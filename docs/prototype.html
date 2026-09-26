@@ -683,6 +683,24 @@ h1{font-size:24px;font-weight:600;letter-spacing:-.01em} h3{font-weight:600;font
 .empty-s{padding:18px;color:var(--ink-3);font-size:13px;text-align:center}
 @media (max-width:1180px){.dgrid{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:760px){.g-kpi3{grid-template-columns:minmax(0,1fr)}.content{padding:8px 16px 64px}.top{padding:10px 16px}.dside .qa2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* dashboard: calmer layout */
+.alerts.clamp>.alert:nth-of-type(n+5){display:none}
+.att.open .alerts.clamp>.alert{display:flex}
+.att-more{display:block;width:100%;padding:10px;border:0;border-top:1px solid var(--grid);background:none;color:var(--accent);font-weight:600;font-size:13px;cursor:pointer;border-radius:0 0 14px 14px}
+.att-more:hover{background:var(--surface-2)}
+.more-qa summary{list-style:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--accent);padding:2px 4px;text-align:center}
+.more-qa summary::-webkit-details-marker{display:none}
+.more-qa[open] summary{color:var(--ink-3)}
+details.fo-d>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:0}
+details.fo-d>summary::-webkit-details-marker{display:none}
+details.fo-d>summary::after{content:'Show';font-size:12.5px;font-weight:600;color:var(--accent)}
+details.fo-d[open]>summary::after{content:'Hide'}
+details.fo-d[open]>summary{border-bottom:1px solid var(--grid)}
+details.fo-d>summary .small{margin-left:auto}
+.dgrid .li-row{padding:9px 10px}
+.dmain,.dside{gap:16px}
+.dgrid .li-row .m>span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 
 <div class="app">
@@ -1236,14 +1254,14 @@ function navHtml(){const cur=PARENT[S.route]||S.route;const fmN=(S.forms||[]).fi
 const V={};
 const avt=(name,y)=>{const t=String(name||'?').replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/);const ini=((t[0]||'?')[0]+((t[1]||'')[0]||'')).toUpperCase();return `<span class="avt ${y?'y':''}" aria-hidden="true">${esc(ini)}</span>`};
 document.addEventListener('input',e=>{const q=e.target.closest('[data-lq]');if(!q)return;const v=q.value.trim().toLowerCase();q.closest('.card').querySelectorAll('.li-row').forEach(r=>{r.hidden=!!v&&!r.textContent.toLowerCase().includes(v)})});
-function agingHtml(live,cur){const B=[['Not yet due','#0F5E56'],['1–30 days','#E1A100'],['31–60 days','#D86B18'],['61–90 days','#C53030'],['90+ days','#7A1F1F']];const v=[0,0,0,0,0];
+function agingHtml(live,cur,noCol){const B=[['Not yet due','#0F5E56'],['1–30 days','#E1A100'],['31–60 days','#D86B18'],['61–90 days','#C53030'],['90+ days','#7A1F1F']];const v=[0,0,0,0,0];
   live.forEach(i=>{const b=calc(i).bal;if(b<=0)return;const d=diff(i.due,TODAY);v[d<=0?0:d<=30?1:d<=60?2:d<=90?3:4]+=cv(b,i.cur)});const tot=v.reduce((a,x)=>a+x,0);
   const m=TODAY.slice(0,7),inv=live.filter(i=>i.date.slice(0,7)===m).reduce((a,i)=>a+cv(calc(i).total,i.cur),0),col=S.payments.filter(p=>inScope(p)&&p.status==='Completed'&&p.date.slice(0,7)===m).reduce((a,p)=>a+cv(p.amount,p.cur),0);const pc=inv?Math.min(100,col/inv*100):0;
   return `<div class="pad" style="border-top:1px solid var(--line)"><div class="row" style="justify-content:space-between"><h3 style="font-size:14px">Receivables aging</h3><span class="small muted">${cur} ${fmtN(rnd(tot,cur),cur)} outstanding</span></div>
    <div class="aging" role="img" aria-label="Receivables by age">${tot?B.map(([l,c],k)=>v[k]?`<i style="width:${(v[k]/tot*100).toFixed(2)}%;background:${c}" title="${l}: ${cur} ${fmtN(rnd(v[k],cur),cur)}"></i>`:'').join(''):''}</div>
-   <div class="aglg">${B.map(([l,c],k)=>`<div><span><em style="background:${c}"></em>${l}</span><b>${fmtN(rnd(v[k],cur),cur)}</b></div>`).join('')}</div></div>
+   <div class="aglg">${B.map(([l,c],k)=>`<div><span><em style="background:${c}"></em>${l}</span><b>${fmtN(rnd(v[k],cur),cur)}</b></div>`).join('')}</div></div>`+(noCol?'':`
    <div class="pad" style="border-top:1px solid var(--line)"><div class="row" style="justify-content:space-between"><h3 style="font-size:14px">Collections this month</h3><span class="small muted">${Math.round(pc)}% of this month’s billing collected</span></div>
-   <div class="prog"><i style="width:${pc.toFixed(1)}%"></i></div><div class="row small muted" style="justify-content:space-between"><span>Collected <b style="color:var(--ink)">${cur} ${fmtN(rnd(col,cur),cur)}</b></span><span>Billed <b style="color:var(--ink)">${cur} ${fmtN(rnd(inv,cur),cur)}</b></span></div></div>`}
+   <div class="prog"><i style="width:${pc.toFixed(1)}%"></i></div><div class="row small muted" style="justify-content:space-between"><span>Collected <b style="color:var(--ink)">${cur} ${fmtN(rnd(col,cur),cur)}</b></span><span>Billed <b style="color:var(--ink)">${cur} ${fmtN(rnd(inv,cur),cur)}</b></span></div></div>`)}
 
 V.dashboard=()=>{
   const cur=scopeCur();const inv=S.invoices.filter(inScope);const live=inv.filter(isLive);
@@ -1263,14 +1281,16 @@ V.dashboard=()=>{
   const attention=live.filter(i=>['Overdue'].includes(st(i))).concat(inv.filter(i=>['Pending approval','Approved','Draft'].includes(st(i)))).concat(soon.filter(i=>st(i)!=='Overdue')).slice(0,7);
   const recent=[...inv.map(i=>({d:i.date+(i.sentAt?' 09:00':''),t:`Invoice ${i.no.slice(-6)} · ${cname(cust(i.cust))}`,s:st(i),a:fmt(calc(i).total,i.cur),i:'file',act:`data-act="openInv" data-no="${i.no}"`})),
     ...S.payments.filter(inScope).map(p=>({d:p.date+' '+p.time,t:`Payment · ${cname(cust(p.cust))}`,s:p.status,a:fmt(p.amount,p.cur),i:'cash',act:`data-act="nav" data-r="payments"`})),
-    ...S.expenses.filter(inScope).map(e=>({d:e.date,t:`Expense · ${e.desc}`,s:e.status,a:fmt(e.amount,e.cur),i:'wallet',act:`data-act="nav" data-r="expenses"`}))].sort((a,b)=>b.d.localeCompare(a.d)).slice(0,6);
+    ...S.expenses.filter(inScope).map(e=>({d:e.date,t:`Expense · ${e.desc}`,s:e.status,a:fmt(e.amount,e.cur),i:'wallet',act:`data-act="nav" data-r="expenses"`}))].sort((a,b)=>b.d.localeCompare(a.d)).slice(0,3);
   const taxA=taxAlerts();const bk=S.backups[0];const fMine=S.forms.filter(awaitingMe);const advOver=S.forms.filter(f=>f.type==='K'&&f.status==='Awaiting liquidation'&&f.data.liq<TODAY&&inScope(f));
   const first=me().name.split(' ')[0];const mth=TODAY.slice(0,7),pm=prevYM(TODAY);
   const sm=m=>live.filter(i=>i.date.slice(0,7)===m).reduce((a,i)=>a+cv(calc(i).total,i.cur),0);const smN=sm(mth),smP=sm(pm);const gr=smP?Math.round((smN/smP-1)*100):0;
+  const attN=[unreadAll(),fMine.length,advOver.length,taxA.length,overN,pendInv.length+pendExp.length,soon.length,failed.length,low.length,supp.length,expDocs.length].filter(Boolean).length;
+  const colM=S.payments.filter(p=>inScope(p)&&p.status==='Completed'&&p.date.slice(0,7)===mth).reduce((a,p)=>a+cv(p.amount,p.cur),0);const colPc=smN?Math.min(100,colM/smN*100):0;
   const dash=(g,v)=>`<span class="${v>=0?'up':'dn'}">${v>=0?'+':''}${v}%</span> ${g}`;
-  const recentInv=inv.slice().sort((a,b)=>(b.date+b.no).localeCompare(a.date+a.no)).slice(0,7);
-  const due=live.filter(i=>calc(i).bal>0).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,7);
-  const tops=Object.entries(live.reduce((m,i)=>{m[i.cust]=(m[i.cust]||0)+cv(calc(i).total,i.cur);return m},{})).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const recentInv=inv.slice().sort((a,b)=>(b.date+b.no).localeCompare(a.date+a.no)).slice(0,5);
+  const dueAll=live.filter(i=>calc(i).bal>0).sort((a,b)=>a.due.localeCompare(b.due));const due=dueAll.slice(0,5);
+  const tops=Object.entries(live.reduce((m,i)=>{m[i.cust]=(m[i.cust]||0)+cv(calc(i).total,i.cur);return m},{})).sort((a,b)=>b[1]-a[1]).slice(0,4);
   const subInv=i=>{const s2=st(i);return s2==='Overdue'?`${diff(i.due,TODAY)} days overdue`:s2==='Pending approval'?'Waiting for approval':s2==='Draft'?'Not submitted yet':s2==='Paid'?'Settled':s2==='Approved'?'Ready to send':'Due '+fdate(i.due)};
   return `
   <div class="dh"><div><h1>${greet}, ${esc(first)}</h1><p class="sub"><b>${esc(acctName(S.acct))}</b>${S.branch!=='ALL'?' · '+esc(branch(S.branch).name)+' branch':''} · ${esc(role())}${S.acct==='ALL'?' · consolidated in USD at today’s rates':''}</p></div><div class="dh-date">${DAYS[dd.getUTCDay()]}, ${dd.getUTCDate()} ${MONL[dd.getUTCMonth()]} ${dd.getUTCFullYear()}</div></div>
@@ -1278,22 +1298,20 @@ V.dashboard=()=>{
    <div class="grid g-kpi3">
     <div class="card kpi hero"><div class="kpi-top"><span class="lbl">Outstanding</span><span class="kic">${ic('file',18)}</span></div><div class="v"><small>${cur}</small>${F(out)}</div><span class="d">${outN} invoice${outN===1?'':'s'} with a balance · ${overN} overdue</span></div>
     <div class="card kpi"><div class="kpi-top"><span class="lbl">Billed this month</span><span class="kic">${ic('chart',18)}</span></div><div class="v"><small>${cur}</small>${F(smN)}</div><span class="d">${smP?dash('than last month',gr):'First month of billing'}</span></div>
-    <div class="card kpi"><div class="kpi-top"><span class="lbl">Collected today</span><span class="kic y">${ic('cash',18)}</span></div><div class="v"><small>${cur}</small>${F(payTs)}</div><span class="d">${payT.length} payment${payT.length===1?'':'s'} · ${F(received)} this year</span></div>
+    <div class="card kpi"><div class="kpi-top"><span class="lbl">Collected this month</span><span class="kic y">${ic('cash',18)}</span></div><div class="v"><small>${cur}</small>${F(colM)}</div><div class="prog" style="margin:2px 0 0"><i style="width:${colPc.toFixed(1)}%"></i></div><span class="d">${Math.round(colPc)}% of this month’s billing · ${F(payTs)} today</span></div>
    </div>
    <div class="grid g-2">
     <section class="card"><div class="card-h"><h3>Invoice list</h3><button class="lnk" data-act="nav" data-r="invoices">View all</button></div>
-     <label class="lsearch">${ic('search',15)}<input data-lq placeholder="Search an invoice or customer" aria-label="Search invoices"></label>
-     <div class="li">${recentInv.map(i=>{const c=cust(i.cust),s2=st(i);return `<button class="li-row" data-act="openInv" data-no="${i.no}">${avt(cname(c),['Draft','Pending approval','Overdue'].includes(s2))}<div class="m"><b>${esc(cname(c))}</b><span>${i.items.length} item${i.items.length===1?'':'s'} · #${esc(i.no.slice(-6))}</span></div><div class="r">${pill(s2)}<small>${esc(subInv(i))}</small></div></button>`}).join('')||'<div class="empty-s">No invoices yet.</div>'}</div></section>
-    <section class="card"><div class="card-h"><h3>Payments due</h3><button class="lnk" data-act="invFilter" data-f="Overdue">Overdue</button></div>
-     <label class="lsearch">${ic('search',15)}<input data-lq placeholder="Search a customer" aria-label="Search payments due"></label>
-     <div class="li">${due.map(i=>{const c=cust(i.cust),od=st(i)==='Overdue';return `<div class="li-row" role="button" tabindex="0" data-act="openInv" data-no="${i.no}">${avt(cname(c),od)}<div class="m"><b>${esc(cname(c))}</b><span style="${od?'color:var(--bad)':''}">${od?'Overdue since '+fdate(i.due):'Due '+fdate(i.due)} · #${esc(i.no.slice(-6))}</span></div><div class="r"><span class="amt">${fmt(calc(i).bal,i.cur)}</span>${can('payments.record')?`<button class="pay-btn" data-act="recordPayment" data-cust="${c.id}">Record ${ic('arrow',12)}</button>`:''}</div></div>`}).join('')||'<div class="empty-s">Nothing is waiting for payment.</div>'}</div></section>
+     <div class="li">${recentInv.map(i=>{const c=cust(i.cust),s2=st(i);return `<button class="li-row" data-act="openInv" data-no="${i.no}">${avt(cname(c),['Draft','Pending approval','Overdue'].includes(s2))}<div class="m"><b>${esc(cname(c))}</b><span>#${esc(i.no.slice(-6))} · ${esc(subInv(i))}</span></div><div class="r">${pill(s2)}</div></button>`}).join('')||'<div class="empty-s">No invoices yet.</div>'}</div></section>
+    <section class="card"><div class="card-h"><h3>Payments due</h3><span class="small muted">${dueAll.length} open</span></div>
+     <div class="li">${due.map(i=>{const c=cust(i.cust),od=st(i)==='Overdue';return `<div class="li-row" role="button" tabindex="0" data-act="openInv" data-no="${i.no}">${avt(cname(c),od)}<div class="m"><b>${esc(cname(c))}</b><span><b style="display:inline;font-size:12.5px;color:var(--ink)">${fmt(calc(i).bal,i.cur)}</b> · <span style="${od?'color:var(--bad)':''}">${od?diff(i.due,TODAY)+' days overdue':'due '+fdate(i.due).slice(0,6)}</span></span></div><div class="r">${can('payments.record')?`<button class="pay-btn" data-act="recordPayment" data-cust="${c.id}">Record ${ic('arrow',12)}</button>`:''}</div></div>`}).join('')||'<div class="empty-s">Nothing is waiting for payment.</div>'}</div></section>
    </div>
-   <section class="card"><div class="card-h"><div><h3>Revenue, last 6 months</h3><p class="small muted">${cur} · invoiced amounts · Apr–Aug include sample history</p></div><button class="lnk" data-act="nav" data-r="reports">Sales report</button></div><div class="pad" style="padding-top:8px">${barChart(revenueSeries(),'Revenue by month')}</div>${agingHtml(live,cur)}</section>
-   <section class="card"><div class="card-h"><h3>Financial overview</h3><span class="scope">${cur}</span></div>
+   <section class="card"><div class="card-h"><div><h3>Revenue, last 6 months</h3><p class="small muted">${cur} · invoiced amounts · Apr–Aug include sample history</p></div><button class="lnk" data-act="nav" data-r="reports">Sales report</button></div><div class="pad" style="padding-top:8px">${barChart(revenueSeries(),'Revenue by month')}</div>${agingHtml(live,cur,true)}</section>
+   <details class="card fo-d"><summary class="card-h"><h3>Financial overview</h3><span class="small muted">${cur} · invoices, payments, expenses and net income</span></summary>
     <dl class="fo" style="margin:0">
       <div><dt>Total invoices</dt><dd>${inv.filter(i=>i.status!=='Cancelled').length}</dd></div><div><dt>Paid</dt><dd>${paidN}</dd></div><div><dt>Partially paid</dt><dd>${partN}</dd></div><div><dt>Outstanding</dt><dd>${outN}</dd></div><div><dt>Overdue</dt><dd style="color:var(--bad)">${overN}</dd></div>
       <div><dt>Payments received</dt><dd>${F(received)}</dd></div><div><dt>Expenses (approved)</dt><dd>${F(exps)}</dd></div><div><dt>Net income (before tax)</dt><dd>${F(sales-exps)}</dd></div><div><dt>Pending approvals</dt><dd>${pendInv.length+pendExp.length}</dd></div><div><dt>Customers · Products · Branches</dt><dd>${S.customers.filter(inScope).length} · ${S.products.length} · ${S.branches.filter(b=>b.active).length}</dd></div>
-    </dl></section>
+    </dl></details>
   </div>
   <aside class="dside">
    <button class="cta" ${can('invoices.create')?'data-act="newInvoice"':'disabled'}>${ic('plus',18)} New invoice</button>
@@ -1301,13 +1319,15 @@ V.dashboard=()=>{
     <button ${can('payments.record')?'data-act="recordPayment"':'disabled'}>${ic('cash',16)}Record payment</button>
     <button ${can('customers.manage')?'data-act="newCustomer"':'disabled'}>${ic('users',16)}New customer</button>
     <button ${can('expenses.create')?'data-act="newExpense"':'disabled'}>${ic('wallet',16)}New expense</button>
-    <button ${can('payments.record')?'data-act="createReceipt"':'disabled'}>${ic('receipt',16)}Receipt</button>
     <button ${can('forms.submit')?'data-act="fNew" data-t="A"':'disabled'}>${ic('doc2',16)}Expense memo</button>
-    <button ${can('forms.submit')?'data-act="fNew" data-t="K"':'disabled'}>${ic('wallet',16)}Cash advance</button>
    </div>
-   <section class="card"><div class="card-h"><h3>Top customers</h3><button class="lnk" data-act="nav" data-r="customers">View all</button></div>
-    <div style="padding:6px 0 10px">${tops.map(([id,v],k)=>{const c=cust(id);return `<div class="rank" role="button" tabindex="0" data-act="openCust" data-id="${id}"><span class="no">${String(k+1).padStart(2,'0')}</span>${avt(cname(c),k%2===1)}<div class="m"><b>${esc(cname(c))}</b><span>Billed · <em>${cur} ${F(v)}</em></span></div></div>`}).join('')||'<div class="empty-s">No billing yet.</div>'}</div></section>
-   <section class="card"><div class="card-h"><h3>Needs attention</h3></div><div class="alerts">
+   <details class="more-qa"><summary>More actions</summary><div class="qa2" style="margin-top:8px">
+    <button ${can('payments.record')?'data-act="createReceipt"':'disabled'}>${ic('receipt',16)}Receipt</button>
+    <button ${can('forms.submit')?'data-act="fNew" data-t="K"':'disabled'}>${ic('wallet',16)}Cash advance</button>
+    <button ${can('reports.view')?'data-act="nav" data-r="reports"':'disabled'}>${ic('chart',16)}Report</button>
+    <button ${can('forms.submit')?'data-act="nav" data-r="forms"':'disabled'}>${ic('doc2',16)}All forms</button>
+   </div></details>
+   <section class="card att"><div class="card-h"><h3>Needs attention</h3><span class="small muted">${attN} item${attN===1?"":"s"}</span></div><div class="alerts clamp">
       ${unreadAll()?`<button class="alert" data-act="nav" data-r="communications"><span class="sv info"></span><div><b>Unread team messages</b><span>${myThreads().filter(t=>unreadIn(t)).map(t=>esc(threadName(t))).slice(0,2).join(', ')}</span></div><span class="n">${unreadAll()}</span></button>`:''}
       ${fMine.length?`<button class="alert" data-act="goForms" data-f="Awaiting my signature"><span class="sv warn"></span><div><b>Forms awaiting your signature</b><span>${fMine.slice(0,2).map(f=>esc(f.ref)).join(', ')}</span></div><span class="n">${fMine.length}</span></button>`:''}
       ${advOver.length?`<button class="alert" data-act="goForms" data-f="Approved & open"><span class="sv bad"></span><div><b>Cash advances past liquidation date</b><span>${advOver.map(f=>esc(user(f.by).name)+' · '+fmt(fTotal(f),f.cur)).join(', ')}</span></div><span class="n">${advOver.length}</span></button>`:''}
@@ -1319,10 +1339,11 @@ V.dashboard=()=>{
       ${low.length?`<button class="alert" data-act="nav" data-r="settings"><span class="sv warn"></span><div><b>Low account balance</b><span>${esc(low[0].name)}: ${fmt(low[0].bal,low[0].cur)}</span></div><span class="n">${low.length}</span></button>`:''}
       ${supp.length?`<button class="alert" data-act="nav" data-r="suppliers"><span class="sv info"></span><div><b>Unpaid supplier invoices</b><span>${supp.length} suppliers with balances</span></div><span class="n">${supp.length}</span></button>`:''}
       ${expDocs.length?`<button class="alert" data-act="nav" data-r="documents"><span class="sv warn"></span><div><b>Documents expiring in 30 days</b><span>${esc(expDocs[0].name)}</span></div><span class="n">${expDocs.length}</span></button>`:''}
-    </div></section>
-   <section class="card"><div class="card-h"><h3>Recent activity</h3></div><div class="feed">${recent.map(r=>`<div class="feed-i" role="button" tabindex="0" style="cursor:pointer" ${r.act}><div class="av">${ic(r.i,16)}</div><div class="t"><b>${esc(r.t)}</b><span>${fdate(r.d)} · ${esc(r.s)}</span></div><div class="a">${esc(r.a)}</div></div>`).join('')}</div></section>
-   <section class="card pad"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h3>Backup status</h3>${pill(bk.ok?'Completed':'Failed')}</div>
-    <dl class="bk"><dt>Last backup</dt><dd>Today, 02:00 AM · ${bk.ok?'Successful':'Failed'}</dd><dt>Next backup</dt><dd>Tomorrow, 02:00 AM</dd><dt>Retention</dt><dd>30 daily · 12 monthly copies</dd></dl></section>
+    </div>${attN>4?`<button class="att-more" data-act="attMore">Show all ${attN}</button>`:""}</section>
+   <section class="card"><div class="card-h"><h3>Top customers</h3><button class="lnk" data-act="nav" data-r="customers">View all</button></div>
+    <div style="padding:6px 0 10px">${tops.map(([id,v],k)=>{const c=cust(id);return `<div class="rank" role="button" tabindex="0" data-act="openCust" data-id="${id}"><span class="no">${String(k+1).padStart(2,'0')}</span>${avt(cname(c),k%2===1)}<div class="m"><b>${esc(cname(c))}</b><span>Billed · <em>${cur} ${F(v)}</em></span></div></div>`}).join('')||'<div class="empty-s">No billing yet.</div>'}</div></section>
+   <section class="card"><div class="card-h"><h3>Recent activity</h3><button class="lnk" data-act="nav" data-r="audit">History</button></div><div class="feed">${recent.map(r=>`<div class="feed-i" role="button" tabindex="0" style="cursor:pointer" ${r.act}><div class="av">${ic(r.i,16)}</div><div class="t"><b>${esc(r.t)}</b><span>${fdate(r.d)} · ${esc(r.s)}</span></div><div class="a">${esc(r.a)}</div></div>`).join('')}</div></section>
+   <p class="small muted" style="text-align:center;margin:0">${bk.ok?'Last backup today at 02:00 · successful':'<b style="color:var(--bad)">Last backup failed</b> · check Settings → Backup'}</p>
   </aside></div>`};
 
 /* ----- customers ----- */
@@ -1854,6 +1875,7 @@ function closeSide(){$('#side').classList.remove('open');$('#sideScrim').hidden=
 
 /* ============ actions ============ */
 const A={};
+A.attMore=(d,el)=>{const c=el.closest('.att');const o=c.classList.toggle('open');el.textContent=o?'Show less':'Show all '+c.querySelectorAll('.alert').length};
 A.toggleSide=()=>{const m=document.body.classList.toggle('mini');try{localStorage.setItem('dopay-mini',m?'1':'')}catch(e){}};
 try{if(localStorage.getItem('dopay-mini'))document.body.classList.add('mini')}catch(e){}
 A.kbGo=d=>{closeAI();if(d.tab)S.setTab=d.tab;if(d.ff)S.fFilter=d.ff;if(d.fil)S.invFilter=d.fil;if(d.dtab)S.docTab=d.dtab;go(d.r)};
