@@ -777,7 +777,7 @@ const S={
     {id:'U18',name:'Emmanuel Tabi',email:'emmanuel.tabi@a4s.example',role:'Country Manager',branch:'DLA',twofa:true,last:'2026-09-25 18:44',active:true}],
   roles:['Super Administrator','CEO','CFO','Financial Controller','Regional Manager','Country Manager','Assistant Manager','Finance Manager','Accountant','Accounting Officer','Branch Manager','Sales/Customer Officer','Auditor','Document Officer'],
   permList:[
-    ['customers.manage','Create & edit customers'],['invoices.create','Create invoices & drafts'],['invoices.approve','Approve invoices'],
+    ['customers.manage','Create & edit customers'],['suppliers.manage','Add & edit suppliers'],['invoices.create','Create invoices & drafts'],['invoices.approve','Approve invoices'],
     ['payments.record','Record payments & receipts'],['payments.reverse','Refund / reverse payments'],['expenses.create','Submit expenses'],
     ['expenses.approve','Review & approve expenses'],['documents.manage','Manage templates & documents'],['reports.view','View reports'],
     ['audit.view','View audit trail'],['users.manage','Manage users & roles'],['settings.manage','Change settings'],['forms.submit','Fill & submit finance forms'],['forms.admin','Manage form numbering & revisions']],
@@ -1414,12 +1414,15 @@ V.products=()=>{const cat=S.prodCat;const list=S.products.filter(p=>cat==='All'|
    {h:'Product',cls:'lead',f:p=>`<b>${esc(p.name)}</b><span class="sub2 mono">${p.id}</span>`},{h:'Category',f:p=>`<span class="tag">${esc(p.cat)}</span>`},{h:'Unit',f:p=>esc(p.unit)},
    {h:`Price (${cur})`,cls:'num',f:p=>fmtN(priceIn(p,cur),cur)},{h:`Cost (${cur})`,cls:'num',f:p=>fmtN(rnd(p.cost/S.rates[p.cur]*S.rates[cur],cur),cur)},
    {h:'Margin',cls:'num',f:p=>Math.round((1-p.cost/p.price)*100)+'%'},{h:'Tax',f:p=>p.tax?'Standard rate':'Exempt'},{h:'Available in',f:p=>p.countries.join(' · ')},{h:'Status',f:p=>pill(p.status)}],list,{sum:false})}</section>`};
-V.suppliers=()=>ph('Suppliers','Supplier records feed expenses and payment vouchers. Full supplier invoicing arrives in phase 2.','')+
-  `<section class="card">${tbl([
+V.suppliers=()=>{const list=S.suppliers.filter(x=>S.branch==='ALL'||x.country===branch(S.branch).cc);const ok=can('suppliers.manage');
+  return ph('Suppliers','Supplier records feed expenses, expense memos and payment vouchers. Choose a supplier when you record an expense.',btn('New supplier','newSupplier',{kind:'pri',icon:'plus',perm:'suppliers.manage'}))+
+  `<div style="margin-bottom:10px">${scopeNote()}${ok?'':' · <span class="small muted">Only administrators and Finance Managers can add or edit suppliers.</span>'}</div>
+  <section class="card">${tbl([
    {h:'Supplier',cls:'lead',f:s=>`<b>${esc(s.company)}</b><span class="sub2 mono">${s.id}</span>`},{h:'Contact',f:s=>`${esc(s.contact)}<span class="sub2">${esc(s.phone)}</span>`},{h:'Supplies',f:s=>esc(s.supplies)},
    {h:'Tax ID',f:s=>`<span class="mono small">${esc(s.tin)}</span>`},{h:'Bank',f:s=>`<span class="small">${esc(s.bank.replace(/\d(?=[\d ]{4})/g,'•'))}</span>`},{h:'Terms',f:s=>'Net '+s.terms},
-   {h:'Outstanding',cls:'num',f:s=>s.outstanding?`<b>${fmt(s.outstanding,s.cur)}</b>`:'—'}],S.suppliers)}</section>
-   <p class="note" style="margin-top:12px">${ic('lock',13)} Bank details are masked for all roles except Finance Manager and Super Administrator, and changes need authorization.</p>`;
+   {h:'Outstanding',cls:'num',f:s=>s.outstanding?`<b>${fmt(s.outstanding,s.cur)}</b>`:'—'}],list,{row:s=>ok?`class="click" data-act="editSupplier" data-id="${s.id}" title="Edit supplier"`:'',empty:'No suppliers in this country yet.'})}</section>
+   <p class="note" style="margin-top:12px">${ic('lock',13)} Bank details are masked in the list. Every change to a supplier’s bank details is written to the audit trail and the Finance Manager is notified.</p>`};
+
 
 /* ----- documents ----- */
 V.documents=()=>{const t=S.docTab;
@@ -1570,6 +1573,8 @@ function renderSearch(){const q=$('#gsearch').value.trim();const box=$('#sres');
 
 /* ============ ASK DOPAY: platform guide ============ */
 const KB=[
+ {id:'supplier',t:'Adding and editing suppliers',k:['supplier','suppliers','vendor','vendors','add supplier','new supplier','edit supplier','supplier bank','payee'],
+  a:`Go to <b>Spending & forms → Suppliers</b> and click <b>New supplier</b>. Enter the company, contact, country, TIN, payment terms, what they supply and bank details. Click a supplier in the list to edit it.<ul><li>Only the <b>Super Administrator</b> and <b>Finance Manager</b> can add or edit suppliers by default. An administrator can give other roles the “Add & edit suppliers” permission in Users & roles.</li><li>Dopay blocks duplicates with the same name or TIN.</li><li>Bank detail changes are written to the audit trail and the Finance Manager is notified.</li><li>New suppliers appear straight away in the Supplier list when you record an expense.</li></ul>`,go:['suppliers','Open Suppliers']},
  {id:'grid',t:'Working with tables: sort, filter, totals, export to Excel',k:['sort','filter','table','tables','export','excel','csv','download','print table','total','totals','columns','spreadsheet','collapse menu','sidebar'],
   a:`Every list works like a spreadsheet:<ul><li><b>Sort</b>: click a column heading; click again to reverse.</li><li><b>Filter</b>: type in <b>Filter these rows</b> above the table. The row count and totals update as you type.</li><li><b>Totals</b>: the grey row at the bottom adds up money columns for the visible rows. Failed, reversed and cancelled items are left out.</li><li><b>Export</b> downloads the visible rows as a CSV file that opens in Excel; <b>Print</b> prints just that table.</li><li>Shaded bars in Balance and Outstanding show the biggest amounts at a glance; red means overdue.</li></ul>Need more room? Click the arrow next to the logo to collapse the menu to icons.`,go:['invoices','Open Invoices']},
  {id:'tax',t:'Taxes: VAT, returns and tax payments',k:['tax','taxes','vat','tva','vat return','tax return','file vat','remit','remittance','paye','withholding','tax rate','tax payment','filing','filing day','ura','firs','tax authority'],
@@ -1646,6 +1651,7 @@ const KB=[
   a:`<b>Settings → Organization</b> holds the address, phone, email, tax ID, bank and mobile money details and the logo printed on every invoice, receipt and statement. Legal entity names per country are in <b>Countries & branches</b>.`,go:['settings','Open Settings'],tab:'org'}
 ];
 const PAGE_TIPS={
+ suppliers:['Click New supplier to add one, or click a row to edit it. Bank details are masked in the list and every change is logged.',['How do I add a supplier?','Who can edit supplier bank details?']],
  taxes:['Pick a country tab. Each month shows VAT charged on approved invoices, VAT paid through Expenses (Tax category) and what is left to remit.',['How do I record a VAT payment?','How much VAT do we owe?']],
  dashboard:['The Dashboard answers “what needs my attention today?”. Click any alert to jump to the records behind it.',['How can Dopay help me?','What forms are awaiting my signature?','How do I create an invoice?']],
  customers:['Search by name, ID, phone, email, company or TIN. Open a customer for their timeline and statement.',['How do I add a customer?','How do I send a statement?']],
@@ -2469,6 +2475,30 @@ function openOrCreate(ids,name){if(ids.length===1){let t=S.threads.find(x=>x.typ
   const t={id:'t-'+uid(),type:'group',name:name||[me(),...ids.map(user)].map(u=>u.name.split(' ')[0]).join(', '),members:[S.user,...ids],msgs:[]};S.threads.push(t);return t}
 function postMsg(t,text,ref){t.msgs.push(M(S.user,Date.now(),text,ref,[S.user]));log('Sent team message',threadName(t),'',text.slice(0,60)+(ref?' · '+ref.label:''))}
 
+function supForm(x){x=x||{};const cc=x.country||(S.branch==='ALL'?'UG':branch(S.branch).cc);
+  return `<div class="fg">
+  <div class="f full"><label for="sf-company">Company name</label><input id="sf-company" value="${esc(x.company||'')}" placeholder="Registered business name"></div>
+  <div class="f"><label for="sf-contact">Contact person</label><input id="sf-contact" value="${esc(x.contact||'')}"></div>
+  <div class="f"><label for="sf-phone">Phone</label><input id="sf-phone" value="${esc(x.phone||'')}" placeholder="+256 7…"></div>
+  <div class="f"><label for="sf-email">Email</label><input id="sf-email" type="email" value="${esc(x.email||'')}"></div>
+  <div class="f"><label for="sf-country">Country</label><select id="sf-country">${S.countries.map(c=>opt(c.code,c.name+' · '+c.cur,cc)).join('')}</select></div>
+  <div class="f full"><label for="sf-address">Address</label><input id="sf-address" value="${esc(x.address||'')}"></div>
+  <div class="f"><label for="sf-tin">Tax ID (TIN)</label><input id="sf-tin" value="${esc(x.tin||'')}"></div>
+  <div class="f"><label for="sf-terms">Payment terms</label><select id="sf-terms">${[0,7,15,30,45,60].map(t=>opt(t,t?'Net '+t:'Due on receipt',x.terms===undefined?30:x.terms)).join('')}</select></div>
+  <div class="f full"><label for="sf-supplies">What they supply</label><input id="sf-supplies" value="${esc(x.supplies||'')}" placeholder="e.g. Printing, stationery"></div>
+  <div class="f full"><label for="sf-bank">Bank details</label><input id="sf-bank" value="${esc(x.bank||'')}" placeholder="Bank · account name · account number"><span class="hint">Used on payment vouchers. Changes are logged and the Finance Manager is notified.</span></div>
+  </div><p class="err" id="sf-err"></p>`}
+A.newSupplier=()=>{if(!can('suppliers.manage')){toast('Only administrators and Finance Managers can add suppliers');return}openModal('New supplier',supForm(),btn('Cancel','closeModal')+btn('Save supplier','saveSupplier',{kind:'pri'}),true)};
+A.editSupplier=d=>{if(!can('suppliers.manage'))return;const x=S.suppliers.find(y=>y.id===d.id);openModal('Edit '+esc(x.company),supForm(x),btn('Cancel','closeModal')+btn('Save changes','saveSupplier',{kind:'pri',data:{id:x.id}}),true)};
+A.saveSupplier=d=>{if(!can('suppliers.manage'))return;const g=k=>$('#sf-'+k).value.trim();const e=m=>{$('#sf-err').textContent=m};
+  if(!g('company'))return e('Enter the supplier’s company name.');if(!g('phone')&&!g('email'))return e('Add a phone number or email.');
+  if(g('email')&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(g('email')))return e('That email address doesn’t look right.');
+  const dup=S.suppliers.find(y=>y.id!==d.id&&((g('tin')&&y.tin===g('tin'))||y.company.toLowerCase()===g('company').toLowerCase()));if(dup)return e(`${dup.company} (${dup.id}) already has this ${dup.tin===g('tin')&&g('tin')?'TIN':'name'}.`);
+  const cc=g('country');const o={company:g('company'),contact:g('contact'),phone:g('phone'),email:g('email'),address:g('address'),country:cc,cur:country(cc).cur,tin:g('tin'),terms:+g('terms'),supplies:g('supplies'),bank:g('bank')};
+  if(d.id){const x=S.suppliers.find(y=>y.id===d.id);if(x.bank!==o.bank){log('Changed supplier bank details',x.id,x.bank.replace(/\d(?=[\d ]{4})/g,'•'),o.bank.replace(/\d(?=[\d ]{4})/g,'•'));notify(`Bank details changed for supplier ${o.company}`,'warn',['suppliers'])}
+    Object.assign(x,o);log('Updated supplier',x.id,'',o.company);closeModal();toast('Supplier updated');render(true);return}
+  const id='S-'+String(S.suppliers.reduce((m,y)=>Math.max(m,+y.id.slice(2)||0),0)+1).padStart(4,'0');
+  S.suppliers.push(Object.assign({id,outstanding:0},o));log('Added supplier',id,'',o.company);notify('New supplier added: '+o.company,'info',['suppliers']);closeModal();toast(`${o.company} added as ${id}. It now appears when you record an expense.`);render(true)};
 /* ============ TAXES ============ */
 const TAXRX=/\b(vat|tva)\b/i;
 const ym=d=>d.slice(0,7);

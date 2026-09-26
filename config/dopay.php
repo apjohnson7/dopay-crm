@@ -55,6 +55,7 @@ return [
     */
     'permissions' => [
         'customers.manage' => 'Create & edit customers',
+        'suppliers.manage' => 'Add & edit suppliers',
         'invoices.create' => 'Create invoices & drafts',
         'invoices.approve' => 'Approve invoices',
         'payments.record' => 'Record payments & receipts',
@@ -79,7 +80,7 @@ return [
         'Regional Manager' => ['invoices.approve', 'expenses.approve', 'reports.view', 'audit.view', 'forms.submit', 'messages.use'],
         'Country Manager' => ['customers.manage', 'invoices.create', 'invoices.approve', 'expenses.approve', 'reports.view', 'audit.view', 'forms.submit', 'messages.use'],
         'Assistant Manager' => ['customers.manage', 'invoices.create', 'invoices.approve', 'payments.record', 'expenses.create', 'expenses.approve', 'reports.view', 'forms.submit', 'messages.use'],
-        'Finance Manager' => ['customers.manage', 'invoices.create', 'invoices.approve', 'payments.record', 'payments.reverse', 'expenses.create', 'expenses.approve', 'documents.manage', 'reports.view', 'audit.view', 'forms.submit', 'forms.admin', 'messages.use'],
+        'Finance Manager' => ['customers.manage', 'suppliers.manage', 'invoices.create', 'invoices.approve', 'payments.record', 'payments.reverse', 'expenses.create', 'expenses.approve', 'documents.manage', 'reports.view', 'audit.view', 'forms.submit', 'forms.admin', 'messages.use'],
         'Accountant' => ['customers.manage', 'invoices.create', 'payments.record', 'expenses.create', 'reports.view', 'forms.submit', 'messages.use'],
         'Accounting Officer' => ['customers.manage', 'invoices.create', 'payments.record', 'expenses.create', 'reports.view', 'forms.submit', 'messages.use'],
         'Branch Manager' => ['customers.manage', 'invoices.create', 'invoices.approve', 'expenses.approve', 'reports.view', 'forms.submit', 'messages.use'],

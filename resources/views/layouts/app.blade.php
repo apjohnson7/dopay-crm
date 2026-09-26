@@ -16,7 +16,7 @@
   $nav = [
     'Overview' => [['dashboard', 'Dashboard', 'dashboard', null]],
     'Billing' => array_values(array_filter([['customers.index', 'Customers', 'customers*', null], ['invoices.index', 'Invoices', 'invoices*', null], ['payments.index', 'Payments', 'payments*|receipts*', null], $u->can('reports.view') ? ['taxes.index', 'Taxes', 'taxes*', null] : null])),
-    'Spending & forms' => [['forms.index', 'Finance forms', 'forms*|budget*', $navFormsAwaiting ?? 0]],
+    'Spending & forms' => [['forms.index', 'Finance forms', 'forms*|budget*', $navFormsAwaiting ?? 0], ['suppliers.index', 'Suppliers', 'suppliers*', null]],
     'Records' => [['messages.index', 'Team messages', 'messages*', $navUnreadMessages ?? 0], ['help', 'Help & guide', 'help', null]],
     'Administration' => array_values(array_filter([$u->can('audit.view') ? ['audit.index', 'Audit trail', 'audit*', null] : null, ['profile.security', 'Security', 'profile*', null]])),
   ];

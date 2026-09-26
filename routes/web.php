@@ -14,6 +14,7 @@ use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\ScopeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SharedDocumentController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TaxController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/help', HelpController::class)->name('help');
 
         Route::resource('customers', CustomerController::class)->except('destroy');
+        Route::resource('suppliers', SupplierController::class)->except(['show', 'destroy']);
 
         Route::resource('invoices', InvoiceController::class)->except('destroy');
         Route::post('invoices/{invoice}/submit', [InvoiceController::class, 'submit'])->name('invoices.submit');

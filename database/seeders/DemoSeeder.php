@@ -99,6 +99,19 @@ class DemoSeeder extends Seeder
             ]);
         }
 
+        $suppliers = [
+            ['S-0001', 'Kampala Print House', 'Ivan Lubega', 'UG', '1009988776', 'Printing, stationery', 'Centenary Bank · Kampala Print House · 3100000111', 30],
+            ['S-0002', 'Victoria Logistics', 'Ruth Atim', 'UG', '1008877665', 'Courier, freight', 'Stanbic · Victoria Logistics · 9030000222', 15],
+            ['S-0003', 'Lagos Courier Express', 'Bola Ade', 'NG', '22334455-0001', 'Courier', 'GTBank · Lagos Courier Express · 0123456789', 30],
+        ];
+        foreach ($suppliers as [$code, $company, $contact, $iso, $tin, $supplies, $bank, $terms]) {
+            $country = $cc($iso);
+            \App\Models\Supplier::updateOrCreate(['code' => $code], ['company' => $company, 'contact_person' => $contact, 'country_id' => $country->id, 'currency_code' => $country->currency_code,
+                'tax_id' => $tin, 'supplies' => $supplies, 'bank_details' => $bank, 'payment_terms_days' => $terms, 'phone' => '+000 000 000']);
+        }
+        app(\App\Services\NumberingService::class)->next('SUPPLIER');
+        \App\Models\NumberSequence::where('scope', 'SUPPLIER')->update(['last_value' => count($suppliers)]);
+
         if (\App\Models\Invoice::count() === 0) {
             $this->invoices($users, $cust);
             $this->taxes($users, $b, $cc);
