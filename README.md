@@ -20,6 +20,7 @@ A clickable prototype of the whole system is in `docs/prototype.html`. Open it i
 | **Taxes**: monthly VAT/TVA returns per country, invoice register with customer TINs, tax payments, filing-day alerts, CSV export | Done |
 | Finance forms A, B, C, F, G, J, K: fill online, approval chains, e-signatures with local time, print/PDF | Done |
 | Budget monitoring (Appendix F vs actuals) | Done |
+| **Accounting core (roadmap phase 1)**: chart of accounts per country (IFRS-style for Uganda and Nigeria, SYSCOHADA for Cameroon and Ivory Coast), automatic double-entry posting, manual journals, trial balance, profit & loss, balance sheet, general ledger, bank and mobile money reconciliation, month-end close with period locks | Done |
 | Team messaging across branches and countries | Done |
 | Audit trail, global search, in-app help | Done |
 | Read-only JSON API (`/api/v1`, Sanctum tokens) | Done |
@@ -36,6 +37,15 @@ A clickable prototype of the whole system is in `docs/prototype.html`. Open it i
 - A **Country Administrator** manages their own account: users, company details, suppliers and settings.
 - Group approvers (Financial Controller, Regional Manager, CFO, CEO) sign finance forms routed to them from any country, but browse only their own country's records.
 - Team messages work across countries.
+
+### How the books work
+
+- Every approved invoice, payment, approved or paid expense, cash advance and interbranch memo posts a balanced journal entry to its country's ledger, in the same database transaction.
+  - Posting is idempotent: each source record posts once.
+  - Cancellations and reversals post mirror entries; nothing is edited or deleted.
+- **Closed months are locked.** Anything dated in a closed month is refused until a Finance Manager reopens it with a second person's PIN.
+- **On an existing database**, run `php artisan dopay:ledger-rebuild` once to install the charts and post history.
+- The external accountant should confirm both charts of accounts (`config/accounting.php`) before the first close.
 
 ### How tax is connected
 

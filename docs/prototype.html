@@ -701,6 +701,15 @@ details.fo-d>summary .small{margin-left:auto}
 .dgrid .li-row{padding:9px 10px}
 .dmain,.dside{gap:16px}
 .dgrid .li-row .m>span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* accounting statements */
+.tbl.fs td{padding:7px 16px}
+.tbl.fs tr.fs-h td{font-weight:700;color:var(--accent-2);background:var(--head);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+.tbl.fs tr.fs-l td{font-weight:600}
+.tbl.fs tr.fs-a td{color:var(--ink-2);font-size:13px}
+.tbl.fs tr.fs-a td:first-child{padding-left:32px}
+.tbl.fs tr.fs-t td{font-weight:700;border-top:1px solid var(--line-2)}
+.tbl.fs tr.fs-n td{font-weight:700;font-size:15px;background:var(--accent-soft);color:var(--accent-2)}
 </style>
 
 <div class="app">
@@ -776,6 +785,8 @@ const token=s=>{let h=2166136261;for(const ch of s){h^=ch.charCodeAt(0);h=Math.i
 const uid=()=>Math.random().toString(36).slice(2,9);
 
 const I={
+book:'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M8 7h7M8 11h7',
+info:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 16v-4M12 8h.01',
 arrow:'M5 12h14M13 6l6 6-6 6',
 search:'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
 print:'M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z',
@@ -863,7 +874,7 @@ const S={
     {id:'U18',name:'Emmanuel Tabi',email:'emmanuel.tabi@dopay.example',role:'Country Manager',branch:'DLA',twofa:true,last:'2026-09-25 18:44',active:true}],
   roles:['Super Administrator','Country Administrator','CEO','CFO','Financial Controller','Regional Manager','Country Manager','Assistant Manager','Finance Manager','Accountant','Accounting Officer','Branch Manager','Sales/Customer Officer','Auditor','Document Officer'],
   permList:[
-    ['customers.manage','Create & edit customers'],['suppliers.manage','Add & edit suppliers'],['invoices.create','Create invoices & drafts'],['invoices.approve','Approve invoices'],
+    ['customers.manage','Create & edit customers'],['suppliers.manage','Add & edit suppliers'],['accounting.post','Post journals & reconcile'],['accounting.close','Close & reopen periods'],['invoices.create','Create invoices & drafts'],['invoices.approve','Approve invoices'],
     ['payments.record','Record payments & receipts'],['payments.reverse','Refund / reverse payments'],['expenses.create','Submit expenses'],
     ['expenses.approve','Review & approve expenses'],['documents.manage','Manage templates & documents'],['reports.view','View reports'],
     ['audit.view','View audit trail'],['users.manage','Manage users & roles'],['settings.manage','Change settings'],['forms.submit','Fill & submit finance forms'],['forms.admin','Manage form numbering & revisions']],
@@ -889,16 +900,16 @@ S.perms={
   'Super Administrator':[...ALLP],
   'Country Administrator':['customers.manage','suppliers.manage','users.manage','settings.manage','documents.manage','reports.view','audit.view','expenses.approve'],
   'Finance Manager':ALLP.filter(p=>!['users.manage','settings.manage'].includes(p)),
-  'Accountant':['customers.manage','invoices.create','payments.record','expenses.create','reports.view','forms.submit'],
-  'Accounting Officer':['customers.manage','invoices.create','payments.record','expenses.create','reports.view','forms.submit'],
+  'Accountant':['customers.manage','accounting.post','invoices.create','payments.record','expenses.create','reports.view','forms.submit'],
+  'Accounting Officer':['customers.manage','accounting.post','invoices.create','payments.record','expenses.create','reports.view','forms.submit'],
   'Branch Manager':['customers.manage','invoices.create','invoices.approve','expenses.approve','reports.view','forms.submit'],
   'Sales/Customer Officer':['customers.manage','invoices.create','forms.submit'],
   'Auditor':['reports.view','audit.view'],
   'Document Officer':['documents.manage','forms.submit','forms.admin'],
-  'Assistant Manager':['customers.manage','invoices.create','invoices.approve','payments.record','expenses.create','expenses.approve','reports.view','forms.submit'],
+  'Assistant Manager':['customers.manage','accounting.post','invoices.create','invoices.approve','payments.record','expenses.create','expenses.approve','reports.view','forms.submit'],
   'Country Manager':['customers.manage','invoices.create','invoices.approve','expenses.approve','reports.view','audit.view','forms.submit'],
   'Regional Manager':['invoices.approve','expenses.approve','reports.view','audit.view','forms.submit'],
-  'Financial Controller':['invoices.approve','payments.reverse','expenses.approve','reports.view','audit.view','forms.submit','forms.admin'],
+  'Financial Controller':['invoices.approve','accounting.post','accounting.close','payments.reverse','expenses.approve','reports.view','audit.view','forms.submit','forms.admin'],
   'CFO':['invoices.approve','payments.reverse','expenses.approve','reports.view','audit.view','forms.submit'],
   'CEO':['reports.view','audit.view','forms.submit']
 };
@@ -1093,7 +1104,7 @@ function log(action,record,prev,next){const m=/DOPAY-([A-Z]{2})-/.exec(record||'
 function notify(text,kind,go){S.notifs.unshift({id:uid(),at:stamp(),text,kind:kind||'info',read:false,go})}
 function comm(o){S.comms.unshift(Object.assign({id:uid(),at:stamp(),by:S.user,status:'Sent'},o))}
 let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,3600)}
-const PC={'Draft':'mute','Pending approval':'warn','Approved':'info','Sent':'acc','Partially paid':'info','Paid':'ok','Overdue':'bad','Cancelled':'mute','Completed':'ok','Reversed':'bad','Refunded':'bad','Failed':'bad','Submitted':'warn','Reviewed':'info','Issued':'ok','Void':'mute','Active':'ok','Inactive':'mute','Delivered':'ok','Queued':'warn','Link copied':'mute','Connected':'ok','Not connected':'mute','Limited':'warn','Planned':'info','Downloaded':'mute','In approval':'warn','Returned':'bad','Reimbursed':'ok','Liquidated':'ok','Settled':'ok','Awaiting liquidation':'info','Opened':'acc','Open period':'mute','Due':'warn'};
+const PC={'Draft':'mute','Pending approval':'warn','Approved':'info','Sent':'acc','Partially paid':'info','Paid':'ok','Overdue':'bad','Cancelled':'mute','Completed':'ok','Reversed':'bad','Refunded':'bad','Failed':'bad','Submitted':'warn','Reviewed':'info','Issued':'ok','Void':'mute','Active':'ok','Inactive':'mute','Delivered':'ok','Queued':'warn','Link copied':'mute','Connected':'ok','Not connected':'mute','Limited':'warn','Planned':'info','Downloaded':'mute','In approval':'warn','Returned':'bad','Reimbursed':'ok','Liquidated':'ok','Settled':'ok','Awaiting liquidation':'info','Opened':'acc','Open period':'mute','Due':'warn','Ready':'ok','Closed':'mute','Reconciled':'ok','Unmatched':'warn'};
 const pill=s=>`<span class="pill p-${PC[s]||'mute'}">${esc(s)}</span>`;
 const ph=(t,sub,act)=>`<div class="ph"><div><h1>${t}</h1>${sub?`<p class="sub">${sub}</p>`:''}</div><div class="ph-act">${act||''}</div></div>`;
 function btn(l,act,o){o=o||{};const ok=!o.perm||can(o.perm);const d=Object.entries(o.data||{}).map(([k,v])=>`data-${k}="${esc(v)}"`).join(' ');
@@ -1243,6 +1254,7 @@ function revenueSeries(){const months=[3,4,5,6,7,8];const brs=S.branch!=='ALL'?[
 const NAV=[
  ['Overview',[['dashboard','Dashboard','home']]],
  ['Billing',[['customers','Customers','users'],['invoices','Invoices','file'],['payments','Payments','cash'],['receipts','Receipts','receipt'],['taxes','Taxes','pct']]],
+ ['Accounting',[['coa','Chart of accounts','book'],['ledger','Journals & ledger','list'],['fs','Financial statements','chart'],['recon','Reconciliation','check'],['close','Month-end close','lock']]],
  ['Spending & forms',[['forms','Finance forms','doc2'],['expenses','Expenses','wallet'],['suppliers','Suppliers','truck']]],
  ['Catalogue & records',[['products','Products','box'],['documents','Documents','folder'],['reports','Reports','chart'],['communications','Communications','chat']]],
  ['Administration',[['users','Users & roles','shield'],['audit','Audit trail','list'],['settings','Settings','gear']]]];
@@ -1690,6 +1702,8 @@ function renderSearch(){const q=$('#gsearch').value.trim();const box=$('#sres');
 
 /* ============ ASK DOPAY: platform guide ============ */
 const KB=[
+ {id:'ledger',t:'Accounting: ledger, statements, reconciliation and month-end close',k:['ledger','general ledger','journal','journal entry','chart of accounts','accounts','balance sheet','profit and loss','p&l','income statement','cash flow','trial balance','reconcile','reconciliation','bank statement','month end','close','closing','period','lock','syscohada','ifrs','consolidated','intercompany','revaluation','books','double entry','debit','credit'],
+  a:`DoPay keeps double-entry books for each country under <b>Accounting</b>.<ul><li><b>Posting is automatic</b>: approved invoices, payments, paid expenses, cash advances and interbranch memos post debits and credits for you. Use <b>New journal entry</b> only for things DoPay doesn’t record, such as payroll or accruals; large journals need a second person.</li><li><b>Chart of accounts</b>: Uganda and Nigeria use an IFRS-based chart; Cameroon and Ivory Coast use SYSCOHADA.</li><li><b>Financial statements</b>: profit and loss, balance sheet, cash flow and trial balance per country, plus a consolidated USD view for the Super Administrator with intercompany balances removed.</li><li><b>Reconciliation</b>: import the bank or mobile money statement as CSV, press <b>Auto-match</b>, then match or record what is left.</li><li><b>Month-end close</b>: once the checklist is done a Finance Manager closes the month; nothing dated in it can change unless it is reopened with a second person’s approval.</li></ul>`,go:['fs','Open financial statements']},
  {id:'accounts',t:'Country accounts: who sees what',k:['account','accounts','country account','switch country','other country','all countries','see nigeria','see uganda','separate','consolidated','super admin','super administrator','country administrator','access','data separation'],
   a:`Each country runs as its own <b>DoPay account</b> with its own customers, invoices, payments, suppliers, expenses, taxes, numbering, users and company details.<ul><li><b>Everyone else</b> works only inside their own country’s account. Their search, reports, audit trail and Ask Dopay answers never include another country.</li><li>The <b>Super Administrator</b> can open every account from the selector at the top, or choose <b>All accounts</b> for a consolidated view in USD.</li><li>A <b>Country Administrator</b> manages their own account: users, company details, suppliers and settings.</li><li>Group approvers (Financial Controller, Regional Manager, CFO, CEO) still sign forms routed to them from any country, but they can’t browse other countries’ records.</li><li>Team messages work across countries, so officers can still talk to each other.</li></ul>`,go:['settings','Open account settings']},
  {id:'supplier',t:'Adding and editing suppliers',k:['supplier','suppliers','vendor','vendors','add supplier','new supplier','edit supplier','supplier bank','payee'],
@@ -1770,6 +1784,9 @@ const KB=[
   a:`<b>Settings → Organization</b> holds the address, phone, email, tax ID, bank and mobile money details and the logo printed on every invoice, receipt and statement. Legal entity names per country are in <b>Countries & branches</b>.`,go:['settings','Open Settings'],tab:'org'}
 ];
 const PAGE_TIPS={
+ recon:['Import the statement, press Auto-match, then deal with whatever is left on either side.',['How do I reconcile the bank?','What does month-end close do?']],
+ close:['Work down the checklist, then close the month. A closed month is locked.',['What does month-end close do?','How do I reopen a month?']],
+ fs:['Switch between profit and loss, balance sheet, cash flow and trial balance. Click an account for its postings.',['How is the balance sheet built?','What is consolidated?']],
  suppliers:['Click New supplier to add one, or click a row to edit it. Bank details are masked in the list and every change is logged.',['How do I add a supplier?','Who can edit supplier bank details?']],
  taxes:['Pick a country tab. Each month shows VAT charged on approved invoices, VAT paid through Expenses (Tax category) and what is left to remit.',['How do I record a VAT payment?','How much VAT do we owe?']],
  dashboard:['The Dashboard answers “what needs my attention today?”. Click any alert to jump to the records behind it.',['How can Dopay help me?','What forms are awaiting my signature?','How do I create an invoice?']],
@@ -2004,6 +2021,7 @@ function updPaySum(){const amt=parseFloat(($('#pm-amt')||{}).value)||0;let a=0;d
   s.innerHTML=`Allocated <b>${fmt(a,c.cur)}</b> of ${fmt(amt,c.cur)}${amt-a>0.004?` · ${fmt(amt-a,c.cur)} goes to account credit`:''}${a-amt>0.004?' · <span style="color:var(--bad)">allocation exceeds amount</span>':''}`}
 A.autoAlloc=()=>{let left=parseFloat($('#pm-amt').value)||0;document.querySelectorAll('[data-in="alloc"]').forEach(x=>{const m=parseFloat(x.dataset.max);const v=Math.min(m,left);x.value=v>0?v:0;left-=v});updPaySum()};
 A.savePay=()=>{const cid=$('#pm-cust').value;const c=cust(cid);const err=$('#pm-err');if(!c){err.textContent='Choose a customer.';return}
+  {const pd=$('#pm-date').value||TODAY;if(lockedFor(c.country,pd)){err.textContent=lockMsg(c.country,pd);return}}
   const amt=parseFloat($('#pm-amt').value)||0;if(amt<=0){err.textContent='Enter the amount received.';return}
   const ref=$('#pm-ref').value.trim();const method=$('#pm-method').value;if(method!=='Cash'&&!ref){err.textContent='Add the transaction reference for '+method.toLowerCase()+' payments.';return}
   const allocs=[];let sum=0;let over=false;document.querySelectorAll('[data-in="alloc"]').forEach(x=>{const v=parseFloat(x.value)||0;if(v>0){if(v>parseFloat(x.dataset.max)+0.004)over=true;allocs.push({inv:x.dataset.no,amt:v});sum+=v}});
@@ -2025,7 +2043,8 @@ A.newExpense=d=>{d=d||{};const br=d.br||(homeBr());S.expCtx={br};const cur=count
    <div class="f full"><label for="ex-doc">Supporting document</label><input id="ex-doc" type="file" accept=".pdf,.jpg,.jpeg,.png,.docx,.xlsx"><span class="hint">Receipt, invoice or quote. PDF, JPG, PNG, DOCX or XLSX.</span></div></div><p class="err" id="ex-err"></p>`,
    btn('Cancel','closeModal')+btn('Save draft','saveExp',{data:{s:'Draft'}})+btn('Submit for review','saveExp',{kind:'pri',data:{s:'Submitted'}}),true)};
 A.saveExp=d=>{const br=(S.expCtx&&S.expCtx.br)||(homeBr());const cc=branch(br).cc;const desc=$('#ex-desc').value.trim();const amt=parseFloat($('#ex-amt').value)||0;
-  if(!desc||amt<=0){$('#ex-err').textContent='Add a description and an amount.';return}const f=$('#ex-doc').files[0];
+  if(!desc||amt<=0){$('#ex-err').textContent='Add a description and an amount.';return}
+  {const xd=$('#ex-date').value||TODAY;if(lockedFor(cc,xd)){$('#ex-err').textContent=lockMsg(cc,xd);return}}const f=$('#ex-doc').files[0];
   const e={no:nextNo(cc,'EXP'),date:$('#ex-date').value||TODAY,cat:$('#ex-cat').value,desc,amount:amt,cur:country(cc).cur,sup:$('#ex-sup').value,branch:br,method:$('#ex-method').value,doc:f?f.name:'',by:S.user,approvedBy:'',status:d.s};const per=$('#ex-per');if(per&&per.value&&e.cat==='Tax')e.taxPeriod=per.value;
   S.expenses.push(e);if(f)S.docs.unshift({id:uid(),name:f.name,type:(f.name.split('.').pop()||'').toUpperCase(),link:'Expense',linkId:e.no,cat:'Supporting document',tags:[e.cat.toLowerCase()],owner:S.user,up:TODAY,exp:'',ver:1,access:'Finance',branch:br});
   log(d.s==='Draft'?'Created expense draft':'Submitted expense',e.no,'',fmt(amt,e.cur));if(d.s==='Submitted')notify(`Expense ${e.no} is awaiting review`,'warn',['expenses']);closeModal();toast(d.s==='Draft'?'Expense saved as draft':'Expense submitted for review');render(true)};
@@ -2451,7 +2470,7 @@ A.fRevise=d=>requireAuth('Revising a signed form',a=>{const f=fById(d.id);S.fdra
 A.fDup=d=>{const f=fById(d.id);const n=JSON.parse(JSON.stringify(f));Object.assign(n,{id:null,ref:null,status:'Draft',by:S.user,sigs:[],reqSig:null,history:[],version:1,approvedAt:null,returnNote:''});if(n.data.date)n.data.date=TODAY;S.fdraft=n;go('form-edit')};
 A.fVoid=d=>requireAuth('Voiding a form',a=>{const f=fById(d.id);const was=f.status;f.status='Void';f.history.push({at:stamp(),uid:S.user,text:'Voided: '+a.reason});log('Voided '+FT[f.type].name+' (authorized by '+user(a.by).name+')',f.ref,was,'Void');render(true)});
 A.fPaid=d=>{const f=fById(d.id);openModal('Mark as paid',`<p class="small" style="margin-bottom:12px">Posts ${f.lines.length} line${f.lines.length>1?'s':''} to Expenses under their categories, which updates budget monitoring and the branch financial report.</p><div class="fg"><div class="f"><label for="pd-d">Payment date</label><input id="pd-d" type="date" value="${f.data.payDate||TODAY}"></div><div class="f"><label for="pd-r">Payment reference</label><input id="pd-r" placeholder="Bank or mobile money reference"></div></div>`,btn('Cancel','closeModal')+btn('Mark paid & post','fPaidOk',{kind:'pri',data:{id:f.id}}))};
-A.fPaidOk=d=>{const f=fById(d.id);const dt=$('#pd-d').value||TODAY;const ref=$('#pd-r').value.trim();const cc=f.country;const last=f.sigs[f.sigs.length-1];
+A.fPaidOk=d=>{const f=fById(d.id);const dt=$('#pd-d').value||TODAY;if(lockedFor(f.country,dt)){toast(lockMsg(f.country,dt));return}const ref=$('#pd-r').value.trim();const cc=f.country;const last=f.sigs[f.sigs.length-1];
   f.lines.forEach(l=>{if(+l.amount>0)S.expenses.push({no:nextNo(cc,'EXP'),date:dt,cat:l.cat,desc:l.desc,amount:+l.amount,cur:f.cur,sup:'',branch:f.branch,method:f.data.payMethod,doc:f.ref,by:f.by,approvedBy:last?last.uid:'',status:'Paid'})});
   f.status='Paid';f.data.payDate=dt;f.history.push({at:stamp(),uid:S.user,text:'Paid'+(ref?' · ref '+ref:'')+' · posted to Expenses'});log('Paid expense memo',f.ref,'Approved','Paid · '+fmt(fTotal(f),f.cur));closeModal();toast('Paid and posted to Expenses');render(true)};
 A.fFromMemoB=d=>{const m=fById(d.id);S.fdraft=newFormDraft('B',f=>{f.branch=m.branch;f.country=m.country;f.cur=m.cur;f.data.memo=m.ref;f.lines=m.lines.map(l=>({date:TODAY,desc:l.desc,cat:l.cat,amount:l.amount}))});go('form-edit')};
@@ -2623,6 +2642,301 @@ A.saveSupplier=d=>{if(!can('suppliers.manage'))return;const g=k=>$('#sf-'+k).val
     Object.assign(x,o);log('Updated supplier',x.id,'',o.company);closeModal();toast('Supplier updated');render(true);return}
   const id='S-'+String(S.suppliers.reduce((m,y)=>Math.max(m,+y.id.slice(2)||0),0)+1).padStart(4,'0');
   S.suppliers.push(Object.assign({id,outstanding:0},o));log('Added supplier',id,'',o.company);notify('New supplier added: '+o.company,'info',['suppliers']);closeModal();toast(`${o.company} added as ${id}. It now appears when you record an expense.`);render(true)};
+/* ============ ACCOUNTING CORE (Phase 1) ============ */
+/* Each account has a role so posting rules work for both charts. IFRS-style chart for UG/NG; SYSCOHADA (OHADA) for CM/CI. */
+const COA_T={
+ ifrs:[
+  ['1010','Cash on hand','Asset','cash','Cash and bank'],['1015','Petty cash','Asset','petty','Cash and bank'],['1020','Bank: operating account','Asset','bank','Cash and bank'],
+  ['1030','Mobile money wallet','Asset','momo','Cash and bank'],['1040','Card and online clearing','Asset','clearing','Cash and bank'],
+  ['1100','Accounts receivable','Asset','ar','Receivables'],['1300','Staff advances','Asset','advances','Receivables'],['1400','Due from group companies','Asset','ico_rec','Intercompany'],
+  ['1500','Furniture and fittings','Asset','fa_furn','Fixed assets'],['1510','Computers and IT','Asset','fa_it','Fixed assets'],['1520','Office equipment','Asset','fa_equip','Fixed assets'],
+  ['1530','Motor vehicles','Asset','fa_vehicle','Fixed assets'],['1540','Intangible assets','Asset','fa_intang','Fixed assets'],
+  ['2000','Accounts payable','Liability','ap','Payables'],['2100','VAT payable','Liability','vat','Taxes payable'],['2110','PAYE payable','Liability','paye','Taxes payable'],
+  ['2200','Accrued expenses','Liability','accrued','Payables'],['2400','Due to group companies','Liability','ico_pay','Intercompany'],
+  ['3000','Share capital','Equity','capital','Equity'],['3100','Retained earnings','Equity','retained','Equity'],
+  ['4000','Sales: goods','Income','sales_goods','Revenue'],['4010','Sales: services','Income','sales_services','Revenue'],['4800','Foreign exchange gain','Income','fx_gain','Other income'],
+  ['6000','Office expenses','Expense','exp_office','Operating expenses'],['6010','Hotel and transport','Expense','exp_travel','Operating expenses'],['6030','Welfare and project supplies','Expense','exp_welfare','Operating expenses'],
+  ['6040','Commission','Expense','exp_commission','Operating expenses'],['6050','Salaries and wages','Expense','exp_salaries','Staff costs'],['6060','Local transport and waybills','Expense','exp_local','Operating expenses'],
+  ['6070','Marketing and media','Expense','exp_marketing','Operating expenses'],['6080','Cargo and freight','Expense','exp_freight','Operating expenses'],['6090','Professional fees and levies','Expense','exp_prof','Operating expenses'],
+  ['6100','Rent and premises','Expense','exp_rent','Operating expenses'],['6110','Bank charges','Expense','exp_bank','Finance costs'],['6120','Pension contributions','Expense','exp_pension','Staff costs'],
+  ['6130','Taxes and licences','Expense','exp_tax','Operating expenses'],['6140','Insurance','Expense','exp_insurance','Operating expenses'],['6190','Other expenses','Expense','exp_other','Operating expenses'],
+  ['6800','Foreign exchange loss','Expense','fx_loss','Finance costs']],
+ syscohada:[
+  ['5710','Caisse','Asset','cash','Cash and bank'],['5711','Caisse menues dépenses','Asset','petty','Cash and bank'],['5210','Banque : compte courant','Asset','bank','Cash and bank'],
+  ['5530','Monnaie électronique (mobile money)','Asset','momo','Cash and bank'],['5850','Virements de fonds en cours','Asset','clearing','Cash and bank'],
+  ['4111','Clients','Asset','ar','Receivables'],['4210','Personnel : avances et acomptes','Asset','advances','Receivables'],['4630','Comptes courants groupe : débiteurs','Asset','ico_rec','Intercompany'],
+  ['2440','Mobilier et matériel de bureau','Asset','fa_furn','Fixed assets'],['2441','Matériel informatique','Asset','fa_it','Fixed assets'],['2442','Matériel et outillage','Asset','fa_equip','Fixed assets'],
+  ['2450','Matériel de transport','Asset','fa_vehicle','Fixed assets'],['2130','Logiciels et licences','Asset','fa_intang','Fixed assets'],
+  ['4011','Fournisseurs','Liability','ap','Payables'],['4431','TVA facturée','Liability','vat','Taxes payable'],['4470','Impôts retenus à la source','Liability','paye','Taxes payable'],
+  ['4081','Fournisseurs : factures non parvenues','Liability','accrued','Payables'],['4631','Comptes courants groupe : créditeurs','Liability','ico_pay','Intercompany'],
+  ['1010','Capital social','Equity','capital','Equity'],['1210','Report à nouveau','Equity','retained','Equity'],
+  ['7010','Ventes de marchandises','Income','sales_goods','Revenue'],['7060','Services vendus','Income','sales_services','Revenue'],['7760','Gains de change','Income','fx_gain','Other income'],
+  ['6055','Fournitures de bureau','Expense','exp_office','Operating expenses'],['6181','Voyages et déplacements','Expense','exp_travel','Operating expenses'],['6058','Achats de fournitures de projets','Expense','exp_welfare','Operating expenses'],
+  ['6322','Commissions et courtages','Expense','exp_commission','Operating expenses'],['6610','Rémunérations du personnel','Expense','exp_salaries','Staff costs'],['6183','Transports du personnel et livraisons','Expense','exp_local','Operating expenses'],
+  ['6270','Publicité et relations publiques','Expense','exp_marketing','Operating expenses'],['6122','Transports sur achats et fret','Expense','exp_freight','Operating expenses'],['6324','Honoraires','Expense','exp_prof','Operating expenses'],
+  ['6222','Locations de bâtiments','Expense','exp_rent','Operating expenses'],['6310','Frais bancaires','Expense','exp_bank','Finance costs'],['6641','Charges sociales (retraite)','Expense','exp_pension','Staff costs'],
+  ['6410','Impôts et taxes','Expense','exp_tax','Operating expenses'],['6250','Primes d’assurance','Expense','exp_insurance','Operating expenses'],['6588','Autres charges diverses','Expense','exp_other','Operating expenses'],
+  ['6760','Pertes de change','Expense','fx_loss','Finance costs']]};
+const COA_OF={UG:'ifrs',NG:'ifrs',CM:'syscohada',CI:'syscohada'};
+S.coa={};S.journals=[];S.closed={UG:'2026-07',NG:'2026-07',CM:'2026-07',CI:'2026-07'};S.stmts={};S.recon={};S.glAcct='';S.glCC='';S.fsTab='pl';S.fsPeriod='ytd';S.rcAcct='bank';S.rcMonth='2026-09';
+Object.keys(COA_OF).forEach(cc=>{S.coa[cc]=COA_T[COA_OF[cc]].map(([code,name,type,role,line])=>({code,name,type,role,line,sys:true,active:true}))});
+const acctByRole=(cc,role)=>(S.coa[cc]||[]).find(a=>a.role===role);
+const acctName2=(cc,code)=>{const a=(S.coa[cc]||[]).find(x=>x.code===code);return a?a.code+' '+a.name:code};
+const CAT_ROLE={'Office Expenses':'exp_office','Hotel & Transportation':'exp_travel','Salary Advance':'advances','Welfare and Project Supplies':'exp_welfare','Commission':'exp_commission',
+ 'Salary and Wages':'exp_salaries','Local Transportation and Waybills':'exp_local','Marketing & Media':'exp_marketing','Cargo & Freight':'exp_freight','Professional & Levy':'exp_prof',
+ 'Bank Charges':'exp_bank','Pension':'exp_pension','Tax':'exp_tax','Insurance':'exp_insurance','Furniture and Fittings':'fa_furn','Land and Building':'exp_rent','Computers & IT':'fa_it',
+ 'Office Equipment and Machinery':'fa_equip','Motor Vehicles':'fa_vehicle','Intangible Assets':'fa_intang','Other (Specify)':'exp_other'};
+const METHOD_ROLE={'Cash':'cash','Bank transfer':'bank','Bank Transfer':'bank','Mobile money':'momo','Mobile Money':'momo','Card':'clearing','Online payment':'clearing','Other':'bank'};
+const fxTo=(amt,from,to)=>from===to?amt:amt/(S.rates[from]||1)*(S.rates[to]||1);
+const lockedFor=(cc,date)=>!!(S.closed[cc]&&date&&date.slice(0,7)<=S.closed[cc]);
+const lockMsg=(cc,date)=>`${MONL[+date.slice(5,7)-1]} ${date.slice(0,4)} is closed for ${country(cc).name}. Date it in an open month, or ask a Finance Manager to reopen the period.`;
+
+/* Opening balances and a sample manual journal */
+[['UG','2026-01-01',[['bank',62000000,0],['cash',1500000,0],['petty',500000,0],['fa_it',14500000,0],['capital',0,40000000],['retained',0,38500000]]],
+ ['NG','2026-01-01',[['bank',9500000,0],['cash',250000,0],['capital',0,6000000],['retained',0,3750000]]],
+ ['CM','2026-01-01',[['bank',8200000,0],['cash',300000,0],['capital',0,5000000],['retained',0,3500000]]],
+ ['CI','2026-01-01',[['bank',6400000,0],['capital',0,5000000],['retained',0,1400000]]]].forEach(([cc,date,ls])=>{
+  S.journals.push({id:uid(),no:nextNo(cc,'JNL'),cc,date,memo:'Opening balances brought forward',kind:'Opening',by:'U1',status:'Posted',lines:ls.map(([r,dr,cr])=>({a:acctByRole(cc,r).code,dr,cr,d:''}))})});
+S.journals.push({id:uid(),no:nextNo('UG','JNL'),cc:'UG',date:'2026-08-31',memo:'August salaries (payroll summary)',kind:'Manual',by:'U2',status:'Posted',lines:[
+  {a:'6050',dr:18600000,cr:0,d:'Gross salaries'},{a:'2110',dr:0,cr:2790000,d:'PAYE withheld'},{a:'1020',dr:0,cr:15810000,d:'Net pay, Stanbic'}]});
+/* An approved interbranch memo so intercompany balances exist */
+seedForm('J','LOS','U9',f=>{Object.assign(f.data,{date:'2026-08-12',paying:'UG',receiving:'NG'});f.cur='USD';f.lines=[{desc:'Lagos office rent support, Q3',amount:2000,memo:''}]},[['U9','2026-08-12','10:00'],['U13','2026-08-12','15:10'],['U15','2026-08-13','09:30']],'Approved',{approvedAt:'2026-08-13',bookedRates:{USD:1,UGX:S.rates.UGX,NGN:S.rates.NGN}});
+
+/* Build the ledger for a country from what DoPay already records (automatic posting) plus manual journals. */
+function glEntries(cc){const E=[];const cur=country(cc).cur;const R=v=>rnd(v,cur);const A=r=>acctByRole(cc,r).code;
+  const add=(src,no,date,memo,lines,link)=>{const ls=lines.filter(l=>Math.abs(l.dr||0)+Math.abs(l.cr||0)>0).map(l=>({a:l.a,dr:R(l.dr||0),cr:R(l.cr||0),d:l.d||''}));
+    const dr=ls.reduce((s,l)=>s+l.dr,0),cr=ls.reduce((s,l)=>s+l.cr,0),gap=R(dr-cr);
+    if(ls.length&&Math.abs(gap)>0.001){const side=gap>0?'cr':'dr';const t=ls.filter(l=>l[side]>0).sort((x,y)=>y[side]-x[side])[0];if(t)t[side]=R(t[side]+Math.abs(gap))} // rounding lands on the largest line
+    if(ls.length)E.push({src,no,date,memo,lines:ls,link,auto:src!=='JNL'})};
+  S.invoices.filter(i=>i.country===cc&&isLive(i)).forEach(i=>{const k=calc(i);let goods=0,serv=0;(i.items||[]).forEach(it=>{const g=(+it.qty||0)*(+it.price||0);const net=g-g*(+it.disc||0)/100;if(String(it.pid).startsWith('S-'))serv+=net;else goods+=net});
+    const c=fxTo(1,i.cur,cur);add('INV',i.no,i.date,'Invoice · '+cname(cust(i.cust)),[{a:A('ar'),dr:k.total*c},{a:A('sales_goods'),cr:goods*c},{a:A('sales_services'),cr:serv*c},{a:A('vat'),cr:k.tax*c}],['openInv',{no:i.no}])});
+  S.payments.filter(p=>branch(p.branch).cc===cc&&p.status!=='Failed').forEach(p=>{const cash=A(METHOD_ROLE[p.method]||'bank');const amt=fxTo(p.amount,p.cur,cur);
+    add('PAY',p.no,p.date,'Payment · '+cname(cust(p.cust))+(p.ref?' · '+p.ref:''),[{a:cash,dr:amt},{a:A('ar'),cr:amt}],['nav',{r:'payments'}]);
+    if(p.status==='Reversed')add('REV',p.no+'-R',p.revDate||TODAY,'Reversal of '+p.no,[{a:A('ar'),dr:amt},{a:cash,cr:amt}],['nav',{r:'payments'}])});
+  const kRefs={};S.forms.filter(f=>f.type==='K'&&f.country===cc).forEach(f=>kRefs[f.ref]=f);
+  S.expenses.filter(e=>branch(e.branch).cc===cc&&['Approved','Paid'].includes(e.status)).forEach(e=>{const amt=fxTo(e.amount,e.cur,cur);
+    let debit=CAT_ROLE[e.cat]||'exp_other';if(e.cat==='Tax'&&/\b(vat|tva)\b/i.test(e.desc))debit='vat';else if(e.cat==='Tax'&&/\bpaye\b/i.test(e.desc))debit='paye';
+    const credit=e.status==='Approved'?'accrued':kRefs[e.doc]?'advances':e.method==='Cash'&&String(e.doc||'').includes('-A-')?'petty':(METHOD_ROLE[e.method]||'bank');
+    add('EXP',e.no,e.date,(e.status==='Approved'?'Accrued · ':'')+e.desc,[{a:A(debit),dr:amt},{a:A(credit),cr:amt}],['nav',{r:'expenses'}])});
+  S.forms.filter(f=>f.type==='K'&&f.country===cc&&['Awaiting liquidation','Liquidated','Settled'].includes(f.status)).forEach(f=>{const tot=fxTo(fTotal(f),f.cur,cur);const cash=A(METHOD_ROLE[f.data.payMethod]||'cash');
+    add('ADV',f.ref,f.data.disbursed||f.data.date,'Cash advance · '+(f.data.subject||''),[{a:A('advances'),dr:tot},{a:cash,cr:tot}],['openForm',{id:f.id}]);
+    const lq=f.data.liquidation;if(lq&&+lq.returned>0)add('ADV',f.ref+'-R',lq.date,'Unused advance returned',[{a:cash,dr:fxTo(+lq.returned,f.cur,cur)},{a:A('advances'),cr:fxTo(+lq.returned,f.cur,cur)}],['openForm',{id:f.id}])});
+  S.forms.filter(f=>f.type==='J'&&['Approved','Paid','Settled'].includes(f.status)&&(f.data.paying===cc||f.data.receiving===cc)).forEach(f=>{const usd=fTotal(f)/(f.bookedRates||S.rates)[f.cur]*1;const booked=(f.bookedRates||S.rates)[cur]||S.rates[cur];const amt=usd*booked;const other=f.data.paying===cc?f.data.receiving:f.data.paying;const date=f.approvedAt||f.data.date;
+    if(f.data.paying===cc)add('ICO',f.ref,date,'Funds sent to DoPay '+country(other).name,[{a:A('ico_rec'),dr:amt,d:other},{a:A('bank'),cr:amt}],['openForm',{id:f.id}]);
+    else add('ICO',f.ref,date,'Funds received from DoPay '+country(other).name,[{a:A('bank'),dr:amt},{a:A('ico_pay'),cr:amt,d:other}],['openForm',{id:f.id}]);
+    if(f.status==='Settled'){const sd=f.data.settled||TODAY;if(f.data.paying===cc)add('ICO',f.ref+'-S',sd,'Repayment from DoPay '+country(other).name,[{a:A('bank'),dr:amt},{a:A('ico_rec'),cr:amt,d:other}],['openForm',{id:f.id}]);
+      else add('ICO',f.ref+'-S',sd,'Repayment to DoPay '+country(other).name,[{a:A('ico_pay'),dr:amt,d:other},{a:A('bank'),cr:amt}],['openForm',{id:f.id}])}});
+  S.journals.filter(j=>j.cc===cc&&j.status==='Posted').forEach(j=>E.push({src:'JNL',no:j.no,date:j.date,memo:j.memo,lines:j.lines.map(l=>({...l})),link:['glJnl',{id:j.id}],auto:false,kind:j.kind}));
+  return E.sort((a,b)=>(a.date+a.no).localeCompare(b.date+b.no))}
+/* Balances by account code up to a date (inclusive), optionally from a date */
+function glBal(cc,to,from){const B={};glEntries(cc).forEach(e=>{if(e.date>to||(from&&e.date<from))return;e.lines.forEach(l=>{B[l.a]=(B[l.a]||0)+l.dr-l.cr})});return B}
+const acctType=(cc,code)=>((S.coa[cc]||[]).find(a=>a.code===code)||{}).type||'Expense';
+const natural=(cc,code,v)=>['Asset','Expense'].includes(acctType(cc,code))?v:-v;
+function ledgerCCs(){return S.acct==='ALL'?myAccts():[S.acct]}
+function pickCC(key){const ccs=ledgerCCs();if(!ccs.includes(S[key]))S[key]=ccs[0];return S[key]}
+const ccTabs=(key,act,extra)=>{const ccs=ledgerCCs();return ccs.length>1||extra?`<div class="tabs">${ccs.map(c=>`<button class="${S[key]===c?'on':''}" data-act="${act}" data-cc="${c}">${esc(country(c).name)} · ${COA_OF[c]==='ifrs'?'IFRS':'SYSCOHADA'}</button>`).join('')}${extra||''}</div>`:''};
+A.ccPick=d=>{S.ledCC=d.cc;render(true)};
+
+/* ----- Chart of accounts ----- */
+V.coa=()=>{const cc=pickCC('ledCC');const bal=glBal(cc,TODAY);const cur=country(cc).cur;const canEdit=can('accounting.post');
+  const rows=S.coa[cc].slice().sort((a,b)=>a.code.localeCompare(b.code));
+  return ph('Chart of accounts',`${esc(acctName(cc))} keeps its books on the ${COA_OF[cc]==='ifrs'?'IFRS-based chart used in Uganda and Nigeria':'OHADA chart (SYSCOHADA) used in Cameroon and Ivory Coast'}. Every invoice, payment, expense and approved form posts here automatically.`,btn('New account','newAcct',{kind:'pri',icon:'plus',perm:'accounting.post'}))+
+  ccTabs('ledCC','ccPick')+
+  `<section class="card">${tbl([{h:'Code',cls:'mono',f:a=>`<b>${esc(a.code)}</b>`},{h:'Account',cls:'lead',f:a=>`<b>${esc(a.name)}</b><span class="sub2">${esc(a.line)}${a.sys?'':' · added by your team'}</span>`},{h:'Type',f:a=>`<span class="tag">${esc(a.type)}</span>`},
+    {h:'Balance ('+cur+')',cls:'num',f:a=>{const v=natural(cc,a.code,bal[a.code]||0);return v?fmtN(rnd(v,cur),cur):'—'}}],rows,{row:a=>`class="click" data-act="glOpen" data-code="${a.code}" data-cc="${cc}"`,sum:false})}</section>
+  <p class="note" style="margin-top:12px">${ic('info',13)} ${COA_OF[cc]==='ifrs'?'Account groups follow IFRS for SMEs.':'Codes follow the SYSCOHADA classes (1 capital, 2 fixed assets, 4 third parties, 5 cash, 6 expenses, 7 income).'} Your accountant should confirm the chart before the first period close.${canEdit?'':' Only accountants and Finance Managers can add accounts.'}</p>`};
+A.newAcct=()=>{const cc=pickCC('ledCC');openModal('New account · '+esc(country(cc).name),`<div class="fg"><div class="f"><label for="na-code">Code</label><input id="na-code" placeholder="${COA_OF[cc]==='ifrs'?'e.g. 6150':'e.g. 6280'}"></div><div class="f"><label for="na-type">Type</label><select id="na-type">${['Asset','Liability','Equity','Income','Expense'].map(t=>opt(t,t,'Expense')).join('')}</select></div>
+  <div class="f full"><label for="na-name">Name</label><input id="na-name" placeholder="e.g. Training and conferences"></div></div><p class="err" id="na-err"></p>`,btn('Cancel','closeModal')+btn('Add account','saveAcct',{kind:'pri'}))};
+A.saveAcct=()=>{const cc=pickCC('ledCC');const code=$('#na-code').value.trim(),name=$('#na-name').value.trim(),type=$('#na-type').value;const e=m=>$('#na-err').textContent=m;
+  if(!/^\d{3,6}$/.test(code))return e('Use a 3 to 6 digit code.');if(!name)return e('Enter the account name.');if(S.coa[cc].some(a=>a.code===code))return e('That code is already used.');
+  const line={Asset:'Other assets',Liability:'Payables',Equity:'Equity',Income:'Other income',Expense:'Operating expenses'}[type];
+  S.coa[cc].push({code,name,type,role:'custom_'+code,line,sys:false,active:true});log('Added ledger account',code+' '+name,'',country(cc).name);closeModal();toast('Account '+code+' added');render(true)};
+
+/* ----- Journals and general ledger ----- */
+A.glOpen=d=>{S.ledCC=d.cc;S.glAcct=d.code;go('ledger')};
+A.glJnl=d=>{const j=S.journals.find(x=>x.id===d.id);if(!j)return;const cur=country(j.cc).cur;
+  openModal(esc(j.no),`<p class="small muted" style="margin-bottom:10px">${fdate(j.date)} · ${esc(j.memo)} · ${esc(user(j.by).name)}${j.reason?' · '+esc(j.reason):''}</p>${tbl([{h:'Account',f:l=>esc(acctName2(j.cc,l.a))},{h:'Detail',f:l=>esc(l.d||'')},{h:'Debit',cls:'num',f:l=>l.dr?fmtN(l.dr,cur):''},{h:'Credit',cls:'num',f:l=>l.cr?fmtN(l.cr,cur):''}],j.lines,{tools:false,cards:false})}`,btn('Close','closeModal'),true)};
+V.ledger=()=>{const cc=pickCC('ledCC');const cur=country(cc).cur;const all=glEntries(cc);const a=S.glAcct&&S.coa[cc].some(x=>x.code===S.glAcct)?S.glAcct:'';
+  const q=(S.glQ||'').toLowerCase();const N=v=>v?fmtN(rnd(v,cur),cur):'';
+  let body;
+  if(a){let run=0;const rows=[];all.forEach(e=>e.lines.forEach(l=>{if(l.a!==a)return;run+=l.dr-l.cr;rows.push({e,l,run})}));
+    const shown=rows.filter(r=>!q||(r.e.no+' '+r.e.memo).toLowerCase().includes(q));
+    body=`<section class="card"><div class="card-h"><div><h3>${esc(acctName2(cc,a))}</h3><p class="small muted">Every posting to this account, with the running balance</p></div><button class="lnk" data-act="glClear">All journals</button></div>
+    ${tbl([{h:'Date',f:r=>fdate(r.e.date)},{h:'Reference',cls:'lead',f:r=>`<span class="mono strong">${esc(r.e.no)}</span><span class="sub2">${esc(r.e.memo)}</span>`},{h:'Source',f:r=>`<span class="tag">${GL_SRC[r.e.src]||r.e.src}</span>`},
+      {h:'Debit',cls:'num',f:r=>N(r.l.dr)},{h:'Credit',cls:'num',f:r=>N(r.l.cr)},{h:'Balance',cls:'num',nosum:true,f:r=>fmtN(rnd(natural(cc,a,r.run),cur),cur)}],shown.slice().reverse(),{row:r=>`class="click" data-act="${r.e.link[0]}" ${Object.entries(r.e.link[1]).map(([k,v])=>`data-${k}="${esc(v)}"`).join(' ')}`,empty:'Nothing posted to this account yet.'})}</section>`}
+  else{const shown=all.filter(e=>!q||(e.no+' '+e.memo).toLowerCase().includes(q)).slice().reverse();
+    body=`<section class="card"><div class="card-h"><div><h3>Journal</h3><p class="small muted">${all.length} entries · automatic entries come from invoices, payments, expenses, advances and interbranch memos</p></div></div>
+    ${tbl([{h:'Date',f:e=>fdate(e.date)},{h:'Reference',cls:'lead',f:e=>`<span class="mono strong">${esc(e.no)}</span><span class="sub2">${esc(e.memo)}</span>`},{h:'Source',f:e=>`<span class="tag">${GL_SRC[e.src]||e.src}</span>`},
+      {h:'Accounts',f:e=>`<span class="small">${e.lines.map(l=>`${esc(l.a)} ${l.dr?'Dr':'Cr'}`).join(' · ')}</span>`},{h:'Amount ('+cur+')',cls:'num',f:e=>fmtN(e.lines.reduce((s,l)=>s+l.dr,0),cur)}],shown,{row:e=>`class="click" data-act="${e.link[0]}" ${Object.entries(e.link[1]).map(([k,v])=>`data-${k}="${esc(v)}"`).join(' ')}`})}</section>`}
+  return ph('Journals & ledger','Double-entry books for each country account. Debits always equal credits; closed months cannot change.',btn('New journal entry','newJnl',{kind:'pri',icon:'plus',perm:'accounting.post'}))+ccTabs('ledCC','ccPick')+
+  `<div class="row" style="margin-bottom:12px"><select class="sel" data-ch="glAcct" aria-label="Account">${opt('','All accounts (journal)',a)}${S.coa[cc].slice().sort((x,y)=>x.code.localeCompare(y.code)).map(x=>opt(x.code,x.code+' '+x.name,a)).join('')}</select><input class="inp" style="max-width:280px" data-in="glQ" id="glQ" placeholder="Search reference or description" value="${esc(S.glQ||'')}"><span class="scope">Closed through ${S.closed[cc]?MONL[+S.closed[cc].slice(5)-1]+' '+S.closed[cc].slice(0,4):'—'}</span></div>`+body};
+const GL_SRC={INV:'Invoice',PAY:'Payment',REV:'Reversal',EXP:'Expense',ADV:'Cash advance',ICO:'Interbranch',JNL:'Journal'};
+A.glClear=()=>{S.glAcct='';render(true)};
+A.newJnl=()=>{const cc=pickCC('ledCC');S.jDraft={cc,date:TODAY,memo:'',lines:[{a:'',dr:'',cr:'',d:''},{a:'',dr:'',cr:'',d:''}]};jnlModal()};
+function jnlModal(){const j=S.jDraft;const accts=S.coa[j.cc].slice().sort((x,y)=>x.code.localeCompare(y.code));const cur=country(j.cc).cur;
+  const dr=j.lines.reduce((s,l)=>s+(+l.dr||0),0),cr=j.lines.reduce((s,l)=>s+(+l.cr||0),0);
+  openModal('New journal entry · '+esc(country(j.cc).name),`<div class="fg"><div class="f"><label for="jn-date">Date</label><input id="jn-date" type="date" value="${j.date}" data-in="jnF" data-k="date"></div><div class="f"><label for="jn-memo">Description</label><input id="jn-memo" value="${esc(j.memo)}" data-in="jnF" data-k="memo" placeholder="e.g. Accrue September audit fee"></div></div>
+   <div class="tw" style="margin-top:12px"><table class="tbl"><thead><tr><th>Account</th><th>Detail</th><th class="num">Debit (${cur})</th><th class="num">Credit (${cur})</th><th></th></tr></thead><tbody id="jn-lines">${j.lines.map((l,i)=>`<tr>
+    <td><select class="inp" data-in="jnL" data-i="${i}" data-k="a" aria-label="Account">${opt('','Choose…',l.a)}${accts.map(x=>opt(x.code,x.code+' '+x.name,l.a)).join('')}</select></td>
+    <td><input class="inp" data-in="jnL" data-i="${i}" data-k="d" value="${esc(l.d)}" aria-label="Detail"></td>
+    <td><input class="inp" style="text-align:right" type="number" min="0" step="any" data-in="jnL" data-i="${i}" data-k="dr" value="${l.dr}" aria-label="Debit"></td>
+    <td><input class="inp" style="text-align:right" type="number" min="0" step="any" data-in="jnL" data-i="${i}" data-k="cr" value="${l.cr}" aria-label="Credit"></td>
+    <td>${j.lines.length>2?`<button class="btn sm ghost" data-act="jnDel" data-i="${i}" aria-label="Remove line">✕</button>`:''}</td></tr>`).join('')}</tbody></table></div>
+   <div class="row" style="justify-content:space-between;margin-top:8px">${btn('Add line','jnAdd',{cls:'sm',icon:'plus'})}<span class="small" id="jn-tot">Debits <b>${fmtN(dr,cur)}</b> · Credits <b>${fmtN(cr,cur)}</b> ${Math.abs(dr-cr)<0.005&&dr>0?'<span class="pill p-ok">Balanced</span>':'<span class="pill p-warn">Not balanced</span>'}</span></div>
+   <p class="small muted" style="margin-top:8px">Journals over ${cur} ${fmtN(rnd(fxTo(5000,'USD',cur),cur),cur)} (about USD 5,000) need a second person’s authorization.</p><p class="err" id="jn-err"></p>`,btn('Cancel','closeModal')+btn('Post journal','saveJnl',{kind:'pri'}),true)}
+IN.jnF=t=>{S.jDraft[t.dataset.k]=t.value};
+IN.jnL=t=>{S.jDraft.lines[+t.dataset.i][t.dataset.k]=t.value;if(t.dataset.k==='dr'&&+t.value)S.jDraft.lines[+t.dataset.i].cr='';if(t.dataset.k==='cr'&&+t.value)S.jDraft.lines[+t.dataset.i].dr='';
+  const j=S.jDraft,cur=country(j.cc).cur,dr=j.lines.reduce((s,l)=>s+(+l.dr||0),0),cr=j.lines.reduce((s,l)=>s+(+l.cr||0),0);const el=$('#jn-tot');if(el)el.innerHTML=`Debits <b>${fmtN(dr,cur)}</b> · Credits <b>${fmtN(cr,cur)}</b> ${Math.abs(dr-cr)<0.005&&dr>0?'<span class="pill p-ok">Balanced</span>':'<span class="pill p-warn">Not balanced</span>'}`};
+A.jnAdd=()=>{S.jDraft.lines.push({a:'',dr:'',cr:'',d:''});jnlModal()};
+A.jnDel=d=>{S.jDraft.lines.splice(+d.i,1);jnlModal()};
+A.saveJnl=()=>{if(!can('accounting.post'))return;const j=S.jDraft;const cur=country(j.cc).cur;const e=m=>{$('#jn-err').textContent=m};
+  const ls=j.lines.filter(l=>l.a&&((+l.dr||0)>0||(+l.cr||0)>0)).map(l=>({a:l.a,dr:rnd(+l.dr||0,cur),cr:rnd(+l.cr||0,cur),d:l.d}));
+  if(!j.memo.trim())return e('Add a description.');if(ls.length<2)return e('A journal needs at least two lines with an account and an amount.');
+  if(ls.some(l=>l.dr<0||l.cr<0))return e('Amounts must be positive.');const dr=ls.reduce((s,l)=>s+l.dr,0),cr=ls.reduce((s,l)=>s+l.cr,0);
+  if(Math.abs(dr-cr)>0.005)return e(`Debits (${fmtN(dr,cur)}) must equal credits (${fmtN(cr,cur)}).`);if(lockedFor(j.cc,j.date))return e(lockMsg(j.cc,j.date));
+  const post=reason=>{const x={id:uid(),no:nextNo(j.cc,'JNL'),cc:j.cc,date:j.date,memo:j.memo.trim(),kind:'Manual',by:S.user,status:'Posted',lines:ls,reason};S.journals.push(x);log('Posted journal',x.no,'',fmt(dr,cur));closeModal();toast('Journal '+x.no.slice(-6)+' posted');render(true)};
+  if(fxTo(dr,cur,'USD')>5000){closeModal();requireAuth('Posting a large journal ('+fmt(dr,cur)+')',a=>post(a.reason))}else post()};
+
+/* ----- Financial statements ----- */
+const FS_P={month:'This month',quarter:'This quarter',ytd:'Year to date',last:'Last month'};
+function fsRange(p){const y=TODAY.slice(0,4),m=+TODAY.slice(5,7);if(p==='month')return [TODAY.slice(0,7)+'-01',TODAY];if(p==='last'){const pm=prevYM(TODAY);return [pm+'-01',pm+'-'+String(new Date(Date.UTC(+pm.slice(0,4),+pm.slice(5),0)).getUTCDate()).padStart(2,'0')]}
+  if(p==='quarter'){const q0=Math.floor((m-1)/3)*3+1;return [`${y}-${String(q0).padStart(2,'0')}-01`,TODAY]}return [y+'-01-01',TODAY]}
+function fsData(cc,from,to){const cur=country(cc).cur;const per=glBal(cc,to,from),cum=glBal(cc,to);const accts=S.coa[cc];
+  const grp=(types,src)=>{const G={};accts.filter(a=>types.includes(a.type)).forEach(a=>{const v=natural(cc,a.code,src[a.code]||0);if(Math.abs(v)<0.005)return;(G[a.line]=G[a.line]||[]).push({a,v})});return G};
+  const inc=grp(['Income'],per),exp=grp(['Expense'],per);const sum=G=>Object.values(G).flat().reduce((s,x)=>s+x.v,0);const net=sum(inc)-sum(exp);
+  const ytdFrom=to.slice(0,4)+'-01-01';const ytd=glBal(cc,to,ytdFrom);const cyE=accts.filter(a=>a.type==='Income').reduce((s,a)=>s+natural(cc,a.code,ytd[a.code]||0),0)-accts.filter(a=>a.type==='Expense').reduce((s,a)=>s+natural(cc,a.code,ytd[a.code]||0),0);
+  const prior=glBal(cc,(+to.slice(0,4)-1)+'-12-31');const priorPL=accts.filter(a=>['Income','Expense'].includes(a.type)).reduce((s,a)=>s-(prior[a.code]||0),0);
+  const assets=grp(['Asset'],cum),liab=grp(['Liability'],cum),eq=grp(['Equity'],cum);
+  if(Math.abs(priorPL)>0.005)(eq['Equity']=eq['Equity']||[]).push({a:{code:'—',name:'Profit of earlier years not yet closed'},v:priorPL});
+  (eq['Equity']=eq['Equity']||[]).push({a:{code:'—',name:'Profit or loss this year'},v:cyE});
+  return {cur,inc,exp,net,assets,liab,eq,sum,per,cum}}
+function fsSection(title,G,cur,sum,sign){const rows=Object.entries(G);return `<tr class="fs-h"><td colspan="2">${esc(title)}</td></tr>${rows.map(([line,xs])=>`<tr class="fs-l"><td>${esc(line)}</td><td class="num">${fmtN(rnd(xs.reduce((s,x)=>s+x.v,0),cur),cur)}</td></tr>${xs.map(x=>`<tr class="fs-a"><td>${esc(x.a.code)} ${esc(x.a.name)}</td><td class="num">${fmtN(rnd(x.v,cur),cur)}</td></tr>`).join('')}`).join('')}<tr class="fs-t"><td>Total ${esc(title.toLowerCase())}</td><td class="num">${fmtN(rnd(sum(G),cur),cur)}</td></tr>`}
+/* Consolidated: every account in the group mapped by statement line, converted to USD at today's rates, intercompany eliminated */
+function fsConsolidated(from,to){const L={inc:{},exp:{},assets:{},liab:{},eq:{}};let net=0,elim=0;
+  myAccts().forEach(cc=>{const d=fsData(cc,from,to);const c=v=>fxTo(v,d.cur,'USD');
+    [['inc',d.inc],['exp',d.exp],['assets',d.assets],['liab',d.liab],['eq',d.eq]].forEach(([k,G])=>Object.entries(G).forEach(([line,xs])=>xs.forEach(x=>{
+      if(x.a.role==='ico_rec'||x.a.role==='ico_pay'){elim+=c(x.v)*(x.a.role==='ico_rec'?1:-1);return}
+      const key=x.a.role&&x.a.role.startsWith('custom_')?line:x.a.name;const lab=x.a.code==='—'?x.a.name:(COA_T.ifrs.find(r=>r[3]===x.a.role)||[,x.a.name])[1];
+      (L[k][line]=L[k][line]||{})[lab]=((L[k][line]||{})[lab]||0)+c(x.v)})));net+=c(d.net)});
+  const toG=o=>Object.fromEntries(Object.entries(o).map(([line,m])=>[line,Object.entries(m).map(([n,v])=>({a:{code:'',name:n},v}))]));
+  return {cur:'USD',inc:toG(L.inc),exp:toG(L.exp),assets:toG(L.assets),liab:toG(L.liab),eq:toG(L.eq),net,elim,sum:G=>Object.values(G).flat().reduce((s,x)=>s+x.v,0)}}
+A.fsTab=d=>{S.fsTab=d.t;render(true)};A.fsCC=d=>{S.fsCC=d.cc;render(true)};
+V.fs=()=>{const ccs=ledgerCCs();const cons=ccs.length>1;if(S.fsCC!=='ALL'&&!ccs.includes(S.fsCC))S.fsCC=cons?'ALL':ccs[0];const cc=S.fsCC;
+  const [from,to]=fsRange(S.fsPeriod);const d=cc==='ALL'?fsConsolidated(from,to):fsData(cc,from,to);const cur=d.cur;const F=v=>fmtN(rnd(v,cur),cur);
+  let tb=null;if(cc!=='ALL'){const B=glBal(cc,to);tb=S.coa[cc].slice().sort((x,y)=>x.code.localeCompare(y.code)).map(a=>({a,v:B[a.code]||0})).filter(x=>Math.abs(x.v)>0.004)}
+  const tabs=[['pl','Profit & loss'],['bs','Balance sheet'],['cf','Cash flow'],['tb','Trial balance']].filter(([k])=>!(cc==='ALL'&&k==='tb'));if(cc==='ALL'&&S.fsTab==='tb')S.fsTab='pl';
+  let body='';
+  if(S.fsTab==='pl')body=`<table class="tbl fs">${fsSection('Income',d.inc,cur,d.sum)}${fsSection('Expenses',d.exp,cur,d.sum)}<tr class="fs-n"><td>Net ${d.net>=0?'profit':'loss'}</td><td class="num">${F(d.net)}</td></tr></table>`;
+  else if(S.fsTab==='bs'){const ta=d.sum(d.assets),tl=d.sum(d.liab),te=d.sum(d.eq);body=`<table class="tbl fs">${fsSection('Assets',d.assets,cur,d.sum)}${fsSection('Liabilities',d.liab,cur,d.sum)}${fsSection('Equity',d.eq,cur,d.sum)}<tr class="fs-n"><td>Liabilities and equity</td><td class="num">${F(tl+te)}</td></tr></table>
+    <p class="small" style="padding:12px 16px">${Math.abs(ta-tl-te)<1?'<span class="pill p-ok">Balances</span> Assets equal liabilities plus equity.':`<span class="pill p-bad">Out by ${F(ta-tl-te)}</span>`}${cc==='ALL'?` Intercompany balances of USD ${fmtN(rnd(Math.abs(d.elim),'USD'),'USD')} were eliminated${Math.abs(d.elim)>1?' (the difference between the two sides is an exchange or timing difference)':''}.`:''}</p>`}
+  else if(S.fsTab==='cf'){const rows=cfRows(cc,from,to);body=`<table class="tbl fs">${rows.map(r=>`<tr class="${r[2]||'fs-a'}"><td>${esc(r[0])}</td><td class="num">${r[1]===null?'':F(r[1])}</td></tr>`).join('')}</table>`}
+  else{const dr=tb.reduce((s,x)=>s+Math.max(x.v,0),0),cr=tb.reduce((s,x)=>s+Math.max(-x.v,0),0);body=tbl([{h:'Code',cls:'mono',f:x=>x.a.code},{h:'Account',cls:'lead',f:x=>esc(x.a.name)},{h:'Debit',cls:'num',f:x=>x.v>0?F(x.v):''},{h:'Credit',cls:'num',f:x=>x.v<0?F(-x.v):''}],tb,{row:x=>`class="click" data-act="glOpen" data-code="${x.a.code}" data-cc="${cc}"`})+`<p class="small" style="padding:12px 16px">${Math.abs(dr-cr)<1?'<span class="pill p-ok">Balanced</span> Total debits equal total credits.':'<span class="pill p-bad">Not balanced</span>'}</p>`}
+  const titles={pl:'Profit & loss',bs:'Balance sheet as at '+fdate(to),cf:'Cash flow',tb:'Trial balance as at '+fdate(to)};
+  return ph('Financial statements',cc==='ALL'?'Group view: every country converted to USD at today’s rates, with balances between DoPay companies removed.':'Built from the ledger. Click an account to see its postings.','')+
+  `<div class="tabs">${cons?`<button class="${cc==='ALL'?'on':''}" data-act="fsCC" data-cc="ALL">Consolidated · USD</button>`:''}${ccs.map(c=>`<button class="${cc===c?'on':''}" data-act="fsCC" data-cc="${c}">${esc(country(c).name)}</button>`).join('')}</div>
+  <div class="row" style="margin-bottom:12px;justify-content:space-between"><div class="row">${tabs.map(([k,l])=>`<button class="chip ${S.fsTab===k?'on':''}" data-act="fsTab" data-t="${k}">${l}</button>`).join('')}</div>
+   <select class="sel" data-ch="fsPeriod" aria-label="Period">${Object.entries(FS_P).map(([k,l])=>opt(k,l,S.fsPeriod)).join('')}</select></div>
+  ${cc!=='ALL'?mstrip([['Revenue',F(d.sum(d.inc)),'ok'],['Expenses',F(d.sum(d.exp))],['Net '+(d.net>=0?'profit':'loss'),F(d.net),d.net>=0?'ok':'bad'],['Cash and bank',F((d.assets['Cash and bank']||[]).reduce((s,x)=>s+x.v,0))],['Receivables',F((d.assets['Receivables']||[]).reduce((s,x)=>s+x.v,0))]]):''}
+  <section class="card"><div class="card-h"><div><h3>${titles[S.fsTab]}</h3><p class="small muted">${cc==='ALL'?'DoPay group':esc(country(cc).entity)} · ${S.fsTab==='bs'||S.fsTab==='tb'?'':fdate(from)+' – '+fdate(to)+' · '}${cur}</p></div>${btn('Print','printFs',{cls:'sm',icon:'print'})}</div>${body}</section>`};
+function cfRows(cc,from,to){const ccs=cc==='ALL'?myAccts():[cc];const T={cust:0,sup:0,staff:0,tax:0,capex:0,ico:0,other:0};let open=0,close=0;
+  ccs.forEach(c=>{const cur=country(c).cur;const cashCodes=S.coa[c].filter(a=>a.line==='Cash and bank').map(a=>a.code);const conv=v=>cc==='ALL'?fxTo(v,cur,'USD'):v;
+    const ob=glBal(c,addDays(from,-1)),cb=glBal(c,to);open+=conv(cashCodes.reduce((s,k)=>s+(ob[k]||0),0));close+=conv(cashCodes.reduce((s,k)=>s+(cb[k]||0),0));
+    glEntries(c).filter(e=>e.date>=from&&e.date<=to).forEach(e=>{const cash=e.lines.filter(l=>cashCodes.includes(l.a)).reduce((s,l)=>s+l.dr-l.cr,0);if(Math.abs(cash)<0.005)return;
+      if(e.kind==='Opening'){open+=conv(cash);return} // opening balances are the starting cash, not a movement
+      const other=e.lines.filter(l=>!cashCodes.includes(l.a));if(!other.length)return;const role=((S.coa[c].find(a=>a.code===other[0].a))||{}).role||'';const v=conv(cash);
+      if(role==='ar')T.cust+=v;else if(['vat','paye','exp_tax'].includes(role))T.tax+=v;else if(['exp_salaries','exp_pension','advances'].includes(role))T.staff+=v;else if(role.startsWith('fa_'))T.capex+=v;else if(role.startsWith('ico'))T.ico+=v;else if(['capital','retained'].includes(role))T.other+=v;else T.sup+=v})});
+  const op=T.cust+T.sup+T.staff+T.tax;
+  return [['Operating activities',null,'fs-h'],['Received from customers',T.cust],['Paid to suppliers and for expenses',T.sup],['Paid to and for staff',T.staff],['Taxes paid',T.tax],['Net cash from operating activities',op,'fs-l'],
+    ['Investing activities',null,'fs-h'],['Equipment and other fixed assets',T.capex],['Financing activities',null,'fs-h'],['Funds from and to group companies',T.ico],['Capital and other',T.other],
+    ['Net change in cash',op+T.capex+T.ico+T.other,'fs-t'],['Cash at the start',open],['Cash at the end',close,'fs-n']]}
+A.printFs=()=>{const s=document.querySelector('#view section.card:last-of-type');document.body.classList.add('pgrid');let h=s;while(h.parentElement&&h.parentElement.id!=='view')h=h.parentElement;h.classList.add('pg-host');s.classList.add('pg-on','gw');window.print();setTimeout(()=>{document.body.classList.remove('pgrid');h.classList.remove('pg-host');s.classList.remove('pg-on','gw')},800)};
+
+/* ----- Bank and mobile money reconciliation ----- */
+function seedStmt(cc,role,rows){(S.stmts[cc]=S.stmts[cc]||[]).push(...rows.map(([date,desc,ref,amount])=>({id:uid(),role,date,desc,ref,amount,match:null})))}
+seedStmt('UG','bank',[['2026-09-01','Rent, September','TRF-RENT-0901',-4500000],['2026-09-10','Mbale Agro Supplies','DEP-44120',0],['2026-09-14','URA VAT August','URA-PRN-2208814',-1028700],['2026-09-14','URA PAYE August','URA-PRN-2208815',-950000],
+ ['2026-09-15','Nile Health Pharmacy','CEN-44820917',3000000],['2026-09-18','Account and SMS charges','STB-CHG-0918',-47500],['2026-09-22','Unidentified deposit','CDM-7781',650000]].filter(r=>r[3]!==0));
+seedStmt('UG','momo',[['2026-09-01','ABC Ltd','MTN-MP260901.1432.C77412',1000000],['2026-09-25','John Uganda Ltd','MTN-MP260925.0918.A55219',250000],['2026-09-25','MoMo merchant fee','MTN-FEE-0925',-2500]]);
+const RC_ROLES=[['bank','Bank: operating account'],['momo','Mobile money wallet'],['cash','Cash on hand']];
+function bookMoves(cc,role,month){const code=acctByRole(cc,role).code;const M=[];glEntries(cc).forEach(e=>{if(e.date.slice(0,7)!==month)return;e.lines.forEach((l,i)=>{if(l.a!==code)return;M.push({key:e.src+':'+e.no+':'+i,e,amount:l.dr-l.cr})})});return M}
+function autoMatch(cc,role,month){const cur=country(cc).cur;const lines=(S.stmts[cc]||[]).filter(s=>s.role===role&&s.date.slice(0,7)===month);const book=bookMoves(cc,role,month);const used=new Set(lines.filter(s=>s.match).map(s=>s.match));let n=0;
+  lines.filter(s=>!s.match).forEach(s=>{const c=book.filter(b=>!used.has(b.key)&&Math.abs(b.amount-s.amount)<0.5&&Math.abs(diff(b.e.date,s.date))<=5);
+    const best=c.find(b=>s.ref&&(b.e.memo+' '+b.e.no).toLowerCase().includes(s.ref.toLowerCase()))||c.sort((a,b)=>Math.abs(diff(a.e.date,s.date))-Math.abs(diff(b.e.date,s.date)))[0];
+    if(best){s.match=best.key;used.add(best.key);n++}});return n}
+V.recon=()=>{const cc=pickCC('ledCC');const cur=country(cc).cur;const role=S.rcAcct;const m=S.rcMonth;const acct=acctByRole(cc,role);const F=v=>fmtN(rnd(v,cur),cur);
+  const lines=(S.stmts[cc]||[]).filter(s=>s.role===role&&s.date.slice(0,7)===m);const book=bookMoves(cc,role,m);const used=new Set(lines.filter(s=>s.match).map(s=>s.match));
+  const openB=book.filter(b=>!used.has(b.key));const unS=lines.filter(s=>!s.match);const done=lines.length>0&&!unS.length&&!openB.length;const rec=((S.recon[cc]||{})[role]||{})[m];
+  const stmtNet=lines.reduce((s,x)=>s+x.amount,0),bookNet=book.reduce((s,x)=>s+x.amount,0);const ok=can('accounting.post');
+  const months=['2026-07','2026-08','2026-09'];
+  return ph('Reconciliation','Match the bank or mobile money statement to the books line by line. Whatever is left unmatched is a missing entry, a timing difference or an error.',`${ok?`<label class="btn">${ic('upload',15)}<span>Import statement (CSV)</span><input type="file" accept=".csv,text/csv" data-ch="rcImport" hidden></label>`:''}${btn('Auto-match','rcAuto',{kind:'pri',perm:'accounting.post'})}`)+ccTabs('ledCC','ccPick')+
+  `<div class="row" style="margin-bottom:12px">${RC_ROLES.map(([r,l])=>`<button class="chip ${role===r?'on':''}" data-act="rcAcct" data-r="${r}">${esc(acctByRole(cc,r).code+' '+acctByRole(cc,r).name)}</button>`).join('')}<select class="sel" data-ch="rcMonth" aria-label="Month">${months.map(x=>opt(x,MONL[+x.slice(5)-1]+' '+x.slice(0,4),m)).join('')}</select></div>
+  ${mstrip([['Statement lines',lines.length],['Matched',lines.length-unS.length,'ok'],['Statement only',unS.length,unS.length?'warn':''],['Books only',openB.length,openB.length?'warn':''],['Status',rec?'Reconciled':done?'Ready to confirm':lines.length?'In progress':'No statement',rec?'ok':done?'ok':'']])}
+  <div class="grid g-2" style="margin-bottom:16px">
+   <section class="card"><div class="card-h"><div><h3>On the statement, not in the books</h3><p class="small muted">Movement ${F(stmtNet)} in ${MONL[+m.slice(5)-1]}</p></div></div>
+    ${unS.length?`<div class="li">${unS.map(s=>`<div class="li-row" style="cursor:default"><div class="m"><b>${esc(s.desc)}</b><span>${fdate(s.date)} · ${esc(s.ref||'no reference')}</span></div><div class="r"><span class="amt" style="color:${s.amount<0?'var(--bad)':'var(--ok)'}">${F(s.amount)}</span>${ok?`<div class="row" style="gap:4px">${openB.length?`<button class="btn sm" data-act="rcPick" data-id="${s.id}">Match</button>`:''}<button class="pay-btn" data-act="rcCreate" data-id="${s.id}">${s.amount<0?'Record expense':'Record receipt'}</button></div>`:''}</div></div>`).join('')}</div>`:`<div class="empty-s">${lines.length?'Every statement line is matched.':'No statement for this month yet. Import one as CSV (date, description, reference, amount).'}</div>`}</section>
+   <section class="card"><div class="card-h"><div><h3>In the books, not on the statement</h3><p class="small muted">Movement ${F(bookNet)} in ${MONL[+m.slice(5)-1]}</p></div></div>
+    ${openB.length?`<div class="li">${openB.map(b=>`<div class="li-row" data-act="${b.e.link[0]}" ${Object.entries(b.e.link[1]).map(([k,v])=>`data-${k}="${esc(v)}"`).join(' ')}><div class="m"><b>${esc(b.e.memo)}</b><span>${fdate(b.e.date)} · ${esc(b.e.no)}</span></div><div class="r"><span class="amt">${F(b.amount)}</span><small>${Math.abs(diff(b.e.date,TODAY))<=3?'may clear in a few days':'check this entry'}</small></div></div>`).join('')}</div>`:`<div class="empty-s">Every book entry appears on the statement.</div>`}</section>
+  </div>
+  <section class="card">${tbl([{h:'Date',f:s=>fdate(s.date)},{h:'Statement line',cls:'lead',f:s=>`<b>${esc(s.desc)}</b><span class="sub2 mono">${esc(s.ref||'')}</span>`},{h:'Amount',cls:'num',f:s=>F(s.amount)},{h:'Matched to',f:s=>{if(!s.match)return pill('Unmatched');const b=book.find(x=>x.key===s.match);return b?`<span class="small">${esc(b.e.no)} · ${esc(b.e.memo)}</span>`:'<span class="small muted">entry changed</span>'}},
+    {h:'',f:s=>s.match&&ok&&!rec?`<button class="btn sm ghost" data-act="rcUnmatch" data-id="${s.id}">Unmatch</button>`:''}],lines,{empty:'No statement lines for this account and month.'})}
+   ${done&&!rec&&ok?`<div class="pad row" style="justify-content:flex-end;border-top:1px solid var(--grid)"><span class="small muted">Everything matches.</span>${btn('Confirm reconciliation','rcConfirm',{kind:'pri'})}</div>`:''}${rec?`<div class="pad small" style="border-top:1px solid var(--grid)">${pill('Reconciled')} ${esc(user(rec.by).name)} confirmed this on ${fdate(rec.at)}.</div>`:''}</section>`};
+A.rcAcct=d=>{S.rcAcct=d.r;render(true)};
+A.rcAuto=()=>{const cc=pickCC('ledCC');const n=autoMatch(cc,S.rcAcct,S.rcMonth);log('Auto-matched statement lines',acctName2(cc,acctByRole(cc,S.rcAcct).code),'',n+' matched');toast(n?`${n} line${n>1?'s':''} matched`:'Nothing new to match');render(true)};
+A.rcUnmatch=d=>{const cc=pickCC('ledCC');const s=S.stmts[cc].find(x=>x.id===d.id);s.match=null;render(true)};
+A.rcPick=d=>{const cc=pickCC('ledCC');const s=S.stmts[cc].find(x=>x.id===d.id);const cur=country(cc).cur;const lines=(S.stmts[cc]||[]).filter(x=>x.role===S.rcAcct&&x.date.slice(0,7)===S.rcMonth);const used=new Set(lines.filter(x=>x.match).map(x=>x.match));
+  const open=bookMoves(cc,S.rcAcct,S.rcMonth).filter(b=>!used.has(b.key));
+  openModal('Match statement line',`<p class="small" style="margin-bottom:10px"><b>${esc(s.desc)}</b> · ${fdate(s.date)} · ${fmt(s.amount,cur)}</p><div class="stack" style="gap:6px">${open.map(b=>`<label class="row" style="gap:8px;padding:8px;border:1px solid var(--line);border-radius:10px"><input type="radio" name="rcm" value="${esc(b.key)}"><span style="flex:1">${esc(b.e.memo)} <span class="small muted">· ${fdate(b.e.date)} · ${esc(b.e.no)}</span></span><b class="tab">${fmt(b.amount,cur)}</b>${Math.abs(b.amount-s.amount)>0.5?'<span class="pill p-warn">amount differs</span>':''}</label>`).join('')}</div><p class="err" id="rcm-err"></p>`,
+  btn('Cancel','closeModal')+btn('Match','rcPickOk',{kind:'pri',data:{id:s.id}}))};
+A.rcPickOk=d=>{const cc=pickCC('ledCC');const v=(document.querySelector('input[name="rcm"]:checked')||{}).value;if(!v){$('#rcm-err').textContent='Choose the book entry.';return}const s=S.stmts[cc].find(x=>x.id===d.id);s.match=v;log('Matched statement line',s.desc,'',v);closeModal();render(true)};
+A.rcCreate=d=>{const cc=pickCC('ledCC');const s=S.stmts[cc].find(x=>x.id===d.id);const cur=country(cc).cur;const br=(S.branches.find(b=>b.cc===cc&&b.id===me().branch)||S.branches.find(b=>b.cc===cc&&b.active)).id;const method=S.rcAcct==='momo'?'Mobile money':S.rcAcct==='cash'?'Cash':'Bank transfer';
+  if(lockedFor(cc,s.date)){toast(lockMsg(cc,s.date));return}
+  if(s.amount<0){const guess=/charge|fee|sms/i.test(s.desc)?'Bank Charges':/ura|vat|tax|paye/i.test(s.desc)?'Tax':'Other (Specify)';
+    const e={no:nextNo(cc,'EXP'),date:s.date,cat:guess,desc:s.desc,amount:-s.amount,cur,sup:'',branch:br,method,doc:'Statement '+(s.ref||''),by:S.user,approvedBy:S.user,status:'Paid'};S.expenses.push(e);log('Recorded expense from statement',e.no,'',fmt(e.amount,cur));toast(`Expense ${e.no.slice(-6)} recorded as ${guess}; change the category in Expenses if needed`)}
+  else{const j={id:uid(),no:nextNo(cc,'JNL'),cc,date:s.date,memo:'Unidentified receipt · '+s.desc,kind:'Manual',by:S.user,status:'Posted',lines:[{a:acctByRole(cc,S.rcAcct).code,dr:s.amount,cr:0,d:s.ref},{a:acctByRole(cc,'accrued').code,dr:0,cr:s.amount,d:'Suspense until identified'}]};S.journals.push(j);log('Posted unidentified receipt to suspense',j.no,'',fmt(s.amount,cur));toast('Posted to suspense (accrued liabilities) until the payer is identified')}
+  autoMatch(cc,S.rcAcct,S.rcMonth);render(true)};
+A.rcConfirm=()=>{const cc=pickCC('ledCC');((S.recon[cc]=S.recon[cc]||{})[S.rcAcct]=S.recon[cc][S.rcAcct]||{})[S.rcMonth]={by:S.user,at:TODAY};log('Confirmed reconciliation',acctName2(cc,acctByRole(cc,S.rcAcct).code),'',S.rcMonth);toast('Reconciliation confirmed');render(true)};
+CH.rcMonth=t=>{S.rcMonth=t.value;render(true)};CH.glAcct=t=>{S.glAcct=t.value;render(true)};CH.fsPeriod=t=>{S.fsPeriod=t.value;render(true)};
+IN.glQ=t=>{S.glQ=t.value;const p=t.selectionStart;render(true);const n=$('#glQ');if(n){n.focus();n.setSelectionRange(p,p)}};
+CH.rcImport=t=>{const f=t.files[0];if(!f)return;const cc=pickCC('ledCC');const r=new FileReader();r.onload=()=>{const rows=String(r.result).split(/\r?\n/).map(l=>l.split(',').map(x=>x.replace(/^"|"$/g,'').trim())).filter(x=>x.length>=4&&/^\d{4}-\d{2}-\d{2}$/.test(x[0]));
+  if(!rows.length){toast('No rows found. Use columns: date (YYYY-MM-DD), description, reference, amount');return}
+  seedStmt(cc,S.rcAcct,rows.map(x=>[x[0],x[1],x[2],parseFloat(x[3].replace(/[^\d.\-]/g,''))||0]));S.rcMonth=rows[0][0].slice(0,7);const n=autoMatch(cc,S.rcAcct,S.rcMonth);log('Imported statement',f.name,'',rows.length+' lines');toast(`${rows.length} lines imported, ${n} matched automatically`);render(true)};r.readAsText(f)};
+
+/* ----- Month-end close, currency revaluation and intercompany ----- */
+function fxReval(cc,month){const cur=country(cc).cur;const out=[];S.forms.filter(f=>f.type==='J'&&['Approved','Paid'].includes(f.status)&&(f.data.paying===cc||f.data.receiving===cc)&&f.cur!==cur&&(f.approvedAt||f.data.date).slice(0,7)<=month).forEach(f=>{
+  const fc=fTotal(f);const booked=fc/(f.bookedRates||S.rates)[f.cur]*((f.bookedRates||S.rates)[cur]);const now=fc/S.rates[f.cur]*S.rates[cur];const done=S.journals.filter(j=>j.cc===cc&&j.reval===f.ref).reduce((s,j)=>s+(j.revalAmt||0),0);
+  const delta=rnd((now-booked)-done,cur);if(Math.abs(delta)>=1)out.push({f,delta,side:f.data.paying===cc?'rec':'pay'})});return out}
+V.close=()=>{const cc=pickCC('ledCC');const cur=country(cc).cur;const F=v=>fmtN(rnd(v,cur),cur);const last=S.closed[cc];const next=last?(()=>{const [y,m]=last.split('-').map(Number);return m===12?`${y+1}-01`:`${y}-${String(m+1).padStart(2,'0')}`})():TODAY.slice(0,7);
+  const nextEnd=next+'-'+String(new Date(Date.UTC(+next.slice(0,4),+next.slice(5),0)).getUTCDate()).padStart(2,'0');const canClose=can('accounting.close');
+  const B=glBal(cc,nextEnd);const tbOk=Math.abs(Object.values(B).reduce((s,v)=>s+v,0))<1;
+  const rc=RC_ROLES.map(([r])=>{const has=(S.stmts[cc]||[]).some(s=>s.role===r&&s.date.slice(0,7)===next);return {r,has,done:!!(((S.recon[cc]||{})[r]||{})[next])}});
+  const pendInv=S.invoices.filter(i=>i.country===cc&&i.date.slice(0,7)===next&&['Draft','Pending approval'].includes(i.status)).length;
+  const pendExp=S.expenses.filter(e=>branch(e.branch).cc===cc&&e.date.slice(0,7)===next&&['Draft','Submitted','Reviewed'].includes(e.status)).length;
+  const fx=fxReval(cc,next);const monthName=MONL[+next.slice(5)-1]+' '+next.slice(0,4);
+  const checks=[[tbOk,'Trial balance balances','Debits equal credits in the ledger up to '+fdate(nextEnd)+'.',true],
+    ...rc.filter(x=>x.has).map(x=>[x.done,'Reconcile '+acctByRole(cc,x.r).name,x.done?'Confirmed.':'Open Reconciliation and confirm '+monthName+'.',true]),
+    [!pendInv,'No invoices waiting in '+monthName,pendInv?pendInv+' draft or pending invoice'+(pendInv>1?'s':'')+' dated in the month.':'All approved or cancelled.',false],
+    [!pendExp,'No expenses waiting in '+monthName,pendExp?pendExp+' expense'+(pendExp>1?'s':'')+' not yet approved.':'All approved or paid.',false],
+    [!fx.length,'Currency revaluation posted',fx.length?`${fx.length} interbranch balance${fx.length>1?'s':''} to revalue at today’s rate (${F(fx.reduce((s,x)=>s+x.delta,0))}).`:'Nothing to revalue.',true]];
+  const blocking=checks.filter(c=>c[3]&&!c[0]).length;
+  const ico=S.forms.filter(f=>f.type==='J'&&['Approved','Paid'].includes(f.status)&&(f.data.paying===cc||f.data.receiving===cc));
+  return ph('Month-end close','Close each month once the books are right. A closed month is locked: nothing dated in it can be added or changed unless a Finance Manager reopens it with a second person’s approval.','')+ccTabs('ledCC','ccPick')+
+  `<div class="grid g-main" style="margin-bottom:16px"><section class="card"><div class="card-h"><div><h3>Close ${monthName}</h3><p class="small muted">${esc(country(cc).entity)} · closed through ${last?MONL[+last.slice(5)-1]+' '+last.slice(0,4):'—'}</p></div>${pill(blocking?'In progress':'Ready')}</div>
+   <div class="li">${checks.map(([ok,t,d,req])=>`<div class="li-row" style="cursor:default"><span class="avt ${ok?'':'y'}" style="width:30px;height:30px">${ok?'✓':req?'!':'·'}</span><div class="m"><b>${esc(t)}</b><span>${esc(d)}</span></div>${!ok&&t.startsWith('Reconcile')?`<button class="btn sm" data-act="nav" data-r="recon">Open</button>`:''}${!ok&&t.startsWith('Currency')&&can('accounting.post')?`<button class="pay-btn" data-act="fxPost">Post revaluation</button>`:''}</div>`).join('')}</div>
+   <div class="pad row" style="justify-content:space-between;border-top:1px solid var(--grid)"><span class="small muted">${blocking?blocking+' required step'+(blocking>1?'s':'')+' left. Warnings (·) don’t block the close.':'All required steps are done.'}</span>${canClose?(blocking?`<button class="btn pri" disabled title="Finish the required steps first">Close ${monthName}</button>`:btn('Close '+monthName,'closeMonth',{kind:'pri',data:{m:next}})):'<span class="small muted">Finance Managers close periods</span>'}</div></section>
+   <section class="card"><div class="card-h"><h3>Closed months</h3>${last&&canClose?btn('Reopen '+MONL[+last.slice(5)-1],'reopenMonth',{cls:'sm'}):''}</div>
+   <div class="li">${['2026-07','2026-08','2026-09'].map(x=>`<div class="li-row" style="cursor:default"><div class="m"><b>${MONL[+x.slice(5)-1]} ${x.slice(0,4)}</b><span>${lockedFor(cc,x+'-01')?'Locked':'Open'}</span></div>${pill(lockedFor(cc,x+'-01')?'Closed':'Open period')}</div>`).join('')}</div></section></div>
+  <section class="card"><div class="card-h"><div><h3>Intercompany balances</h3><p class="small muted">Funds between DoPay companies (Appendix J). Removed in the consolidated statements.</p></div></div>
+  ${tbl([{h:'Memo',cls:'lead',f:f=>`<span class="mono strong">${esc(f.ref)}</span><span class="sub2">${esc(f.lines.map(l=>l.desc).join(', '))}</span>`},{h:'Direction',f:f=>f.data.paying===cc?'Owed to us by DoPay '+esc(country(f.data.receiving).name):'We owe DoPay '+esc(country(f.data.paying).name)},
+    {h:'Amount',cls:'num',f:f=>fmt(fTotal(f),f.cur)},{h:'In '+cur,cls:'num',f:f=>F(fTotal(f)/S.rates[f.cur]*S.rates[cur])},{h:'Status',f:f=>pill(f.status)}],ico,{empty:'No open balances with other DoPay companies.',row:f=>`class="click" data-act="openForm" data-id="${f.id}"`})}</section>`};
+A.fxPost=()=>{const cc=pickCC('ledCC');const next=(()=>{const l=S.closed[cc];const [y,m]=l.split('-').map(Number);return m===12?`${y+1}-01`:`${y}-${String(m+1).padStart(2,'0')}`})();const end=next+'-'+String(new Date(Date.UTC(+next.slice(0,4),+next.slice(5),0)).getUTCDate()).padStart(2,'0');
+  fxReval(cc,next).forEach(x=>{const a=acctByRole(cc,x.side==='rec'?'ico_rec':'ico_pay').code;const gain=x.side==='rec'?x.delta>0:x.delta<0;const v=Math.abs(x.delta);const pl=acctByRole(cc,gain?'fx_gain':'fx_loss').code;
+    const lines=x.side==='rec'?(x.delta>0?[{a,dr:v,cr:0},{a:pl,dr:0,cr:v}]:[{a:pl,dr:v,cr:0},{a,dr:0,cr:v}]):(x.delta>0?[{a:pl,dr:v,cr:0},{a,dr:0,cr:v}]:[{a,dr:v,cr:0},{a:pl,dr:0,cr:v}]);
+    S.journals.push({id:uid(),no:nextNo(cc,'JNL'),cc,date:end<TODAY?end:TODAY,memo:'Currency revaluation · '+x.f.ref,kind:'Revaluation',by:S.user,status:'Posted',lines:lines.map(l=>({...l,d:x.f.ref})),reval:x.f.ref,revalAmt:x.delta})});
+  log('Posted currency revaluation',country(cc).name,'',next);toast('Revaluation posted');render(true)};
+A.closeMonth=d=>{const cc=pickCC('ledCC');if(!can('accounting.close'))return;openModal('Close '+MONL[+d.m.slice(5)-1]+' '+d.m.slice(0,4),`<p>Nothing dated in this month can be added or changed in ${esc(country(cc).name)} after you close it. Reports for the month become final.</p>`,btn('Cancel','closeModal')+btn('Close the month','closeMonthOk',{kind:'pri',data:{m:d.m}}))};
+A.closeMonthOk=d=>{const cc=pickCC('ledCC');const B=glBal(cc,d.m+'-31');if(Math.abs(Object.values(B).reduce((s,v)=>s+v,0))>=1){toast('The trial balance does not balance; fix it before closing');closeModal();return}
+  S.closed[cc]=d.m;log('Closed period',country(cc).name,'',d.m);closeModal();toast(MONL[+d.m.slice(5)-1]+' is closed and locked');render(true)};
+A.reopenMonth=()=>{const cc=pickCC('ledCC');const l=S.closed[cc];requireAuth('Reopening '+MONL[+l.slice(5)-1]+' '+l.slice(0,4)+' in '+country(cc).name,a=>{S.closed[cc]=prevYM(l+'-15');log('Reopened period',country(cc).name,l,a.reason);toast(MONL[+l.slice(5)-1]+' reopened');render(true)})};
+
 /* ============ TAXES ============ */
 const TAXRX=/\b(vat|tva)\b/i;
 const ym=d=>d.slice(0,7);

@@ -114,16 +114,40 @@ class DemoSeeder extends Seeder
         app(\App\Services\NumberingService::class)->next('SUPPLIER');
         \App\Models\NumberSequence::where('scope', 'SUPPLIER')->update(['last_value' => count($suppliers)]);
 
+        if (\App\Models\JournalEntry::count() === 0) {
+            $this->openingBalances($cc);
+        }
+
         if (\App\Models\Invoice::count() === 0) {
             $this->invoices($users, $cust);
             $this->taxes($users, $b, $cc);
+            // August payroll summary: salaries expensed, PAYE withheld (paid to URA in September), net pay from the bank.
+            app(\App\Services\Accounting\LedgerService::class)->post($cc('UG'), '2026-08-31', 'August salaries (payroll summary)',
+                [['exp_salaries', 18600000, 0], ['paye', 0, 950000], ['bank', 0, 17650000]], 'manual', 'demo:payroll:2026-08', null, $users['patrick.mugisha']);
         }
+
+        Country::whereNull('books_closed_through')->update(['books_closed_through' => '2026-07']); // July is closed in the demo
 
         $messaging = app(MessagingService::class);
         if (\App\Models\Message::count() === 0) {
             $d = $users['david.ssemanda'];
             $messaging->send(Conversation::directBetween($users['ngozi.eze'], $d), $users['ngozi.eze'], 'Morning David. Can you confirm the Lagos courier memo was paid from Kampala?');
             $messaging->send(Conversation::directBetween($users['patrick.mugisha'], $d), $users['patrick.mugisha'], 'David, this cash advance needs receipts by Friday.');
+        }
+    }
+
+    /** Balances brought forward on 1 January, so the balance sheet starts from real-looking figures. */
+    private function openingBalances(\Closure $cc): void
+    {
+        $ledger = app(\App\Services\Accounting\LedgerService::class);
+        $open = [
+            'UG' => [['bank', 62000000, 0], ['cash', 1500000, 0], ['petty', 500000, 0], ['fa_it', 14500000, 0], ['capital', 0, 40000000], ['retained', 0, 38500000]],
+            'NG' => [['bank', 9500000, 0], ['cash', 250000, 0], ['capital', 0, 6000000], ['retained', 0, 3750000]],
+            'CM' => [['bank', 8200000, 0], ['cash', 300000, 0], ['capital', 0, 5000000], ['retained', 0, 3500000]],
+            'CI' => [['bank', 6400000, 0], ['capital', 0, 5000000], ['retained', 0, 1400000]],
+        ];
+        foreach ($open as $iso => $lines) {
+            $ledger->post($cc($iso), '2026-01-01', 'Opening balances brought forward', $lines, 'opening', 'opening:'.$iso.':2026');
         }
     }
 

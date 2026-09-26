@@ -25,9 +25,9 @@ if (! function_exists('status_tone')) {
     function status_tone(string $label): string
     {
         return match ($label) {
-            'Paid', 'Completed', 'Issued', 'Active', 'Delivered', 'Reimbursed', 'Liquidated', 'Settled', 'Connected' => 'ok',
+            'Paid', 'Completed', 'Issued', 'Active', 'Delivered', 'Reimbursed', 'Liquidated', 'Settled', 'Connected', 'Balanced', 'Ready' => 'ok',
             'Pending approval', 'In approval', 'Submitted', 'Queued', 'Limited', 'Due' => 'warn',
-            'Overdue', 'Failed', 'Reversed', 'Returned', 'Cancelled void' => 'bad',
+            'Overdue', 'Failed', 'Reversed', 'Returned', 'Cancelled void', 'Out of balance' => 'bad',
             'Approved', 'Partially paid', 'Reviewed', 'Awaiting liquidation' => 'info',
             'Sent', 'Opened' => 'acc',
             default => 'mute',

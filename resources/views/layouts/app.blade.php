@@ -16,6 +16,7 @@
   $nav = [
     'Overview' => [['dashboard', 'Dashboard', 'dashboard', null]],
     'Billing' => array_values(array_filter([['customers.index', 'Customers', 'customers*', null], ['invoices.index', 'Invoices', 'invoices*', null], ['payments.index', 'Payments', 'payments*|receipts*', null], $u->can('reports.view') ? ['taxes.index', 'Taxes', 'taxes*', null] : null])),
+    'Accounting' => $u->can('reports.view') ? [['accounting.statements', 'Financial statements', 'accounting.statements', null], ['accounting.journals', 'Journals & ledger', 'accounting.journal*|accounting.ledger', null], ['accounting.accounts', 'Chart of accounts', 'accounting.accounts*', null], ['accounting.reconciliation', 'Reconciliation', 'accounting.reconcil*', null], ['accounting.close', 'Month-end close', 'accounting.close*', null]] : [],
     'Spending & forms' => [['forms.index', 'Finance forms', 'forms*|budget*', $navFormsAwaiting ?? 0], ['suppliers.index', 'Suppliers', 'suppliers*', null]],
     'Records' => array_values(array_filter([$u->can('messages.use') ? ['messages.index', 'Team messages', 'messages*', $navUnreadMessages ?? 0] : null, ['help', 'Help & guide', 'help', null]])),
     'Administration' => array_values(array_filter([['account.edit', 'Account', 'account*', null], $u->can('audit.view') ? ['audit.index', 'Audit trail', 'audit*', null] : null, ['profile.security', 'Security', 'profile*', null]])),
@@ -27,6 +28,7 @@
     <div class="brand-stripe" aria-hidden="true"><i style="background:#0A47A6"></i><i style="background:#D7191F"></i><i style="background:#1B9A3E"></i></div>
     <nav class="nav">
       @foreach($nav as $group => $items)
+        @continue(empty($items))
         <div class="nav-g"><div class="nav-h">{{ $group }}</div>
           @foreach($items as [$route, $label, $pattern, $count])
             @php $on = collect(explode('|', $pattern))->contains(fn($p) => request()->routeIs($p)); @endphp

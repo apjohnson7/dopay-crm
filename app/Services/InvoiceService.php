@@ -97,7 +97,7 @@ class InvoiceService
         if (! $approver->can('invoices.approve') || ! $approver->canActForCountry($invoice->country_id)) {
             abort(403, 'You cannot approve invoices for this country.');
         }
-        $invoice->update(['status' => 'approved', 'approved_by' => $approver->id, 'approved_at' => now()]);
+        DB::transaction(fn () => $invoice->update(['status' => 'approved', 'approved_by' => $approver->id, 'approved_at' => now()])); // posts to the ledger
     }
 
     public function returnToDraft(Invoice $invoice, string $comment): void
@@ -117,7 +117,7 @@ class InvoiceService
     public function markSent(Invoice $invoice): void
     {
         if ($invoice->status === 'approved' && $invoice->generated_at) {
-            $invoice->update(['status' => 'sent', 'sent_at' => now()]);
+            DB::transaction(fn () => $invoice->update(['status' => 'sent', 'sent_at' => now()]));
         }
     }
 
@@ -126,7 +126,7 @@ class InvoiceService
         if ((float) $invoice->amount_paid > 0) {
             throw ValidationException::withMessages(['status' => 'Reverse the payments on this invoice before cancelling it.']);
         }
-        $invoice->update(['status' => 'cancelled', 'cancelled_reason' => $reason, 'share_token' => null]); // the customer link stops working immediately
+        DB::transaction(fn () => $invoice->update(['status' => 'cancelled', 'cancelled_reason' => $reason, 'share_token' => null])); // reverses the ledger entry // the customer link stops working immediately
     }
 
     private function expect(Invoice $invoice, string $status): void

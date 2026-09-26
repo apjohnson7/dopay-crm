@@ -45,5 +45,16 @@ Artisan::command('dopay:admin {email} {name}', function (string $email, string $
     $this->info("{$email} is a Super Administrator. Sign in and set up two-factor authentication under Security.");
 })->purpose('Create or reset the first Super Administrator');
 
+/*
+| Posts everything already recorded to the ledger (first install on existing data). Safe to run again.
+*/
+Artisan::command('dopay:ledger-rebuild {country? : ISO code, e.g. UG}', function (?string $country = null) {
+    $rules = app(\App\Services\Accounting\PostingRules::class);
+    \App\Models\Country::when($country, fn ($q) => $q->where('iso2', strtoupper($country)))->get()->each(function ($c) use ($rules) {
+        app(\App\Services\Accounting\ChartOfAccounts::class)->install($c);
+        $this->info("{$c->name}: ".$rules->rebuild($c).' entries posted.');
+    });
+})->purpose('Install the charts of accounts and post existing records to the ledger');
+
 Schedule::command('dopay:reminders')->dailyAt('06:00');
 Schedule::command('queue:work --stop-when-empty')->everyMinute()->withoutOverlapping();

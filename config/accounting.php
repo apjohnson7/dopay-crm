@@ -1,0 +1,121 @@
+<?php
+
+/*
+| Charts of accounts used by the ledger. Every account has a role so the posting rules work for both charts.
+| 'ifrs' is an IFRS-for-SMEs style chart (Uganda, Nigeria); 'syscohada' follows the OHADA chart (Cameroon, Ivory Coast).
+| The external accountant should confirm both before the first period close.
+*/
+
+return [
+    'chart_by_country' => ['UG' => 'ifrs', 'NG' => 'ifrs', 'CM' => 'syscohada', 'CI' => 'syscohada'],
+
+    // Journals above this USD value need a second person's authorization.
+    'journal_authorization_usd' => 5000,
+
+    'templates' => [
+        'ifrs' => [
+            ['1010', 'Cash on hand', 'asset', 'cash', 'Cash and bank'],
+            ['1015', 'Petty cash', 'asset', 'petty', 'Cash and bank'],
+            ['1020', 'Bank: operating account', 'asset', 'bank', 'Cash and bank'],
+            ['1030', 'Mobile money wallet', 'asset', 'momo', 'Cash and bank'],
+            ['1040', 'Card and online clearing', 'asset', 'clearing', 'Cash and bank'],
+            ['1100', 'Accounts receivable', 'asset', 'ar', 'Receivables'],
+            ['1300', 'Staff advances', 'asset', 'advances', 'Receivables'],
+            ['1400', 'Due from group companies', 'asset', 'ico_rec', 'Intercompany'],
+            ['1500', 'Furniture and fittings', 'asset', 'fa_furn', 'Fixed assets'],
+            ['1510', 'Computers and IT', 'asset', 'fa_it', 'Fixed assets'],
+            ['1520', 'Office equipment', 'asset', 'fa_equip', 'Fixed assets'],
+            ['1530', 'Motor vehicles', 'asset', 'fa_vehicle', 'Fixed assets'],
+            ['1540', 'Intangible assets', 'asset', 'fa_intang', 'Fixed assets'],
+            ['2000', 'Accounts payable', 'liability', 'ap', 'Payables'],
+            ['2100', 'VAT payable', 'liability', 'vat', 'Taxes payable'],
+            ['2110', 'PAYE payable', 'liability', 'paye', 'Taxes payable'],
+            ['2200', 'Accrued expenses', 'liability', 'accrued', 'Payables'],
+            ['2400', 'Due to group companies', 'liability', 'ico_pay', 'Intercompany'],
+            ['3000', 'Share capital', 'equity', 'capital', 'Equity'],
+            ['3100', 'Retained earnings', 'equity', 'retained', 'Equity'],
+            ['4000', 'Sales: goods', 'income', 'sales_goods', 'Revenue'],
+            ['4010', 'Sales: services', 'income', 'sales_services', 'Revenue'],
+            ['4900', 'Other income', 'income', 'other_income', 'Other income'],
+            ['2900', 'Suspense: items to identify', 'liability', 'suspense', 'Other liabilities'],
+            ['4800', 'Foreign exchange gain', 'income', 'fx_gain', 'Other income'],
+            ['6000', 'Office expenses', 'expense', 'exp_office', 'Operating expenses'],
+            ['6010', 'Hotel and transport', 'expense', 'exp_travel', 'Operating expenses'],
+            ['6030', 'Welfare and project supplies', 'expense', 'exp_welfare', 'Operating expenses'],
+            ['6040', 'Commission', 'expense', 'exp_commission', 'Operating expenses'],
+            ['6050', 'Salaries and wages', 'expense', 'exp_salaries', 'Staff costs'],
+            ['6060', 'Local transport and waybills', 'expense', 'exp_local', 'Operating expenses'],
+            ['6070', 'Marketing and media', 'expense', 'exp_marketing', 'Operating expenses'],
+            ['6080', 'Cargo and freight', 'expense', 'exp_freight', 'Operating expenses'],
+            ['6090', 'Professional fees and levies', 'expense', 'exp_prof', 'Operating expenses'],
+            ['6100', 'Rent and premises', 'expense', 'exp_rent', 'Operating expenses'],
+            ['6110', 'Bank charges', 'expense', 'exp_bank', 'Finance costs'],
+            ['6120', 'Pension contributions', 'expense', 'exp_pension', 'Staff costs'],
+            ['6130', 'Taxes and licences', 'expense', 'exp_tax', 'Operating expenses'],
+            ['6140', 'Insurance', 'expense', 'exp_insurance', 'Operating expenses'],
+            ['6190', 'Other expenses', 'expense', 'exp_other', 'Operating expenses'],
+            ['6800', 'Foreign exchange loss', 'expense', 'fx_loss', 'Finance costs'],
+        ],
+        'syscohada' => [
+            ['5710', 'Caisse', 'asset', 'cash', 'Cash and bank'],
+            ['5711', 'Caisse menues dépenses', 'asset', 'petty', 'Cash and bank'],
+            ['5210', 'Banque : compte courant', 'asset', 'bank', 'Cash and bank'],
+            ['5530', 'Monnaie électronique (mobile money)', 'asset', 'momo', 'Cash and bank'],
+            ['5850', 'Virements de fonds en cours', 'asset', 'clearing', 'Cash and bank'],
+            ['4111', 'Clients', 'asset', 'ar', 'Receivables'],
+            ['4210', 'Personnel : avances et acomptes', 'asset', 'advances', 'Receivables'],
+            ['4630', 'Comptes courants groupe : débiteurs', 'asset', 'ico_rec', 'Intercompany'],
+            ['2440', 'Mobilier et matériel de bureau', 'asset', 'fa_furn', 'Fixed assets'],
+            ['2441', 'Matériel informatique', 'asset', 'fa_it', 'Fixed assets'],
+            ['2442', 'Matériel et outillage', 'asset', 'fa_equip', 'Fixed assets'],
+            ['2450', 'Matériel de transport', 'asset', 'fa_vehicle', 'Fixed assets'],
+            ['2130', 'Logiciels et licences', 'asset', 'fa_intang', 'Fixed assets'],
+            ['4011', 'Fournisseurs', 'liability', 'ap', 'Payables'],
+            ['4431', 'TVA facturée', 'liability', 'vat', 'Taxes payable'],
+            ['4470', 'Impôts retenus à la source', 'liability', 'paye', 'Taxes payable'],
+            ['4081', 'Fournisseurs : factures non parvenues', 'liability', 'accrued', 'Payables'],
+            ['4631', 'Comptes courants groupe : créditeurs', 'liability', 'ico_pay', 'Intercompany'],
+            ['1010', 'Capital social', 'equity', 'capital', 'Equity'],
+            ['1210', 'Report à nouveau', 'equity', 'retained', 'Equity'],
+            ['7010', 'Ventes de marchandises', 'income', 'sales_goods', 'Revenue'],
+            ['7060', 'Services vendus', 'income', 'sales_services', 'Revenue'],
+            ['7580', 'Produits divers', 'income', 'other_income', 'Other income'],
+            ['4710', 'Comptes d’attente à régulariser', 'liability', 'suspense', 'Other liabilities'],
+            ['7760', 'Gains de change', 'income', 'fx_gain', 'Other income'],
+            ['6055', 'Fournitures de bureau', 'expense', 'exp_office', 'Operating expenses'],
+            ['6181', 'Voyages et déplacements', 'expense', 'exp_travel', 'Operating expenses'],
+            ['6058', 'Achats de fournitures de projets', 'expense', 'exp_welfare', 'Operating expenses'],
+            ['6322', 'Commissions et courtages', 'expense', 'exp_commission', 'Operating expenses'],
+            ['6610', 'Rémunérations du personnel', 'expense', 'exp_salaries', 'Staff costs'],
+            ['6183', 'Transports du personnel et livraisons', 'expense', 'exp_local', 'Operating expenses'],
+            ['6270', 'Publicité et relations publiques', 'expense', 'exp_marketing', 'Operating expenses'],
+            ['6122', 'Transports sur achats et fret', 'expense', 'exp_freight', 'Operating expenses'],
+            ['6324', 'Honoraires', 'expense', 'exp_prof', 'Operating expenses'],
+            ['6222', 'Locations de bâtiments', 'expense', 'exp_rent', 'Operating expenses'],
+            ['6310', 'Frais bancaires', 'expense', 'exp_bank', 'Finance costs'],
+            ['6641', 'Charges sociales (retraite)', 'expense', 'exp_pension', 'Staff costs'],
+            ['6410', 'Impôts et taxes', 'expense', 'exp_tax', 'Operating expenses'],
+            ['6250', 'Primes d’assurance', 'expense', 'exp_insurance', 'Operating expenses'],
+            ['6588', 'Autres charges diverses', 'expense', 'exp_other', 'Operating expenses'],
+            ['6760', 'Pertes de change', 'expense', 'fx_loss', 'Finance costs'],
+        ],
+    ],
+
+    // Expense category (Appendix F list) => account role
+    'category_roles' => [
+        'Office Expenses' => 'exp_office', 'Hotel & Transportation' => 'exp_travel', 'Salary Advance' => 'advances', 'Welfare and Project Supplies' => 'exp_welfare',
+        'Commission' => 'exp_commission', 'Salary and Wages' => 'exp_salaries', 'Local Transportation and Waybills' => 'exp_local', 'Marketing & Media' => 'exp_marketing',
+        'Cargo & Freight' => 'exp_freight', 'Professional & Levy' => 'exp_prof', 'Bank Charges' => 'exp_bank', 'Pension' => 'exp_pension', 'Tax' => 'exp_tax',
+        'Insurance' => 'exp_insurance', 'Furniture and Fittings' => 'fa_furn', 'Land and Building' => 'exp_rent', 'Computers & IT' => 'fa_it',
+        'Office Equipment and Machinery' => 'fa_equip', 'Motor Vehicles' => 'fa_vehicle', 'Intangible Assets' => 'fa_intang', 'Other (Specify)' => 'exp_other',
+    ],
+
+    // Payment method => cash account role
+    'method_roles' => [
+        'Cash' => 'cash', 'Bank transfer' => 'bank', 'Bank Transfer' => 'bank', 'Mobile money' => 'momo', 'Mobile Money' => 'momo',
+        'Card' => 'clearing', 'Online payment' => 'clearing', 'Other' => 'bank',
+    ],
+
+    // Accounts that can be reconciled against a statement
+    'reconcilable_roles' => ['bank' => 'Bank', 'momo' => 'Mobile money', 'cash' => 'Cash'],
+];

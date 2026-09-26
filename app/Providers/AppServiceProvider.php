@@ -27,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('partials.pagination');
         Paginator::defaultSimpleView('partials.pagination');
 
+        // Every invoice, payment, expense, cash advance and interbranch memo posts to the ledger.
+        foreach ([\App\Models\Invoice::class, \App\Models\Payment::class, \App\Models\Expense::class, \App\Models\FinanceForm::class] as $model) {
+            $model::observe(\App\Observers\LedgerObserver::class);
+        }
+
         // Super Administrators pass every permission check.
         Gate::before(fn ($user) => $user->hasRole('Super Administrator') ? true : null);
 

@@ -56,6 +56,10 @@ class ReferenceSeeder extends Seeder
             }
         }
 
+        foreach (Country::all() as $c) {
+            app(\App\Services\Accounting\ChartOfAccounts::class)->install($c); // IFRS-style or SYSCOHADA chart per country
+        }
+
         foreach (config('dopay.expense_categories') as $i => [$name, $group, $note]) {
             ExpenseCategory::updateOrCreate(['name' => $name], ['group' => $group, 'position' => $i + 1, 'note' => $note]);
         }

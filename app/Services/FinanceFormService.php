@@ -149,13 +149,13 @@ class FinanceFormService
     public function reimburse(FinanceForm $form): void
     {
         $this->expect($form, 'B', 'approved');
-        $form->update(['status' => 'reimbursed', 'data' => array_merge($form->data, ['reimbursed_on' => today()->toDateString()])]);
+        DB::transaction(fn () => $form->update(['status' => 'reimbursed', 'data' => array_merge($form->data, ['reimbursed_on' => today()->toDateString()])]));
     }
 
     public function disburse(FinanceForm $form): void
     {
         $this->expect($form, 'K', 'approved');
-        $form->update(['status' => 'awaiting_liquidation', 'data' => array_merge($form->data, ['disbursed_on' => today()->toDateString()])]);
+        DB::transaction(fn () => $form->update(['status' => 'awaiting_liquidation', 'data' => array_merge($form->data, ['disbursed_on' => today()->toDateString()])])); // posts the advance
     }
 
     public function liquidate(FinanceForm $form, float $spent, User $user): void
@@ -176,7 +176,7 @@ class FinanceFormService
     public function settle(FinanceForm $form): void
     {
         $this->expect($form, 'J', 'approved');
-        $form->update(['status' => 'settled']);
+        DB::transaction(fn () => $form->update(['status' => 'settled'])); // posts the intercompany repayment
     }
 
     public function addWorkingDays(string $from, int $days): Carbon

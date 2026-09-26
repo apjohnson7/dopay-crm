@@ -129,7 +129,7 @@ class FinanceFormController extends Controller
         $this->authorizeEdit($form, allowSigned: true);
         abort_unless(in_array($form->status, ['in_approval', 'approved'], true), 403, 'Only forms in approval or approved (not yet paid) can be revised. Paid, disbursed or closed forms need a reversal.');
         SecondApproval::verify($request, 'Revise '.$form->reference, $form->country_id);
-        $form->update(['status' => 'draft', 'version' => $form->version + 1, 'approved_at' => null]);
+        \Illuminate\Support\Facades\DB::transaction(fn () => $form->update(['status' => 'draft', 'version' => $form->version + 1, 'approved_at' => null]));
 
         return redirect()->route('forms.edit', $form)->with('status', 'Authorized. Saving and submitting restarts the approval chain.');
     }
@@ -139,7 +139,7 @@ class FinanceFormController extends Controller
         $this->authorizeEdit($form, allowSigned: true);
         abort_unless(in_array($form->status, ['draft', 'returned', 'in_approval'], true), 403);
         SecondApproval::verify($request, 'Void '.$form->reference, $form->country_id);
-        $form->update(['status' => 'void']);
+        \Illuminate\Support\Facades\DB::transaction(fn () => $form->update(['status' => 'void']));
 
         return back()->with('status', 'Form voided. It stays in the records.');
     }

@@ -119,9 +119,9 @@ class InvoiceController extends Controller
         $this->ensureCountry($invoice->country_id);
         abort_unless($invoice->generated_at, 422, 'Generate the official invoice first.');
         $channel = $request->validate(['channel' => 'required|in:WhatsApp,Email,Telegram,IMO,SMS,Link'])['channel'];
+        $this->service->markSent($invoice); // first, so a posting refused in a closed month logs nothing
         Communication::create(['customer_id' => $invoice->customer_id, 'channel' => $channel, 'kind' => 'Invoice', 'reference' => $invoice->number,
             'recipient' => $channel === 'Email' ? $invoice->customer->email : $invoice->customer->phone, 'status' => 'sent', 'sent_by' => $request->user()->id, 'sent_at' => now()]);
-        $this->service->markSent($invoice);
         $invoice->forceFill(['share_refreshed_at' => now()])->save(); // each send restarts the link's 30 days
 
         return $request->expectsJson() ? response()->json(['ok' => true]) : back()->with('status', "Logged: sent via {$channel}.");

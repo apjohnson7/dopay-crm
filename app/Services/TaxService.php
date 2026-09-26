@@ -136,7 +136,7 @@ class TaxService
         abort_unless($expense->expense_category_id === self::taxCategoryId(), 422, 'Not a tax payment.');
         abort_unless($expense->status === 'submitted', 422, 'Only submitted tax payments can be approved.');
         $before = $expense->only('status');
-        $expense->update(['status' => 'paid', 'approved_by' => $by->id]);
+        DB::transaction(fn () => $expense->update(['status' => 'paid', 'approved_by' => $by->id])); // posts to the ledger
         AuditLogger::log('Approved tax payment', $expense, $before, ['status' => 'paid'], $expense->number);
     }
 }

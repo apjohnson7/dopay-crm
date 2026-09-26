@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountingController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\BudgetMonitorController;
 use App\Http\Controllers\CustomerController;
@@ -34,6 +35,20 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('customers', CustomerController::class)->except('destroy');
         Route::resource('suppliers', SupplierController::class)->except(['show', 'destroy']);
+        Route::prefix('accounting')->name('accounting.')->controller(AccountingController::class)->group(function () {
+            Route::get('accounts', 'accounts')->name('accounts');
+            Route::post('accounts', 'storeAccount')->name('accounts.store');
+            Route::get('journals', 'journals')->name('journals');
+            Route::post('journals', 'storeJournal')->name('journals.store');
+            Route::get('journals/{entry}', 'showJournal')->name('journal');
+            Route::get('ledger', 'ledger')->name('ledger');
+            Route::get('statements', 'statements')->name('statements');
+            Route::get('reconciliation', 'reconciliation')->name('reconciliation');
+            Route::post('reconciliation/{action}', 'reconcile')->whereIn('action', ['import', 'auto', 'match', 'unmatch', 'book', 'confirm'])->name('reconcile');
+            Route::get('close', 'close')->name('close');
+            Route::post('close', 'closePeriod')->name('close.store');
+            Route::post('close/reopen', 'reopenPeriod')->name('close.reopen');
+        });
         Route::get('account', [AccountController::class, 'edit'])->name('account.edit');
         Route::put('account/{country}', [AccountController::class, 'update'])->name('account.update');
 
