@@ -1,0 +1,1 @@
+<span class="pill p-{{ status_tone($label) }}">{{ $label }}</span>

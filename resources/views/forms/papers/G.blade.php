@@ -1,0 +1,16 @@
+<div class="paper fp">@include('forms.papers._top')
+@php $ledger = $ledger ?? app(\App\Services\FinanceFormService::class)->ledger($form); $m = $form->datum('month'); @endphp
+<h1 class="ft">{{ $form->country->legal_entity }} — Branch Financial Report</h1>
+<p class="meta">Month: {{ $m ? \Illuminate\Support\Carbon::parse($m.'-01')->format('F Y') : '' }} | Account: {{ $form->datum('account_name') }} {{ $form->datum('account_no') }} | Bank: {{ $form->datum('bank') }} | Prepared by: {{ $form->preparer->name }}</p>
+<p class="note" style="margin-top:0">Submit to HQ Finance by the 15th of the following month. This report must reconcile to the branch bank statement.</p>
+<div class="p-tw"><table class="ft" style="font-size:9px"><thead><tr><th>Date</th><th>Memo Ref</th><th>Name of Payee / Payer</th><th>Purpose of Transaction</th><th class="r">Inflow ({{ $cur }})</th><th class="r">Outflow ({{ $cur }})</th><th class="r">Balance</th><th>Expense Category</th><th>Notes</th></tr></thead><tbody>
+  <tr><td>{{ $m ? fdate($m.'-01') : '' }}</td><td></td><td class="fl">OPENING BALANCE / BAL B/F</td><td></td><td class="r">{{ money($form->datum('opening_balance', 0), $cur, false) }}</td><td></td><td class="r">{{ money($form->datum('opening_balance', 0), $cur, false) }}</td><td></td><td></td></tr>
+  @foreach($ledger['rows'] as $r)@php $l = $r['line']; @endphp<tr><td>{{ fdate($l->line_date) }}</td><td class="mono">{{ $l->memo_ref }}</td><td>{{ $l->party }}</td><td>{{ $l->description }}</td><td class="r">{{ (float) $l->inflow ? money($l->inflow, $cur, false) : '' }}</td><td class="r">{{ (float) $l->outflow ? money($l->outflow, $cur, false) : '' }}</td><td class="r">{{ money($r['balance'], $cur, false) }}</td><td>{{ $l->is_inflow ? 'Inflow' : $l->category?->name }}</td><td>{{ $l->notes }}</td></tr>@endforeach
+  <tr class="tt"><td colspan="4">TOTALS FOR PERIOD</td><td class="r">{{ money($ledger['inflow'] + (float) $form->datum('opening_balance', 0), $cur, false) }}</td><td class="r">{{ money($ledger['outflow'], $cur, false) }}</td><td class="r">{{ money($ledger['closing'], $cur, false) }}</td><td>CLOSING BALANCE →</td><td class="r">{{ money($ledger['closing'], $cur, false) }}</td></tr>
+</tbody></table></div>
+<table class="ft" style="width:60%"><thead><tr><th colspan="2">BANK STATEMENT RECONCILIATION</th></tr></thead><tbody>
+  <tr><td>Closing balance per this Financial Report (above):</td><td class="r">{{ money($ledger['closing'], $cur, false) }}</td></tr>
+  <tr><td>Closing balance per Bank Statement:</td><td class="r">{{ money($form->datum('bank_closing', 0), $cur, false) }}</td></tr>
+  <tr><td class="fl">Difference (must equal zero):</td><td class="r fl" style="color:{{ $ledger['difference'] ? '#B00020' : '#17873A' }}">{{ money($ledger['difference'], $cur, false) }}</td></tr></tbody></table>
+<table style="width:100%;margin-top:14px;font-size:9.5px"><tr>@foreach(app(\App\Services\ApprovalService::class)->steps($form) as $i => $st)<td style="vertical-align:top;width:25%"><b>{{ $st['label'] }}:</b><br>@include('forms.papers._sig', ['s' => $sigs[$i] ?? null])<br>Name: {{ isset($sigs[$i]) ? $sigs[$i]->user->name : '' }}<br>Date: {{ isset($sigs[$i]) ? $sigs[$i]->signed_at->format('d/M/Y') : '' }}</td>@endforeach</tr></table>
+@include('forms.papers._foot')</div>

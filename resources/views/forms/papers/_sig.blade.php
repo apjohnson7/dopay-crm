@@ -1,0 +1,1 @@
+@if($s)<span class="sig">{{ $s->user->name }}</span><span class="sigm">e-signed {{ $s->signed_at->format('j M Y') }}, {{ $s->local_time }} · {{ $s->code }}</span>@endif

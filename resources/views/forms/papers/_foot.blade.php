@@ -1,0 +1,1 @@
+<div class="foot">{{ $form->definition()['footer'] }} – {{ $form->definition()['effective'] }}@if($form->version > 1) · Revision {{ $form->version }}@endif</div>
