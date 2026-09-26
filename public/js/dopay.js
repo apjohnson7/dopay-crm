@@ -110,3 +110,101 @@
     $$('#peopleList .pp').forEach(l => l.hidden = q && !l.textContent.toLowerCase().includes(q));
   });
 })();
+
+/* Spreadsheet-style tables: every .tw > table.tbl gets row numbers, a filter box,
+   click-to-sort headings, a totals row for money columns, CSV export and print. */
+(function () {
+  const NUMRX = /^(?:([A-Z]{3})\s)?(-?[\d,]+(?:\.\d+)?)$/;
+  const cellTxt = c => c ? (c.firstChild ? c.firstChild.textContent : c.textContent).trim() : '';
+  const esc = s => String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+
+  function totals(gw) {
+    const t = gw.querySelector('table'); if (!t || !t.tHead || gw.hasAttribute('data-nosum')) return;
+    t.querySelectorAll('tfoot.gt-auto').forEach(f => f.remove());
+    const ths = [...t.tHead.rows[0].cells];
+    const vis = [...t.tBodies[0].rows].filter(r => !r.hidden && !r.classList.contains('tt'));
+    const rows = vis.filter(r => { const p = r.querySelector('.pill'); return !(p && /^(Failed|Reversed|Cancelled|Void|Rejected|Refunded)$/i.test(p.textContent.trim())); });
+    if (rows.length < 2 || t.querySelector('tr.tt')) return;
+    const out = ths.map((th, j) => {
+      if (!th.classList.contains('num')) return null;
+      let cur = null, sum = 0, dec = 0, any = false;
+      for (const r of rows) {
+        const tx = cellTxt(r.cells[j]); if (!tx || tx === '—' || tx === '-') continue;
+        const m = tx.match(NUMRX); if (!m) return null;
+        const c = m[1] || ''; if (cur !== null && c !== cur) return null; cur = c; any = true;
+        dec = Math.max(dec, (m[2].split('.')[1] || '').length); sum += parseFloat(m[2].replace(/,/g, ''));
+      }
+      return any ? (cur ? cur + ' ' : '') + sum.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }) : null;
+    });
+    if (!out.some(Boolean)) return;
+    const first = ths.findIndex(th => !th.classList.contains('rn'));
+    const tf = document.createElement('tfoot'); tf.className = 'gt-auto';
+    tf.innerHTML = '<tr>' + ths.map((th, j) => `<td class="${th.classList.contains('num') ? 'num' : ''}${th.classList.contains('rn') ? ' rn' : ''}">${j === first && !out[j] ? 'Total · ' + rows.length + ' rows' : esc(out[j] || '')}</td>`).join('') + '</tr>';
+    t.appendChild(tf);
+  }
+  function sort(th) {
+    const t = th.closest('table'), j = th.cellIndex, dir = th.getAttribute('aria-sort') === 'ascending' ? -1 : 1;
+    [...t.tHead.rows[0].cells].forEach(h => h.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort', dir === 1 ? 'ascending' : 'descending');
+    const isNum = th.classList.contains('num');
+    const key = r => {
+      const c = r.cells[j];
+      if (isNum) { const n = parseFloat(cellTxt(c).replace(/[^\d.\-]/g, '')); return isNaN(n) ? -Infinity : n; }
+      const tx = c ? c.textContent.trim() : ''; const dm = tx.match(/^\d{1,2} [A-Z][a-z]{2} \d{4}/); const d = dm ? Date.parse(dm[0]) : NaN;
+      return isNaN(d) ? tx.toLowerCase() : d;
+    };
+    const tb = t.tBodies[0];
+    [...tb.rows].filter(r => !r.classList.contains('tt')).sort((a, b) => { const x = key(a), y = key(b); return (x > y ? 1 : x < y ? -1 : 0) * dir; })
+      .forEach((r, i) => { tb.appendChild(r); const n = r.querySelector('td.rn'); if (n) n.textContent = i + 1; });
+    tb.querySelectorAll('tr.tt').forEach(r => tb.appendChild(r));
+  }
+  function csv(gw) {
+    const t = gw.querySelector('table'), ths = [...t.tHead.rows[0].cells];
+    const keep = ths.map(th => !th.classList.contains('rn') && th.textContent.trim());
+    const q = v => '"' + String(v).replace(/"/g, '""') + '"';
+    const txt = c => [...c.childNodes].map(n => n.textContent.trim()).filter(Boolean).join(' · ');
+    const lines = [ths.filter((_, j) => keep[j]).map(th => q(th.textContent.trim())).join(',')];
+    [...t.tBodies[0].rows].filter(r => !r.hidden).forEach(r => lines.push([...r.cells].filter((_, j) => keep[j]).map(c => q(txt(c))).join(',')));
+    t.querySelectorAll('tfoot tr').forEach(r => lines.push([...r.cells].filter((_, j) => keep[j]).map(c => q(c.textContent.trim())).join(',')));
+    const title = (document.querySelector('.ph h1') || {}).textContent || 'table';
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+    a.download = ('dopay-' + title + '-' + new Date().toISOString().slice(0, 10) + '.csv').toLowerCase().replace(/[^a-z0-9.-]+/g, '-');
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  function print(gw) {
+    document.body.classList.add('pgrid'); gw.classList.add('pg-on');
+    let h = gw; while (h.parentElement && !h.parentElement.matches('main, .content')) h = h.parentElement; h.classList.add('pg-host');
+    const done = () => { document.body.classList.remove('pgrid'); gw.classList.remove('pg-on'); h.classList.remove('pg-host'); };
+    window.addEventListener('afterprint', done, { once: true }); window.print(); setTimeout(done, 1500);
+  }
+  function enhance(table) {
+    if (table.closest('.gw') || table.closest('form') || !table.tHead || !table.tBodies[0]) return;
+    const tw = table.closest('.tw') || table; const gw = document.createElement('div'); gw.className = 'gw';
+    tw.parentNode.insertBefore(gw, tw); gw.appendChild(tw);
+    const body = [...table.tBodies[0].rows].filter(r => !r.classList.contains('tt'));
+    gw.dataset.n = body.length;
+    const hr = table.tHead.rows[0]; const rn = document.createElement('th'); rn.className = 'rn'; hr.insertBefore(rn, hr.firstChild);
+    [...table.tBodies[0].rows].forEach((r, i) => { const td = document.createElement('td'); td.className = 'rn'; td.textContent = r.classList.contains('tt') ? '' : i + 1; r.insertBefore(td, r.firstChild); });
+    [...hr.cells].forEach(th => { if (!th.classList.contains('rn') && th.textContent.trim()) { th.classList.add('so'); th.dataset.gs = ''; th.tabIndex = 0; th.title = 'Sort'; } });
+    if (body.length >= 3) {
+      const bar = document.createElement('div'); bar.className = 'gt';
+      bar.innerHTML = '<label class="gt-f"><input type="search" data-gq placeholder="Filter these rows" aria-label="Filter these rows"></label><span class="gt-n" data-gn>' + body.length + ' rows</span><span class="top-sp" style="flex:1"></span><button type="button" class="btn sm ghost" data-gx="csv">Export</button><button type="button" class="btn sm ghost" data-gx="print">Print</button>';
+      gw.insertBefore(bar, tw);
+    }
+    totals(gw);
+  }
+  document.querySelectorAll('.tw > table.tbl').forEach(enhance);
+  document.addEventListener('input', e => {
+    const q = e.target.closest('[data-gq]'); if (!q) return;
+    const gw = q.closest('.gw'), v = q.value.trim().toLowerCase(); let n = 0;
+    gw.querySelectorAll('tbody tr:not(.tt)').forEach(r => { const show = !v || r.textContent.toLowerCase().includes(v); r.hidden = !show; if (show) n++; });
+    gw.querySelector('[data-gn]').textContent = v ? n + ' of ' + gw.dataset.n + ' rows' : gw.dataset.n + ' rows';
+    totals(gw);
+  });
+  document.addEventListener('click', e => {
+    const th = e.target.closest('th[data-gs]'); if (th) { sort(th); return; }
+    const x = e.target.closest('[data-gx]'); if (x) { const gw = x.closest('.gw'); x.dataset.gx === 'csv' ? csv(gw) : print(gw); }
+  });
+  document.addEventListener('keydown', e => { const th = e.target.closest && e.target.closest('th[data-gs]'); if (th && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); sort(th); } });
+})();

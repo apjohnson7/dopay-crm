@@ -8,7 +8,7 @@
 <link rel="icon" href="{{ asset('img/favicon.png') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap">
-<link rel="stylesheet" href="{{ asset('css/dopay.css') }}?v=2">
+<link rel="stylesheet" href="{{ asset('css/dopay.css') }}?v=3">
 </head>
 <body>
 @php
@@ -66,13 +66,13 @@
       </details>
       <form method="post" action="{{ route('logout') }}">@csrf<button class="btn ghost sm">Sign out</button></form>
     </header>
-    <main class="content">
+    <main class="content" id="view">
       @include('partials.flash')
       @yield('content')
     </main>
   </div>
 </div>
-<script src="{{ asset('js/dopay.js') }}?v=1"></script>
+<script src="{{ asset('js/dopay.js') }}?v=2"></script>
 @stack('scripts')
 </body>
 </html>

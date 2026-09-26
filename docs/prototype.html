@@ -163,7 +163,7 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:0}
 .tbl td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
 .tbl tbody tr:last-child td{border-bottom:0}
 .tbl tr.click{cursor:pointer}
-.tbl tr.click:hover td{background:var(--surface-2)}
+.tbl tr.click:hover td{background-color:var(--surface-2)}
 .tbl .num{text-align:right;white-space:nowrap}
 .tbl .strong{font-weight:600}
 .tbl td .sub2{display:block;font-size:12px;color:var(--ink-3)}
@@ -542,7 +542,7 @@ h1{letter-spacing:0} h3{font-weight:500}
 .tbl td{border:1px solid var(--grid);border-top:0}
 .tbl th:first-child,.tbl td:first-child{border-left:0}
 .tbl th:last-child,.tbl td:last-child{border-right:0}
-.tbl tr.click:hover td{background:#EAF4EE}
+.tbl tr.click:hover td{background-color:#EAF4EE}
 .tbl tr.tt td{background:var(--head);font-weight:500}
 .card-h{background:var(--surface);border-bottom:1px solid var(--line)}
 .ftab th{text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink-2)}
@@ -560,6 +560,64 @@ h1{letter-spacing:0} h3{font-weight:500}
 @media (max-width:760px){.tbl.cards td{border:0}}
 button.lnk{background:none;border:0;padding:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;text-align:left}button.lnk:hover{text-decoration:underline}.nw{white-space:nowrap}
 [hidden]{display:none!important}
+/* ---------- Excel-style data grid ---------- */
+.gw{min-width:0}
+.gt{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--surface);flex-wrap:wrap}
+.gt-f{display:flex;align-items:center;gap:6px;border:1px solid var(--line-2);border-radius:3px;padding:0 8px;height:30px;background:#fff;color:var(--ink-3);width:240px;max-width:100%}
+.gt-f input{border:0;outline:0;font:inherit;font-size:13px;width:100%;background:none;color:var(--ink)}
+.gt-f:focus-within{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.gt-n{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.gt .btn.sm{height:30px}
+.tbl td{font-size:13.5px;padding:8px 10px;font-variant-numeric:tabular-nums}
+.tbl th{padding:7px 10px;position:relative}
+.tbl th.so{cursor:pointer;user-select:none}
+@media (min-width:761px){.tbl td.nw,.tbl td .pill{white-space:nowrap}.tbl td.lead{min-width:200px}}
+.tbl th.so:hover{background:#E8E6E4;color:var(--ink)}
+.tbl th.so::after{content:'\2195';position:absolute;right:2px;top:50%;transform:translateY(-50%);font-size:9px;opacity:0}
+.tbl th.so:hover::after{opacity:.45}.tbl th.num.so::after{right:auto;left:2px}
+.tbl th[aria-sort=ascending]::after{content:'\25B2';opacity:.9;color:var(--accent)}
+.tbl th[aria-sort=descending]::after{content:'\25BC';opacity:.9;color:var(--accent)}
+.tbl tbody tr:nth-child(even) td{background-color:#FAFAF9}
+.tbl tr.click:hover td{background-color:#EAF4EE}
+.tbl th.rn,.tbl td.rn{width:40px;min-width:40px;text-align:center;background-color:var(--head)!important;color:var(--ink-3);font-size:11.5px;padding:0 4px;border-right:1px solid var(--line-2)}
+.tbl tr.click:hover td.rn{background-color:var(--accent-soft)!important;color:var(--accent-2);font-weight:600}
+.tbl tfoot td{background:var(--head);font-weight:600;border-top:2px solid var(--line-2);font-size:13.5px}
+.tbl tfoot td.lbl-t{color:var(--ink-2);font-weight:500}
+.mstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:14px}
+.mstrip>div{padding:10px 14px;border-right:1px solid var(--grid);display:flex;flex-direction:column;gap:2px;min-width:0}
+.mstrip>div:last-child{border-right:0}
+.mstrip span{font-size:11.5px;color:var(--ink-3)}
+.mstrip b{font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mstrip .bad b{color:var(--bad)} .mstrip .ok b{color:var(--accent-2)} .mstrip .warn b{color:#8A5A00}
+.aging{display:flex;height:14px;border-radius:2px;overflow:hidden;background:var(--grid);margin:6px 0 10px}
+.aging i{display:block;height:100%}
+.aglg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.aglg div{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column}
+.aglg b{font-size:13.5px;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+.aglg em{display:inline-block;width:8px;height:8px;border-radius:1px;margin-right:5px;font-style:normal}
+.prog{height:8px;background:var(--grid);border-radius:2px;overflow:hidden;margin:6px 0}
+.prog i{display:block;height:100%;background:var(--accent)}
+/* sidebar: user card and collapse */
+.side-user{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:4px;background:var(--surface);margin-top:auto}
+.side-user .av{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;flex:none}
+.side-user b{display:block;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side-user span{display:block;font-size:11.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side-user>div{min-width:0}
+.side-tog{margin-left:auto;border:1px solid var(--line);background:var(--surface);border-radius:3px;width:28px;height:28px;display:grid;place-items:center;color:var(--ink-3);cursor:pointer}
+.side-tog:hover{color:var(--accent);border-color:var(--accent)}
+@media (min-width:761px){
+ body.mini .app{grid-template-columns:64px minmax(0,1fr)}
+ body.mini .side{padding:18px 8px}
+ body.mini .brand>div,body.mini .nav-h,body.mini .nav .nl,body.mini .side-user>div,body.mini .brand-stripe{display:none}
+ body.mini .brand{flex-direction:column;padding:0}
+ body.mini .side-tog{margin:6px auto 0}
+ body.mini .side-tog svg{transform:rotate(180deg)}
+ body.mini .nav a{justify-content:center;padding:9px 0;position:relative}
+ body.mini .nav a .cnt{position:absolute;top:2px;right:4px;transform:scale(.8)}
+ body.mini .side-user{padding:6px;justify-content:center;border:0;background:none}
+}
+@media (max-width:760px){.tbl.cards .rn,.tbl.cards tfoot{display:none}.gt-f{flex:1 1 100%;width:auto}.side-tog{display:none}.aglg{grid-template-columns:repeat(2,minmax(0,1fr))}.tbl tbody tr:nth-child(even) td{background-color:transparent}}
+@media print{body.pgrid .side,body.pgrid .top,body.pgrid .ph,body.pgrid #view>*:not(.pg-host){display:none!important}body.pgrid .gw:not(.pg-on),body.pgrid .gt{display:none!important}body.pgrid .app{display:block}}
 </style>
 
 <div class="app">
@@ -567,10 +625,11 @@ button.lnk{background:none;border:0;padding:0;color:var(--accent);font:inherit;f
     <div class="brand">
       <img class="brand-logo" id="brandLogo" alt="Dopay logo" width="42" height="36">
       <div><b>Dopay</b><small>CRM</small></div>
+      <button class="side-tog" type="button" data-act="toggleSide" aria-label="Collapse menu" title="Collapse menu"><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
     </div>
     <div class="brand-stripe" aria-hidden="true"><i style="background:#0A47A6"></i><i style="background:#D7191F"></i><i style="background:#1B9A3E"></i></div>
     <nav class="nav" id="nav"></nav>
-    
+    <button class="side-user" id="sideUser" type="button" data-act="nav" data-r="settings" title="Your account"></button>
   </aside>
   <div class="scrim" id="sideScrim" hidden data-act="closeSide"></div>
   <div class="main">
@@ -634,6 +693,9 @@ const token=s=>{let h=2166136261;for(const ch of s){h^=ch.charCodeAt(0);h=Math.i
 const uid=()=>Math.random().toString(36).slice(2,9);
 
 const I={
+search:'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
+print:'M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z',
+collapse:'M15 6l-6 6 6 6',
 pct:'M19 5L5 19M6.5 4.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM17.5 15.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4z',
 home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
 users:'M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9.5 10a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM21 19v-1a4 4 0 0 0-3-3.9M15.5 3.2a3.5 3.5 0 0 1 0 6.6',
@@ -940,7 +1002,47 @@ const ph=(t,sub,act)=>`<div class="ph"><div><h1>${t}</h1>${sub?`<p class="sub">$
 function btn(l,act,o){o=o||{};const ok=!o.perm||can(o.perm);const d=Object.entries(o.data||{}).map(([k,v])=>`data-${k}="${esc(v)}"`).join(' ');
   return `<button type="button" class="btn ${o.kind||''} ${o.cls||''}" ${ok?`data-act="${act}"`:`disabled title="${esc(role())} role can't do this"`} ${d}>${o.icon?ic(o.icon,16):''}<span>${l}</span></button>`}
 function tbl(cols,rows,o){o=o||{};if(!rows.length)return `<div class="empty">${o.empty||'Nothing here yet.'}</div>`;
-  return `<div class="tw"><table class="tbl ${o.cards===false?'':'cards'}"><thead><tr>${cols.map(c=>`<th class="${c.cls||''}">${c.h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr ${o.row?o.row(r):''}>${cols.map(c=>`<td class="${c.cls||''}" data-label="${esc(c.h)}">${c.f(r)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
+  const tools=o.tools!==false&&rows.length>=3,rn=o.rn!==false;
+  const mx=cols.map(c=>c.bar?Math.max(0,...rows.map(r=>+c.bar(r)||0)):0);
+  const bar=(c,j,r)=>{if(!c.bar||!mx[j])return '';const p=Math.max(0,Math.min(100,(+c.bar(r)||0)/mx[j]*100));if(!p)return '';const col=c.barTone&&c.barTone(r)==='bad'?'rgba(197,48,48,.15)':'rgba(33,115,70,.15)';return ` style="background-image:linear-gradient(90deg,${col} ${p.toFixed(1)}%,transparent ${p.toFixed(1)}%)"`};
+  return `<div class="gw" data-n="${rows.length}"${o.sum===false?' data-nosum':''}>${tools?`<div class="gt">${o.q===false?'':`<label class="gt-f">${ic('search',14)}<input type="search" data-gq placeholder="Filter these rows" aria-label="Filter these rows"></label>`}<span class="gt-n" data-gn>${rows.length} rows</span><span class="top-sp"></span><button type="button" class="btn sm ghost" data-gx="csv" title="Download the visible rows as CSV (opens in Excel)">${ic('download',14)}Export</button><button type="button" class="btn sm ghost" data-gx="print" title="Print this table">${ic('print',14)}Print</button></div>`:''}<div class="tw"><table class="tbl ${o.cards===false?'':'cards'}"><thead><tr>${rn?'<th class="rn" aria-label="Row"></th>':''}${cols.map(c=>{const so=c.h&&!c.nosort;return `<th class="${c.cls||''}${so?' so':''}" ${so?'data-gs tabindex="0" title="Sort"':''} ${c.nosum?'data-nosum':''}>${c.h}</th>`}).join('')}</tr></thead><tbody>${rows.map((r,i)=>`<tr ${o.row?o.row(r):''}>${rn?`<td class="rn">${i+1}</td>`:''}${cols.map((c,j)=>{const h=String(c.f(r));return `<td class="${c.cls||''}${h.length<=14&&!h.includes('<')?' nw':''}" data-label="${esc(c.h)}"${bar(c,j,r)}>${h}</td>`}).join('')}</tr>`).join('')}</tbody></table></div></div>`}
+/* grid behaviour: filter, sort, totals, export, print (works on any table built by tbl) */
+const cellTxt=c=>c?(c.firstChild?c.firstChild.textContent:c.textContent).trim():'';
+const NUMRX=/^(?:([A-Z]{3})\s)?(-?[\d,]+(?:\.\d+)?)$/;
+function gridTotals(gw){const t=gw.querySelector('table');if(!t||!t.tHead||gw.hasAttribute('data-nosum'))return;if(t.tFoot)t.tFoot.remove();
+  const ths=[...t.tHead.rows[0].cells];const vis=[...t.tBodies[0].rows].filter(r=>!r.hidden);const rows=vis.filter(r=>{const p=r.querySelector('.pill');return !(p&&/^(Failed|Reversed|Cancelled|Void|Rejected|Refunded)$/.test(p.textContent.trim()))});if(rows.length<2)return;const skipped=vis.length-rows.length;
+  const out=ths.map((th,j)=>{if(!th.classList.contains('num')||th.hasAttribute('data-nosum'))return null;let cur=null,sum=0,dec=0,any=false;
+    for(const r of rows){const tx=cellTxt(r.cells[j]);if(!tx||tx==='—'||tx==='-')continue;const m=tx.match(NUMRX);if(!m)return null;const c=m[1]||'';if(cur!==null&&c!==cur)return null;cur=c;any=true;
+      const d=(m[2].split('.')[1]||'').length;dec=Math.max(dec,d);sum+=parseFloat(m[2].replace(/,/g,''))}
+    return any?(cur?cur+' ':'')+sum.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}):null});
+  if(!out.some(Boolean))return;const first=ths.findIndex(th=>!th.classList.contains('rn'));
+  const tf=t.createTFoot();tf.innerHTML=`<tr>${ths.map((th,j)=>`<td class="${th.className.replace(/\bso\b/,'')}${j===first&&!out[j]?' lbl-t':''}">${j===first&&!out[j]?`Total · ${rows.length} row${rows.length>1?'s':''}${skipped?` <span class="small muted">(excl. ${skipped} failed/cancelled)</span>`:''}`:out[j]||''}</td>`).join('')}</tr>`}
+function gridSort(th){const t=th.closest('table');const j=th.cellIndex;const dir=th.getAttribute('aria-sort')==='ascending'?-1:1;
+  [...t.tHead.rows[0].cells].forEach(h=>h.removeAttribute('aria-sort'));th.setAttribute('aria-sort',dir===1?'ascending':'descending');
+  const isNum=th.classList.contains('num');
+  const key=r=>{const c=r.cells[j];if(isNum){const n=parseFloat(cellTxt(c).replace(/[^\d.\-]/g,''));return isNaN(n)?-Infinity:n}const tx=c?c.textContent.trim():'';const dm=tx.match(/^\d{1,2} [A-Z][a-z]{2} \d{4}/);const d=dm?Date.parse(dm[0]):NaN;return isNaN(d)?tx.toLowerCase():d};
+  const tb=t.tBodies[0];[...tb.rows].sort((a,b)=>{const x=key(a),y=key(b);return (x>y?1:x<y?-1:0)*dir}).forEach((r,i)=>{tb.appendChild(r);const n=r.querySelector('td.rn');if(n)n.textContent=i+1})}
+function gridCsv(gw){const t=gw.querySelector('table');const ths=[...t.tHead.rows[0].cells];const keep=ths.map(th=>!th.classList.contains('rn')&&th.textContent.trim());
+  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';const txt=c=>[...c.childNodes].map(n=>n.textContent.trim()).filter(Boolean).join(' · ');
+  const lines=[ths.filter((_,j)=>keep[j]).map(th=>q(th.textContent.trim())).join(',')];
+  [...t.tBodies[0].rows].filter(r=>!r.hidden).forEach(r=>lines.push([...r.cells].filter((_,j)=>keep[j]).map(c=>q(txt(c))).join(',')));
+  if(t.tFoot)lines.push([...t.tFoot.rows[0].cells].filter((_,j)=>keep[j]).map(c=>q(c.textContent.trim())).join(','));
+  const csv='﻿'+lines.join('\r\n');const name=`dopay-${(document.querySelector('.ph h1')||{}).textContent||'table'}-${TODAY}.csv`.toLowerCase().replace(/[^a-z0-9.-]+/g,'-');
+  const copy=()=>(navigator.clipboard?navigator.clipboard.writeText(csv):Promise.reject()).then(()=>toast('Copied as CSV. Paste into Excel.'),()=>toast('Export is not available here'));
+  const n=lines.length-1;
+  if(dlCap){dlCap.save({filename:name,data:csv}).then(()=>toast(`${n} rows exported to ${name}`),e=>{if(e&&e.code==='declined')return;if(e&&e.code==='rate_limited'){toast('A save is already open');return}copy()});return}
+  if(window.claude){copy();return}
+  try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=name;document.body.appendChild(a);a.click();a.remove();toast(`${n} rows exported to ${name}`)}catch(e){copy()}}
+let dlCap=null;if(window.claude&&window.claude.use){window.claude.use('downloads').then(d=>{dlCap=d}).catch(()=>{})}
+function gridPrint(gw){document.body.classList.add('pgrid');gw.classList.add('pg-on');let h=gw;while(h.parentElement&&h.parentElement.id!=='view')h=h.parentElement;h.classList.add('pg-host');
+  const done=()=>{document.body.classList.remove('pgrid');gw.classList.remove('pg-on');h.classList.remove('pg-host');window.removeEventListener('afterprint',done)};window.addEventListener('afterprint',done);window.print();setTimeout(done,1500)}
+document.addEventListener('input',e=>{const q=e.target.closest('[data-gq]');if(!q)return;const gw=q.closest('.gw');const v=q.value.trim().toLowerCase();let n=0;
+  gw.querySelectorAll('tbody tr').forEach(r=>{const show=!v||r.textContent.toLowerCase().includes(v);r.hidden=!show;if(show)n++});
+  gw.querySelector('[data-gn]').textContent=v?`${n} of ${gw.dataset.n} rows`:`${gw.dataset.n} rows`;gridTotals(gw)});
+document.addEventListener('click',e=>{const th=e.target.closest('th[data-gs]');if(th){gridSort(th);return}const x=e.target.closest('[data-gx]');if(x){const gw=x.closest('.gw');x.dataset.gx==='csv'?gridCsv(gw):gridPrint(gw)}});
+document.addEventListener('keydown',e=>{const th=e.target.closest&&e.target.closest('th[data-gs]');if(th&&(e.key==='Enter'||e.key===' ')){e.preventDefault();gridSort(th)}});
+new MutationObserver(()=>document.querySelectorAll('#view .gw:not([data-t])').forEach(gw=>{gw.dataset.t=1;gridTotals(gw)})).observe(document.getElementById('view')||document.body,{childList:true,subtree:true});
+const mstrip=items=>`<div class="mstrip">${items.map(([l,v,t])=>`<div class="${t||''}"><span>${l}</span><b title="${esc(String(v).replace(/<[^>]+>/g,''))}">${v}</b></div>`).join('')}</div>`;
 const scopeNote=()=>`<span class="scope">Showing ${S.branch==='ALL'?'all branches':esc(branch(S.branch).name)+' branch'} · change branch at the top</span>`;
 function opt(v,l,sel){return `<option value="${esc(v)}" ${String(v)===String(sel)?'selected':''}>${esc(l)}</option>`}
 
@@ -1049,10 +1151,18 @@ const NAV=[
  ['Administration',[['users','Users & roles','shield'],['audit','Audit trail','list'],['settings','Settings','gear']]]];
 const PARENT={invoice:'invoices','invoice-new':'invoices',customer:'customers',receipt:'receipts'};
 function navHtml(){const cur=PARENT[S.route]||S.route;const fmN=(S.forms||[]).filter(awaitingMe).length;const pend=S.invoices.filter(i=>i.status==='Pending approval'&&inScope(i)).length;const expP=S.expenses.filter(e=>['Submitted','Reviewed'].includes(e.status)&&inScope(e)).length;
-  return NAV.map(([h,items])=>`<div class="nav-g"><div class="nav-h">${h}</div>${items.map(([r,l,i])=>`<a href="#${r}" data-act="nav" data-r="${r}" class="${cur===r?'on':''}" ${cur===r?'aria-current="page"':''}>${ic(i,17)}${l}${r==='invoices'&&pend?`<span class="cnt">${pend}</span>`:''}${r==='expenses'&&expP?`<span class="cnt">${expP}</span>`:''}${r==='taxes'&&taxAlerts().some(a=>a.r.status==='Overdue')?`<span class="cnt">!</span>`:''}${r==='forms'&&fmN?`<span class="cnt">${fmN}</span>`:''}${r==='communications'&&S.threads&&unreadAll()?`<span class="cnt">${unreadAll()}</span>`:''}</a>`).join('')}</div>`).join('')}
+  return NAV.map(([h,items])=>`<div class="nav-g"><div class="nav-h">${h}</div>${items.map(([r,l,i])=>`<a href="#${r}" data-act="nav" data-r="${r}" title="${l}" class="${cur===r?'on':''}" ${cur===r?'aria-current="page"':''}>${ic(i,17)}<span class="nl">${l}</span>${r==='invoices'&&pend?`<span class="cnt">${pend}</span>`:''}${r==='expenses'&&expP?`<span class="cnt">${expP}</span>`:''}${r==='taxes'&&taxAlerts().some(a=>a.r.status==='Overdue')?`<span class="cnt">!</span>`:''}${r==='forms'&&fmN?`<span class="cnt">${fmN}</span>`:''}${r==='communications'&&S.threads&&unreadAll()?`<span class="cnt">${unreadAll()}</span>`:''}</a>`).join('')}</div>`).join('')}
 
 /* ============ VIEWS ============ */
 const V={};
+function agingHtml(live,cur){const B=[['Not yet due','#217346'],['1–30 days','#E1A100'],['31–60 days','#D86B18'],['61–90 days','#C53030'],['90+ days','#7A1F1F']];const v=[0,0,0,0,0];
+  live.forEach(i=>{const b=calc(i).bal;if(b<=0)return;const d=diff(i.due,TODAY);v[d<=0?0:d<=30?1:d<=60?2:d<=90?3:4]+=cv(b,i.cur)});const tot=v.reduce((a,x)=>a+x,0);
+  const m=TODAY.slice(0,7),inv=live.filter(i=>i.date.slice(0,7)===m).reduce((a,i)=>a+cv(calc(i).total,i.cur),0),col=S.payments.filter(p=>inScope(p)&&p.status==='Completed'&&p.date.slice(0,7)===m).reduce((a,p)=>a+cv(p.amount,p.cur),0);const pc=inv?Math.min(100,col/inv*100):0;
+  return `<div class="pad" style="border-top:1px solid var(--line)"><div class="row" style="justify-content:space-between"><h3 style="font-size:14px">Receivables aging</h3><span class="small muted">${cur} ${fmtN(rnd(tot,cur),cur)} outstanding</span></div>
+   <div class="aging" role="img" aria-label="Receivables by age">${tot?B.map(([l,c],k)=>v[k]?`<i style="width:${(v[k]/tot*100).toFixed(2)}%;background:${c}" title="${l}: ${cur} ${fmtN(rnd(v[k],cur),cur)}"></i>`:'').join(''):''}</div>
+   <div class="aglg">${B.map(([l,c],k)=>`<div><span><em style="background:${c}"></em>${l}</span><b>${fmtN(rnd(v[k],cur),cur)}</b></div>`).join('')}</div></div>
+   <div class="pad" style="border-top:1px solid var(--line)"><div class="row" style="justify-content:space-between"><h3 style="font-size:14px">Collections this month</h3><span class="small muted">${Math.round(pc)}% of this month’s billing collected</span></div>
+   <div class="prog"><i style="width:${pc.toFixed(1)}%"></i></div><div class="row small muted" style="justify-content:space-between"><span>Collected <b style="color:var(--ink)">${cur} ${fmtN(rnd(col,cur),cur)}</b></span><span>Billed <b style="color:var(--ink)">${cur} ${fmtN(rnd(inv,cur),cur)}</b></span></div></div>`}
 
 V.dashboard=()=>{
   const cur=scopeCur();const inv=S.invoices.filter(inScope);const live=inv.filter(isLive);
@@ -1093,7 +1203,7 @@ V.dashboard=()=>{
     <div class="card kpi ok"><div class="kpi-stripe"></div><span class="lbl">Payments today</span><div class="v"><small>${cur}</small>${F(payTs)}</div><span class="d">${payT.length} payment${payT.length===1?'':'s'} received</span></div>
   </div>
   <div class="grid g-main" style="margin-bottom:16px">
-    <section class="card"><div class="card-h"><div><h3>Revenue, last 6 months</h3><p class="small muted">${cur} · invoiced amounts · Apr–Aug include sample history</p></div><button class="lnk" data-act="nav" data-r="reports">Sales report</button></div><div class="pad" style="padding-top:8px">${barChart(revenueSeries(),'Revenue by month')}</div></section>
+    <section class="card"><div class="card-h"><div><h3>Revenue, last 6 months</h3><p class="small muted">${cur} · invoiced amounts · Apr–Aug include sample history</p></div><button class="lnk" data-act="nav" data-r="reports">Sales report</button></div><div class="pad" style="padding-top:8px">${barChart(revenueSeries(),'Revenue by month')}</div>${agingHtml(live,cur)}</section>
     <section class="card"><div class="card-h"><h3>What needs attention today</h3></div><div class="alerts">
       ${unreadAll()?`<button class="alert" data-act="nav" data-r="communications"><span class="sv info"></span><div><b>Unread team messages</b><span>${myThreads().filter(t=>unreadIn(t)).map(t=>esc(threadName(t))).slice(0,2).join(', ')}</span></div><span class="n">${unreadAll()}</span></button>`:''}
       ${fMine.length?`<button class="alert" data-act="goForms" data-f="Awaiting my signature"><span class="sv warn"></span><div><b>Forms awaiting your signature</b><span>${fMine.slice(0,2).map(f=>esc(f.ref)).join(', ')}</span></div><span class="n">${fMine.length}</span></button>`:''}
@@ -1115,7 +1225,7 @@ V.dashboard=()=>{
     </dl></section>
   <div class="grid g-main">
     <section class="card"><div class="card-h"><h3>Invoices requiring attention</h3><button class="lnk" data-act="nav" data-r="invoices">All invoices</button></div>
-      ${tbl([{h:'Invoice',cls:'lead',f:i=>`<span class="mono strong">${esc(i.no)}</span><span class="sub2">${esc(cname(cust(i.cust)))}</span>`},{h:'Due',f:i=>fdate(i.due)},{h:'Balance',cls:'num',f:i=>fmt(calc(i).bal,i.cur)},{h:'Status',f:i=>pill(st(i))}],attention,{row:i=>`class="click" data-act="openInv" data-no="${i.no}"`,empty:'All clear. Nothing needs attention.'})}</section>
+      ${tbl([{h:'Invoice',cls:'lead',f:i=>`<span class="mono strong">${esc(i.no)}</span><span class="sub2">${esc(cname(cust(i.cust)))}</span>`},{h:'Due',f:i=>fdate(i.due)},{h:'Balance',cls:'num',f:i=>fmt(calc(i).bal,i.cur),bar:i=>isLive(i)?toUSD(calc(i).bal,i.cur):0,barTone:i=>st(i)==='Overdue'?'bad':''},{h:'Status',f:i=>pill(st(i))}],attention,{row:i=>`class="click" data-act="openInv" data-no="${i.no}"`,empty:'All clear. Nothing needs attention.'})}</section>
     <div class="stack">
       <section class="card"><div class="card-h"><h3>Recent transactions</h3></div><div class="feed">${recent.map(r=>`<div class="feed-i" role="button" tabindex="0" style="cursor:pointer" ${r.act}><div class="av">${ic(r.i,16)}</div><div class="t"><b>${esc(r.t)}</b><span>${fdate(r.d)} · ${esc(r.s)}</span></div><div class="a">${esc(r.a)}</div></div>`).join('')}</div></section>
       <section class="card pad"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h3>Backup status</h3>${pill(bk.ok?'Completed':'Failed')}</div>
@@ -1125,14 +1235,17 @@ V.dashboard=()=>{
 
 /* ----- customers ----- */
 V.customers=()=>{const q=S.custQ.toLowerCase();const list=S.customers.filter(inScope).filter(c=>!q||[c.id,c.name,c.company,c.phone,c.email,c.tin].join(' ').toLowerCase().includes(q));
+  const all=S.customers.filter(inScope),sc=scopeCur(),fins=all.map(c=>[c,custFin(c)]),F=v=>fmt(rnd(v,sc),sc);
+  const tOut=fins.reduce((a,[c,f])=>a+cv(f.out,c.cur),0),tOver=fins.reduce((a,[c,f])=>a+cv(f.over,c.cur),0);
   return ph('Customers & members','One record per customer. Invoices, receipts and statements pull their details from here.',btn('New customer','newCustomer',{kind:'pri',icon:'plus',perm:'customers.manage'}))+
+  mstrip([['Customers',all.filter(c=>c.type!=='Member').length],['Members',all.filter(c=>c.type==='Member').length],['With a balance',fins.filter(([,f])=>f.out>0).length],['Total outstanding',F(tOut),'warn'],['Overdue',F(tOver),tOver?'bad':''],['Overdue customers',fins.filter(([,f])=>f.over>0).length,fins.some(([,f])=>f.over>0)?'bad':'']])+
   `<div class="row" style="margin-bottom:12px;justify-content:space-between"><input class="inp" id="custQ" data-in="custQ" style="max-width:380px" placeholder="Search name, ID, phone, email, company or TIN" value="${esc(S.custQ)}">${scopeNote()}</div>
   <section class="card" id="custTable">${custTable(list)}</section>`};
 function custTable(list){return tbl([
   {h:'Customer',cls:'lead',f:c=>`<b>${esc(cname(c))}</b><span class="sub2">${c.company?esc(c.name)+' · ':''}<span class="mono">${c.id}</span></span>`},
   {h:'Phone',f:c=>esc(c.phone)},{h:'Category',f:c=>`<span class="tag">${esc(c.category)}</span>`},{h:'Branch',f:c=>esc(branch(c.branch).name)},
-  {h:'Outstanding',cls:'num',f:c=>fmt(custFin(c).out,c.cur)},{h:'Overdue',cls:'num',f:c=>{const o=custFin(c).over;return o?`<span style="color:var(--bad);font-weight:600">${fmt(o,c.cur)}</span>`:'—'}}],
-  list,{row:c=>`class="click" data-act="openCust" data-id="${c.id}"`,empty:'No customers match that search.'})}
+  {h:'Outstanding',cls:'num',f:c=>fmt(custFin(c).out,c.cur),bar:c=>toUSD(custFin(c).out,c.cur),barTone:c=>custFin(c).over?'bad':''},{h:'Overdue',cls:'num',f:c=>{const o=custFin(c).over;return o?`<span style="color:var(--bad);font-weight:600">${fmt(o,c.cur)}</span>`:'—'}}],
+  list,{row:c=>`class="click" data-act="openCust" data-id="${c.id}"`,empty:'No customers match that search.',q:false})}
 
 V.customer=()=>{const c=cust(S.sel.cust);if(!c)return V.customers();const f=custFin(c);const t=S.custTab;
   const ini=cname(c).split(/\s+/).map(w=>w[0]).slice(0,2).join('');
@@ -1150,7 +1263,7 @@ function custTimeline(c){
   ev.sort((a,b)=>b.d.localeCompare(a.d));
   return `<section class="card pad"><div class="timeline">${ev.map(e=>`<div class="tl" ${e.act?`role="button" tabindex="0" style="cursor:pointer" ${e.act}`:''}><div class="av">${ic(e.i,16)}</div><div>${e.t}<div class="small muted">${fdt(e.d)}</div></div><div>${PC[e.s]?pill(e.s):`<span class="tag">${esc(e.s)}</span>`}</div></div>`).join('')||'<div class="empty">No activity yet.</div>'}</div></section>`}
 function custInvoices(c){const inv=S.invoices.filter(i=>i.cust===c.id);const pays=S.payments.filter(p=>p.cust===c.id);
-  return `<div class="grid g-2"><section class="card"><div class="card-h"><h3>Invoices</h3></div>${tbl([{h:'Invoice',cls:'lead',f:i=>`<span class="mono strong">${esc(i.no)}</span><span class="sub2">${fdate(i.date)}</span>`},{h:'Total',cls:'num',f:i=>fmt(calc(i).total,i.cur)},{h:'Balance',cls:'num',f:i=>fmt(calc(i).bal,i.cur)},{h:'Status',f:i=>pill(st(i))}],inv,{row:i=>`class="click" data-act="openInv" data-no="${i.no}"`})}</section>
+  return `<div class="grid g-2"><section class="card"><div class="card-h"><h3>Invoices</h3></div>${tbl([{h:'Invoice',cls:'lead',f:i=>`<span class="mono strong">${esc(i.no)}</span><span class="sub2">${fdate(i.date)}</span>`},{h:'Total',cls:'num',f:i=>fmt(calc(i).total,i.cur)},{h:'Balance',cls:'num',f:i=>fmt(calc(i).bal,i.cur),bar:i=>isLive(i)?toUSD(calc(i).bal,i.cur):0,barTone:i=>st(i)==='Overdue'?'bad':''},{h:'Status',f:i=>pill(st(i))}],inv,{row:i=>`class="click" data-act="openInv" data-no="${i.no}"`})}</section>
   <section class="card"><div class="card-h"><h3>Payments</h3></div>${tbl([{h:'Payment',cls:'lead',f:p=>`<span class="mono strong">${esc(p.no)}</span><span class="sub2">${fdate(p.date)} · ${esc(p.method)}</span>`},{h:'Amount',cls:'num',f:p=>fmt(p.amount,p.cur)},{h:'Status',f:p=>pill(p.status)}],pays,{row:p=>{const r=S.receipts.find(r=>r.pay===p.no);return r?`class="click" data-act="openRct" data-no="${r.no}"`:''}})}</section></div>`}
 function periodRange(p){return p==='month'?['2026-09-01',TODAY]:p==='last'?['2026-08-01','2026-08-31']:p==='quarter'?['2026-07-01',TODAY]:p==='year'?['2026-01-01',TODAY]:['2000-01-01',TODAY]}
 function statementRows(c,p){const [a,b]=periodRange(p);const tx=[];
@@ -1176,12 +1289,15 @@ const INV_F=['All','Draft','Pending approval','Approved','Sent','Partially paid'
 V.invoices=()=>{const all=S.invoices.filter(inScope);const f=S.invFilter;
   const list=all.filter(i=>f==='All'||st(i)===f||(f==='Due soon'&&calc(i).bal>0&&isLive(i)&&diff(TODAY,i.due)>=0&&diff(TODAY,i.due)<=7)).sort((a,b)=>b.no.localeCompare(a.no));
   const cnt=s=>all.filter(i=>s==='All'||st(i)===s).length;
+  const sc=scopeCur(),F=v=>fmt(rnd(v,sc),sc),live=all.filter(isLive);const sm=k=>live.reduce((a,i)=>a+cv(calc(i)[k],i.cur),0);const od=live.filter(i=>st(i)==='Overdue').reduce((a,i)=>a+cv(calc(i).bal,i.cur),0);
+  const mth=live.filter(i=>i.date.slice(0,7)===TODAY.slice(0,7)).reduce((a,i)=>a+cv(calc(i).total,i.cur),0);
   return ph('Invoices','Create → preview → approve → generate → send. Numbers follow each country’s sequence.',btn('New invoice','newInvoice',{kind:'pri',icon:'plus',perm:'invoices.create'}))+
+  mstrip([['Billed · official invoices',F(sm('total'))],['Billed this month',F(mth)],['Collected',F(sm('paid')),'ok'],['Outstanding',F(sm('bal')),'warn'],['Overdue',F(od),od?'bad':''],['Awaiting approval',all.filter(i=>i.status==='Pending approval').length]])+
   `<div class="row" style="margin-bottom:12px">${INV_F.map(s=>`<button class="chip ${f===s?'on':''}" data-act="invFilter" data-f="${s}">${s}<b>${cnt(s)}</b></button>`).join('')}${f==='Due soon'?`<button class="chip on" data-act="invFilter" data-f="Due soon">Due within 7 days</button>`:''}</div>
   <div style="margin-bottom:10px">${scopeNote()}</div>
   <section class="card">${tbl([
    {h:'Invoice',cls:'lead',f:i=>`<span class="mono strong">${esc(i.no)}</span><span class="sub2">${esc(cname(cust(i.cust)))}</span>`},
-   {h:'Date',f:i=>fdate(i.date)},{h:'Due',f:i=>fdate(i.due)},{h:'Total',cls:'num',f:i=>fmt(calc(i).total,i.cur)},{h:'Balance',cls:'num',f:i=>fmt(calc(i).bal,i.cur)},{h:'Status',f:i=>pill(st(i))}],
+   {h:'Date',f:i=>fdate(i.date)},{h:'Due',f:i=>fdate(i.due)},{h:'Total',cls:'num',f:i=>fmt(calc(i).total,i.cur)},{h:'Balance',cls:'num',f:i=>fmt(calc(i).bal,i.cur),bar:i=>isLive(i)?toUSD(calc(i).bal,i.cur):0,barTone:i=>st(i)==='Overdue'?'bad':''},{h:'Status',f:i=>pill(st(i))}],
    list,{row:i=>`class="click" data-act="openInv" data-no="${i.no}"`,empty:'No invoices with this status.'})}</section>`};
 
 function blankDraft(){const br=S.branch==='ALL'?'KLA':S.branch;const cc=branch(br).cc;const co=country(cc);
@@ -1254,7 +1370,9 @@ V.invoice=()=>{const i=invBy(S.sel.inv);if(!i)return V.invoices();const s=st(i);
 
 /* ----- payments & receipts ----- */
 V.payments=()=>{const list=S.payments.filter(inScope).slice().sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
-  return ph('Payments','Every payment is allocated to one or more invoices and produces a receipt automatically.',btn('Record payment','recordPayment',{kind:'pri',icon:'plus',perm:'payments.record'}))+`<div style="margin-bottom:10px">${scopeNote()}</div>
+  const sc=scopeCur(),F=v=>fmt(rnd(v,sc),sc),ok=list.filter(p=>p.status==='Completed');const byM={};ok.forEach(p=>byM[p.method]=(byM[p.method]||0)+cv(p.amount,p.cur));const topM=Object.entries(byM).sort((a,b)=>b[1]-a[1])[0];
+  return ph('Payments','Every payment is allocated to one or more invoices and produces a receipt automatically.',btn('Record payment','recordPayment',{kind:'pri',icon:'plus',perm:'payments.record'}))+
+  mstrip([['Received · all time',F(ok.reduce((a,p)=>a+cv(p.amount,p.cur),0)),'ok'],['This month',F(ok.filter(p=>p.date.slice(0,7)===TODAY.slice(0,7)).reduce((a,p)=>a+cv(p.amount,p.cur),0))],['Today',F(ok.filter(p=>p.date===TODAY).reduce((a,p)=>a+cv(p.amount,p.cur),0))],['Top method',topM?esc(topM[0]):'—'],['Failed or reversed',list.filter(p=>p.status!=='Completed').length,list.some(p=>p.status!=='Completed')?'bad':'']])+`<div style="margin-bottom:10px">${scopeNote()}</div>
   <section class="card">${tbl([
    {h:'Payment',cls:'lead',f:p=>`<span class="mono strong">${esc(p.no)}</span><span class="sub2">${esc(cname(cust(p.cust)))}</span>`},
    {h:'Invoice(s)',f:p=>p.allocs.map(a=>`<span class="mono small">${esc(a.inv.slice(-6))}</span>`).join(', ')},{h:'Amount',cls:'num',f:p=>fmt(p.amount,p.cur)},{h:'Method',f:p=>esc(p.method)},
@@ -1295,7 +1413,7 @@ V.products=()=>{const cat=S.prodCat;const list=S.products.filter(p=>cat==='All'|
   <section class="card">${tbl([
    {h:'Product',cls:'lead',f:p=>`<b>${esc(p.name)}</b><span class="sub2 mono">${p.id}</span>`},{h:'Category',f:p=>`<span class="tag">${esc(p.cat)}</span>`},{h:'Unit',f:p=>esc(p.unit)},
    {h:`Price (${cur})`,cls:'num',f:p=>fmtN(priceIn(p,cur),cur)},{h:`Cost (${cur})`,cls:'num',f:p=>fmtN(rnd(p.cost/S.rates[p.cur]*S.rates[cur],cur),cur)},
-   {h:'Margin',cls:'num',f:p=>Math.round((1-p.cost/p.price)*100)+'%'},{h:'Tax',f:p=>p.tax?'Standard rate':'Exempt'},{h:'Available in',f:p=>p.countries.join(' · ')},{h:'Status',f:p=>pill(p.status)}],list)}</section>`};
+   {h:'Margin',cls:'num',f:p=>Math.round((1-p.cost/p.price)*100)+'%'},{h:'Tax',f:p=>p.tax?'Standard rate':'Exempt'},{h:'Available in',f:p=>p.countries.join(' · ')},{h:'Status',f:p=>pill(p.status)}],list,{sum:false})}</section>`};
 V.suppliers=()=>ph('Suppliers','Supplier records feed expenses and payment vouchers. Full supplier invoicing arrives in phase 2.','')+
   `<section class="card">${tbl([
    {h:'Supplier',cls:'lead',f:s=>`<b>${esc(s.company)}</b><span class="sub2 mono">${s.id}</span>`},{h:'Contact',f:s=>`${esc(s.contact)}<span class="sub2">${esc(s.phone)}</span>`},{h:'Supplies',f:s=>esc(s.supplies)},
@@ -1452,6 +1570,8 @@ function renderSearch(){const q=$('#gsearch').value.trim();const box=$('#sres');
 
 /* ============ ASK DOPAY: platform guide ============ */
 const KB=[
+ {id:'grid',t:'Working with tables: sort, filter, totals, export to Excel',k:['sort','filter','table','tables','export','excel','csv','download','print table','total','totals','columns','spreadsheet','collapse menu','sidebar'],
+  a:`Every list works like a spreadsheet:<ul><li><b>Sort</b>: click a column heading; click again to reverse.</li><li><b>Filter</b>: type in <b>Filter these rows</b> above the table. The row count and totals update as you type.</li><li><b>Totals</b>: the grey row at the bottom adds up money columns for the visible rows. Failed, reversed and cancelled items are left out.</li><li><b>Export</b> downloads the visible rows as a CSV file that opens in Excel; <b>Print</b> prints just that table.</li><li>Shaded bars in Balance and Outstanding show the biggest amounts at a glance; red means overdue.</li></ul>Need more room? Click the arrow next to the logo to collapse the menu to icons.`,go:['invoices','Open Invoices']},
  {id:'tax',t:'Taxes: VAT, returns and tax payments',k:['tax','taxes','vat','tva','vat return','tax return','file vat','remit','remittance','paye','withholding','tax rate','tax payment','filing','filing day','ura','firs','tax authority'],
   a:`Open <b>Billing → Taxes</b> and pick a country. Each month shows the <b>VAT/TVA charged</b> on approved invoices, the amount <b>remitted</b>, the <b>balance</b> and the due date.<ul><li><b>Pay a return</b>: click <b>Record payment</b> on the month. It opens a Tax-category expense with the period and balance filled in; it counts as remitted once the expense reaches Paid.</li><li><b>PAYE, withholding and other taxes</b>: record them as expenses in the <b>Tax</b> category; they list under Other taxes paid and feed the Tax line in budget monitoring.</li><li><b>Rates and filing days</b>: Settings → Finance. Issued invoices keep the rate they were created with.</li><li>The <b>invoice register</b> lists each invoice with the customer TIN for your return; <b>Copy CSV</b> exports the monthly summary.</li></ul>`,go:['taxes','Open Taxes']},
  {id:'start',t:'Getting around Dopay',k:['getting started','overview','modules','menu','navigate','sidebar','what is dopay','start','tour','features'],
@@ -1621,12 +1741,14 @@ function renderTop(){
   $('#userSel').innerHTML=S.users.map(u=>opt(u.id,u.name+' — '+u.role,S.user)).join('')+'<option value="__out">Sign out</option>';
   const n=S.notifs.filter(x=>!x.read).length;const b=$('#bellCount');b.hidden=!n;b.textContent=n}
 function renderNotif(){$('#notifPop').innerHTML=`<div class="card-h" style="padding:10px 14px"><b>Notifications</b><button class="lnk btn ghost sm" data-act="readAll">Mark all read</button></div>`+S.notifs.slice(0,12).map(x=>`<button class="n ${x.read?'':'unread'}" data-act="notifGo" data-id="${x.id}"><span class="pill p-${x.kind==='ok'?'ok':x.kind==='bad'?'bad':x.kind==='warn'?'warn':'info'}" style="padding:0 6px;height:18px"></span><div><b style="font-weight:600;font-size:13px">${esc(x.text)}</b><span>${fdt(x.at)}</span></div></button>`).join('')}
-function render(keepScroll){$('#nav').innerHTML=navHtml();renderTop();const v=V[S.route]||V.dashboard;$('#view').innerHTML=v();if(!keepScroll)window.scrollTo(0,0)}
+function render(keepScroll){$('#nav').innerHTML=navHtml();{const u=me();$('#sideUser').innerHTML=`<span class="av">${esc(initials(u.name))}</span><div><b>${esc(u.name)}</b><span>${esc(u.role)} · ${esc(branch(u.branch).name)}</span></div>`}renderTop();const v=V[S.route]||V.dashboard;$('#view').innerHTML=v();if(!keepScroll)window.scrollTo(0,0)}
 function go(route,sel,keep){S.route=route;Object.assign(S.sel,sel||{});if(!PARENT[route]&&V[route]&&location.hash!=='#'+route){try{history.replaceState(null,'','#'+route)}catch(e){}}closeSide();render(keep)}
 function closeSide(){$('#side').classList.remove('open');$('#sideScrim').hidden=true}
 
 /* ============ actions ============ */
 const A={};
+A.toggleSide=()=>{const m=document.body.classList.toggle('mini');try{localStorage.setItem('dopay-mini',m?'1':'')}catch(e){}};
+try{if(localStorage.getItem('dopay-mini'))document.body.classList.add('mini')}catch(e){}
 A.kbGo=d=>{closeAI();if(d.tab)S.setTab=d.tab;if(d.ff)S.fFilter=d.ff;if(d.fil)S.invFilter=d.fil;if(d.dtab)S.docTab=d.dtab;go(d.r)};
 A.nav=(d,el,e)=>{e.preventDefault();go(d.r)};
 A.openSide=()=>{$('#side').classList.add('open');$('#sideScrim').hidden=false};
@@ -2389,7 +2511,7 @@ V.taxes=()=>{const ccs=taxCCs();if(!ccs.includes(S.taxCC))S.taxCC=ccs[0];
   <section class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>${esc(co.taxName)} invoice register</h3><p class="small muted">Official invoices issued in the period · the list your tax return is built from</p></div>
      <select class="inp" style="max-width:170px" data-ch="taxP" aria-label="Period">${rows.map(r=>opt(r.p,ymLabel(r.p),sel&&sel.p)).join('')}</select></div>
    ${tbl([{h:'Invoice',cls:'lead',f:i=>`<button class="lnk mono nw" data-act="openInv" data-no="${i.no}">${esc(i.no)}</button>`},{h:'Date',f:i=>`<span class="nw">${fdate(i.date)}</span>`},{h:'Customer',f:i=>esc(cname(cust(i.cust)))},{h:'Customer TIN',f:i=>`<span class="mono">${esc(cust(i.cust).tin||'—')}</span>`},{h:'Net',cls:'num',f:i=>{const k=calc(i);return N(k.sub-k.disc)}},{h:esc(co.taxName),cls:'num',f:i=>N(calc(i).tax)},{h:'Total',cls:'num',f:i=>N(calc(i).total)}],sel?sel.inv:[],{empty:'No official invoices in this period.'})}
-   ${sel&&sel.inv.length?`<div class="pad small" style="display:flex;justify-content:flex-end;gap:18px;border-top:1px solid var(--grid)"><span>Taxable sales <b>${fmt(sel.net,cur)}</b></span><span>${esc(co.taxName)} <b>${fmt(sel.vat,cur)}</b></span><span>Remitted <b>${fmt(sel.paid,cur)}</b></span></div>`:''}</section>
+   </section>
    <div class="grid g-2">
     <section class="card"><div class="card-h"><div><h3>Other taxes paid</h3><p class="small muted">PAYE, withholding and other Tax-category expenses · ${TODAY.slice(0,4)}: ${fmt(otherT,cur)}</p></div></div>
      ${tbl([{h:'Payment',cls:'lead',f:e=>`<span class="strong">${esc(e.desc)}</span><span class="sub2 mono">${esc(e.no)}</span>`},{h:'Paid',f:e=>`<span class="nw">${fdate(e.date)}</span>`},{h:'Amount',cls:'num',f:e=>N(e.amount)},{h:'Status',f:e=>pill(e.status)}],other,{empty:'No PAYE, withholding or other tax payments yet. Record them as expenses in the Tax category.'})}</section>
