@@ -13,7 +13,7 @@ return [
     'base_currency' => 'USD',
 
     // Invoice / receipt / payment / expense numbering. Tokens: {CC} ISO country, {DOC} document code, {YYYY}, {SEQ} 6-digit
-    'document_pattern' => env('DOPAY_DOCUMENT_PATTERN', 'A4S-{CC}-{DOC}-{YYYY}-{SEQ}'),
+    'document_pattern' => env('DOPAY_DOCUMENT_PATTERN', 'DOPAY-{CC}-{DOC}-{YYYY}-{SEQ}'),
 
     'require_two_factor' => (bool) env('DOPAY_REQUIRE_2FA', true),
     'share_link_days' => 14,
@@ -74,6 +74,7 @@ return [
 
     'roles' => [
         'Super Administrator' => ['*'],
+        'Country Administrator' => ['customers.manage', 'suppliers.manage', 'users.manage', 'settings.manage', 'documents.manage', 'reports.view', 'audit.view', 'expenses.approve', 'messages.use'],
         'CEO' => ['reports.view', 'audit.view', 'forms.submit', 'messages.use'],
         'CFO' => ['invoices.approve', 'payments.reverse', 'expenses.approve', 'reports.view', 'audit.view', 'forms.submit', 'messages.use'],
         'Financial Controller' => ['invoices.approve', 'payments.reverse', 'expenses.approve', 'reports.view', 'audit.view', 'forms.submit', 'forms.admin', 'messages.use'],
@@ -89,8 +90,11 @@ return [
         'Document Officer' => ['documents.manage', 'forms.submit', 'forms.admin', 'messages.use'],
     ],
 
-    // Roles that work across every country. Everyone else only sees and signs for their own country.
-    'global_roles' => ['Super Administrator', 'CEO', 'CFO', 'Financial Controller', 'Regional Manager', 'Finance Manager', 'Auditor'],
+    // Each country is its own account. Only these roles can open every account.
+    'global_roles' => ['Super Administrator'],
+
+    // Group approvers sign finance forms routed to them from any country, but only browse their own country's account.
+    'group_approver_roles' => ['Financial Controller', 'Regional Manager', 'CFO', 'CEO'],
 
     /*
     | Finance forms. Each step: label, roles that may sign, or 'who' (preparer|holder|purchaser).

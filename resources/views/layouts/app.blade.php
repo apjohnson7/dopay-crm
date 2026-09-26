@@ -8,7 +8,7 @@
 <link rel="icon" href="{{ asset('img/favicon.png') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap">
-<link rel="stylesheet" href="{{ asset('css/dopay.css') }}?v=3">
+<link rel="stylesheet" href="{{ asset('css/dopay.css') }}?v=4">
 </head>
 <body>
 @php
@@ -18,7 +18,7 @@
     'Billing' => array_values(array_filter([['customers.index', 'Customers', 'customers*', null], ['invoices.index', 'Invoices', 'invoices*', null], ['payments.index', 'Payments', 'payments*|receipts*', null], $u->can('reports.view') ? ['taxes.index', 'Taxes', 'taxes*', null] : null])),
     'Spending & forms' => [['forms.index', 'Finance forms', 'forms*|budget*', $navFormsAwaiting ?? 0], ['suppliers.index', 'Suppliers', 'suppliers*', null]],
     'Records' => [['messages.index', 'Team messages', 'messages*', $navUnreadMessages ?? 0], ['help', 'Help & guide', 'help', null]],
-    'Administration' => array_values(array_filter([$u->can('audit.view') ? ['audit.index', 'Audit trail', 'audit*', null] : null, ['profile.security', 'Security', 'profile*', null]])),
+    'Administration' => array_values(array_filter([['account.edit', 'Account', 'account*', null], $u->can('audit.view') ? ['audit.index', 'Audit trail', 'audit*', null] : null, ['profile.security', 'Security', 'profile*', null]])),
   ];
 @endphp
 <div class="app">
@@ -46,13 +46,13 @@
       </form>
       @if($scopeCountries->count() > 1)
         <form method="post" action="{{ route('scope') }}" style="margin-left:auto">@csrf
-          <select class="sel" name="country_id" onchange="this.form.submit()" aria-label="Country">
-            <option value="">All countries · {{ config('dopay.base_currency') }}</option>
-            @foreach($scopeCountries as $c)<option value="{{ $c->id }}" @selected($scopeCountryId === $c->id)>{{ $c->name }} · {{ $c->currency_code }}</option>@endforeach
+          <select class="sel" name="country_id" onchange="this.form.submit()" aria-label="Account">
+            <option value="">All accounts · {{ config('dopay.base_currency') }}</option>
+            @foreach($scopeCountries as $c)<option value="{{ $c->id }}" @selected($scopeCountryId === $c->id)>DoPay {{ $c->name }} · {{ $c->currency_code }}</option>@endforeach
           </select>
         </form>
       @else
-        <span class="proto" style="margin-left:auto;background:var(--accent-soft);color:var(--accent)">{{ $u->country()?->name }} · {{ $u->country()?->localTime() }}</span>
+        <span class="proto" style="margin-left:auto;background:var(--accent-soft);color:var(--accent)">DoPay {{ $u->country()?->name }} account · {{ $u->country()?->localTime() }}</span>
       @endif
       <a class="ai-btn" href="{{ route('help') }}">Help</a>
       <details class="user-menu" style="position:relative">

@@ -30,16 +30,27 @@ class ReferenceSeeder extends Seeder
         }
 
         $countries = [
-            ['UG', 'Uganda', 'UGD', 'A4S Uganda Ltd', 'UGX', 'VAT', 18, 15, 'Africa/Kampala', 'EAT', [['HQ', 'Kampala', 'Head office, Kampala Road', 'Finance'], ['EBB', 'Entebbe', 'Entebbe Road office', 'Sales']]],
-            ['NG', 'Nigeria', 'NG', 'A4S Nigeria Co. Ltd', 'NGN', 'VAT', 7.5, 21, 'Africa/Lagos', 'WAT', [['IK', 'Lagos', 'Ikeja office', 'Sales']]],
-            ['CM', 'Cameroon', 'CMR', 'A4S Cameroon Co., Ltd.', 'XAF', 'TVA', 19.25, 15, 'Africa/Douala', 'WAT', [['DLA', 'Douala', 'Akwa office', 'Sales']]],
-            ['CI', 'Ivory Coast', 'CIV', 'A4S Ivory Coast Co., Ltd.', 'XOF', 'TVA', 18, 15, 'Africa/Abidjan', 'GMT', [['ABJ', 'Abidjan', 'Plateau office', 'Sales']]],
+            ['UG', 'Uganda', 'UGD', 'DoPay Uganda Ltd', 'UGX', 'VAT', 18, 15, 'Africa/Kampala', 'EAT', [['HQ', 'Kampala', 'Head office, Kampala Road', 'Finance'], ['EBB', 'Entebbe', 'Entebbe Road office', 'Sales']]],
+            ['NG', 'Nigeria', 'NG', 'DoPay Nigeria Co. Ltd', 'NGN', 'VAT', 7.5, 21, 'Africa/Lagos', 'WAT', [['IK', 'Lagos', 'Ikeja office', 'Sales']]],
+            ['CM', 'Cameroon', 'CMR', 'DoPay Cameroon Co., Ltd.', 'XAF', 'TVA', 19.25, 15, 'Africa/Douala', 'WAT', [['DLA', 'Douala', 'Akwa office', 'Sales']]],
+            ['CI', 'Ivory Coast', 'CIV', 'DoPay Ivory Coast Co., Ltd.', 'XOF', 'TVA', 18, 15, 'Africa/Abidjan', 'GMT', [['ABJ', 'Abidjan', 'Plateau office', 'Sales']]],
+        ];
+        $profiles = [
+            'UG' => ['Plot 00, Kampala Road, Kampala', '+256 700 000 000', 'accounts.ug@dopay.example', '1000000000', 'Stanbic Bank Uganda · A/C 9030 0000 00000', 'MTN MoMo merchant 000000'],
+            'NG' => ['Plot 5, Allen Avenue, Ikeja, Lagos', '+234 800 000 0000', 'accounts.ng@dopay.example', '12345678-0001', 'GTBank · A/C 0000 0000 00', null],
+            'CM' => ['Rue Joss, Akwa, Douala', '+237 600 000 000', 'accounts.cm@dopay.example', 'M000000000000A', 'Afriland First Bank · A/C 0000 0000 000', 'MTN MoMo 000000'],
+            'CI' => ['Plateau, Abidjan', '+225 07 00 00 00 00', 'accounts.ci@dopay.example', 'CI-0000000-A', 'SGCI · A/C 0000 0000 000', 'Orange Money 000000'],
         ];
         foreach ($countries as [$iso, $name, $doc, $entity, $cur, $taxName, $rate, $filing, $tz, $tzl, $branches]) {
-            $c = Country::updateOrCreate(['iso2' => $iso], [
+            [$addr, $phone, $email, $tin, $bank, $momo] = $profiles[$iso];
+            $c = Country::firstOrNew(['iso2' => $iso]);
+            if (! $c->exists) {
+                $c->fill(['address' => $addr, 'phone' => $phone, 'email' => $email, 'tax_id' => $tin, 'bank_details' => $bank, 'mobile_money' => $momo]);
+            }
+            $c->fill([
                 'name' => $name, 'doc_code' => $doc, 'legal_entity' => $entity, 'currency_code' => $cur,
                 'tax_name' => $taxName, 'tax_rate' => $rate, 'vat_filing_day' => $filing, 'timezone' => $tz, 'timezone_label' => $tzl, 'is_active' => true,
-            ]);
+            ])->save();
             foreach ($branches as [$code, $bname, $office, $dept]) {
                 Branch::updateOrCreate(['country_id' => $c->id, 'code' => $code], ['name' => $bname, 'office' => $office, 'department' => $dept, 'is_active' => true]);
             }

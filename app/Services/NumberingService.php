@@ -26,7 +26,7 @@ class NumberingService
         });
     }
 
-    /** Invoice, payment, receipt and expense numbers, e.g. A4S-UG-INV-2026-000237. */
+    /** Invoice, payment, receipt and expense numbers, e.g. DOPAY-UG-INV-2026-000237. */
     public function document(Country $country, string $doc, ?int $year = null): string
     {
         $year ??= (int) now()->format('Y');

@@ -21,7 +21,7 @@
 </div>
 
 <div class="grid g-kpi" style="margin-bottom:16px">
-  <div class="card kpi acc"><div class="kpi-stripe"></div><span class="lbl">Total sales · {{ now()->year }}</span><div class="v"><small>{{ $currency }}</small>{{ money($kpi['sales'], $currency, false) }}</div><span class="d">{{ $kpi['invoice_count'] }} official invoices</span></div>
+  <div class="card kpi hero"><div class="kpi-stripe"></div><span class="lbl">Total sales · {{ now()->year }}</span><div class="v"><small>{{ $currency }}</small>{{ money($kpi['sales'], $currency, false) }}</div><span class="d">{{ $kpi['invoice_count'] }} official invoices</span></div>
   <div class="card kpi warn"><div class="kpi-stripe"></div><span class="lbl">Outstanding</span><div class="v"><small>{{ $currency }}</small>{{ money($kpi['outstanding'], $currency, false) }}</div><span class="d">{{ $kpi['outstanding_count'] }} invoices with a balance</span></div>
   <div class="card kpi bad"><div class="kpi-stripe"></div><span class="lbl">Overdue</span><div class="v"><small>{{ $currency }}</small>{{ money($kpi['overdue'], $currency, false) }}</div><span class="d">{{ $kpi['overdue_count'] }} past due date</span></div>
   <div class="card kpi ok"><div class="kpi-stripe"></div><span class="lbl">Payments today</span><div class="v"><small>{{ $currency }}</small>{{ money($kpi['payments_today'], $currency, false) }}</div><span class="d">{{ $kpi['payments_today_count'] }} received</span></div>

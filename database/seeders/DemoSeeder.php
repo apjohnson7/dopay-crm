@@ -50,6 +50,8 @@ class DemoSeeder extends Seeder
             ['Sarah Ouma', 'sarah.ouma', 'CEO', 'HQ'],
             ['Daniel Asante', 'daniel.asante', 'Regional Manager', 'HQ'],
             ['Emmanuel Tabi', 'emmanuel.tabi', 'Country Manager', 'DLA'],
+            ['Irene Atuhaire', 'irene.atuhaire', 'Country Administrator', 'HQ'],
+            ['Tunde Bakare', 'tunde.bakare', 'Country Administrator', 'IK'],
         ];
         $users = [];
         foreach ($people as [$name, $handle, $role, $branch]) {

@@ -5,7 +5,7 @@
   @if($wm)<div class="wm {{ $s === 'Paid' ? 'paid' : '' }}">{{ $wm }}</div>@endif
   <table class="p-head" style="width:100%"><tr>
     <td><table><tr><td style="width:56px;vertical-align:top"><img src="{{ isset($pdf) ? public_path('img/dopay-logo.png') : asset('img/dopay-logo.png') }}" style="width:48px" alt="Logo"></td>
-      <td><b style="font-size:13px">{{ $co->legal_entity }}</b><br>{{ $invoice->branch->office }}, {{ $invoice->branch->name }}, {{ $co->name }}</td></tr></table></td>
+      <td><b style="font-size:13px">{{ $co->legal_entity }}</b><br>{{ $co->address ?: $invoice->branch->office.', '.$invoice->branch->name }}, {{ $co->name }}@if($co->phone || $co->email)<br>{{ collect([$co->phone, $co->email])->filter()->implode(' · ') }}@endif @if($co->tax_id)<br>TIN {{ $co->tax_id }}@endif</td></tr></table></td>
     <td class="r"><div class="p-doc">Invoice</div><div class="mono">{{ $invoice->number }}</div>@if($invoice->version > 1)<div class="muted">Revision {{ $invoice->version }}</div>@endif</td>
   </tr></table>
   <div class="line"></div>
@@ -30,7 +30,7 @@
     <tr><td class="due" style="padding:4px 6px">Balance due</td><td class="r due" style="padding:4px 6px">{{ money($invoice->balance(), $cur) }}</td></tr>
   </table></td></tr></table>
   <table style="width:100%;margin-top:16px;font-size:10.5px;color:#444"><tr>
-    <td style="width:50%;vertical-align:top;padding-right:12px"><b style="font-size:9px;text-transform:uppercase;letter-spacing:.1em">Payment</b><br>{!! nl2br(e($invoice->notes ?: 'Please quote '.$invoice->number.' with your payment.')) !!}</td>
+    <td style="width:50%;vertical-align:top;padding-right:12px"><b style="font-size:9px;text-transform:uppercase;letter-spacing:.1em">Payment</b><br>{!! nl2br(e($invoice->notes ?: 'Please quote '.$invoice->number.' with your payment.')) !!}@if($co->bank_details)<br>Bank: {{ $co->bank_details }}@endif @if($co->mobile_money)<br>Mobile money: {{ $co->mobile_money }}@endif</td>
     <td style="vertical-align:top"><b style="font-size:9px;text-transform:uppercase;letter-spacing:.1em">Terms &amp; conditions</b><br>{!! nl2br(e($invoice->terms ?: 'Payment is due by the date shown. Goods remain the property of the seller until paid in full.')) !!}</td>
   </tr></table>
   <div class="p-foot" style="margin-top:18px;border-top:1px solid #E3E8F0;padding-top:8px;font-size:9.5px;color:#777">

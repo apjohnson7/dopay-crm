@@ -19,9 +19,9 @@ class NumberingTest extends TestCase
         $ng = Country::where('iso2', 'NG')->first();
         $y = now()->format('Y');
 
-        $this->assertSame("A4S-UG-INV-{$y}-000001", $n->document($ug, 'INV'));
-        $this->assertSame("A4S-UG-INV-{$y}-000002", $n->document($ug, 'INV'));
-        $this->assertSame("A4S-NG-INV-{$y}-000001", $n->document($ng, 'INV'));
-        $this->assertSame("A4S-UG-PAY-{$y}-000001", $n->document($ug, 'PAY'));
+        $this->assertSame("DOPAY-UG-INV-{$y}-000001", $n->document($ug, 'INV'));
+        $this->assertSame("DOPAY-UG-INV-{$y}-000002", $n->document($ug, 'INV'));
+        $this->assertSame("DOPAY-NG-INV-{$y}-000001", $n->document($ng, 'INV'));
+        $this->assertSame("DOPAY-UG-PAY-{$y}-000001", $n->document($ug, 'PAY'));
     }
 }

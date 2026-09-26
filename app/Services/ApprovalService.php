@@ -62,7 +62,7 @@ class ApprovalService
             return false;
         }
         $countryId = ! empty($step['paying']) ? (int) $form->datum('paying_country_id') : $form->country_id;
-        if (! $user->isGlobal() && $user->countryId() !== $countryId) {
+        if (! $user->isGlobal() && ! $user->isGroupApprover() && $user->countryId() !== $countryId) {
             return false;
         }
         if (! empty($step['not_holder']) && $user->id === (int) $form->datum('holder_id')) {

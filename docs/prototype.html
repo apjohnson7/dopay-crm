@@ -6,15 +6,16 @@
 <style>
 :root{
   color-scheme:light;
-  --bg:#F3F2F1; --surface:#FFFFFF; --surface-2:#F6F6F5; --line:#E1DFDD; --line-2:#C8C6C4;
-  --ink:#201F1E; --ink-2:#484644; --ink-3:#797775;
-  --accent:#217346; --accent-ink:#FFFFFF; --accent-soft:#E6F2EA; --accent-2:#185C37;
-  --bar:#A9D3B8; --brand-green:#1B9A3E; --brand-red:#D7191F;
-  --ok:#107C41; --ok-soft:#DFF6DD; --warn:#8A5A00; --warn-soft:#FFF4CE; --bad:#A4262C; --bad-soft:#FDE7E9;
-  --info:#0F6CBD; --info-soft:#EBF3FC; --mute:#605E5C; --mute-soft:#F3F2F1;
-  --side:#FFFFFF; --side-2:#E6F2EA; --side-ink:#323130; --side-hi:#185C37;
-  --grid:#EDEBE9; --head:#F3F2F1;
-  --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.08);
+  --bg:#F3F1EC; --surface:#FFFFFF; --surface-2:#F7F6F2; --line:#ECE9E2; --line-2:#D9D5CB;
+  --ink:#1D2927; --ink-2:#56615E; --ink-3:#8B9491;
+  --accent:#0F5E56; --accent-ink:#FFFFFF; --accent-soft:#E3EFEC; --accent-2:#0A4842;
+  --yellow:#F7C548; --yellow-2:#EDB52B; --yellow-soft:#FFF4D4;
+  --bar:#A3CEC7; --brand-green:#1B9A3E; --brand-red:#D7191F;
+  --ok:#11845E; --ok-soft:#DEF5EA; --warn:#8A5A00; --warn-soft:#FFF3CF; --bad:#C0392B; --bad-soft:#FDE8E5;
+  --info:#2563A8; --info-soft:#E7F0FB; --mute:#6B7470; --mute-soft:#F1F0EC;
+  --side:#FFFFFF; --side-2:#FFF4D4; --side-ink:#56615E; --side-hi:#1D2927;
+  --grid:#F0EEE8; --head:#FAF9F6;
+  --shadow:0 2px 6px rgba(29,41,39,.05),0 12px 32px rgba(29,41,39,.10);
   --f-display:'Roboto','Segoe UI',system-ui,sans-serif;
   --f-body:'Roboto','Segoe UI',system-ui,-apple-system,sans-serif;
   --f-mono:'Roboto Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -214,14 +215,14 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:0}
 .paper{position:relative;overflow:hidden;background:#FFFFFF;color:#1B2320;border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 10px 30px rgba(10,30,20,.10);padding:34px 38px;font-size:12.3px;line-height:1.5;border:1px solid #E3E8E5}
 .paper .wm{position:absolute;top:38%;left:50%;transform:translate(-50%,-50%) rotate(-18deg);font-family:var(--f-display);font-size:64px;font-weight:700;color:rgba(179,52,43,.10);white-space:nowrap;pointer-events:none;letter-spacing:.04em}
 .paper .wm.paid{color:rgba(29,122,75,.13)}
-.p-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding-bottom:16px;border-bottom:2px solid #217346}
+.p-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding-bottom:16px;border-bottom:2px solid #0F5E56}
 .p-brand{display:flex;gap:12px;color:#46554F;font-size:11.5px}
 .p-brand b{color:#15211D;font-size:13.5px}
-.p-mono{width:46px;height:46px;border-radius:8px;background:#217346;color:#fff;font-family:var(--f-display);font-weight:700;display:grid;place-items:center;font-size:15px;flex:none}
+.p-mono{width:46px;height:46px;border-radius:8px;background:#0F5E56;color:#fff;font-family:var(--f-display);font-weight:700;display:grid;place-items:center;font-size:15px;flex:none}
 .p-logo{width:46px;height:46px;object-fit:contain;flex:none}
 .p-title{text-align:right}
 .p-title .mono{white-space:nowrap;font-size:11px}
-.p-doc{font-family:var(--f-display);font-size:24px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#217346}
+.p-doc{font-family:var(--f-display);font-size:24px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#0F5E56}
 .p-meta{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;padding:16px 0}
 .p-meta .l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#77867F;font-weight:700;margin-bottom:3px}
 .p-kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px}
@@ -235,7 +236,7 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:0}
 .p-sum dl{display:grid;grid-template-columns:auto auto;gap:3px 26px;min-width:260px;margin:0;font-variant-numeric:tabular-nums}
 .p-sum dt{color:#46554F} .p-sum dd{margin:0;text-align:right;font-weight:600}
 .p-sum .t{font-size:14px;font-weight:700;color:#15211D;border-top:1px solid #C9D3CD;padding-top:5px}
-.p-sum .due{background:#217346;color:#fff;padding:5px 8px;border-radius:4px;font-weight:700}
+.p-sum .due{background:#0F5E56;color:#fff;padding:5px 8px;border-radius:4px;font-weight:700}
 .p-notes{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:18px;font-size:11.3px;color:#46554F;white-space:pre-line}
 .p-foot{margin-top:20px;padding-top:10px;border-top:1px solid #E6ECE8;display:flex;justify-content:space-between;gap:12px;font-size:10.5px;color:#77867F;flex-wrap:wrap}
 .p-sign{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:26px;font-size:11px;color:#46554F}
@@ -321,7 +322,7 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:0}
 .login{position:fixed;inset:0;z-index:110;background:var(--bg);display:grid;place-items:center;padding:16px}
 .login .card{width:100%;max-width:400px;padding:28px}
 
-/* finance form paper: replicates the A4S Word/Excel templates */
+/* finance form paper: replicates the original Word/Excel templates */
 .fp{font-family:Arial,'Liberation Sans','Helvetica Neue',Helvetica,sans-serif;font-size:11.5px;color:#111;line-height:1.45}
 .fp p{margin:6px 0}
 .fp-top{display:flex;justify-content:space-between;gap:10px;font-size:9.5px;color:#8A8A8A;margin-bottom:10px;flex-wrap:wrap}
@@ -515,48 +516,15 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* ---------- Excel-style light theme ---------- */
-h1,h2,h3,h4{font-weight:500}
-h1{letter-spacing:0} h3{font-weight:500}
-.side{border-right:1px solid var(--line)}
-.brand b{color:var(--ink)} .brand small{color:var(--ink-3)}
-.brand-logo{background:transparent;padding:0}
-.nav-h{color:var(--ink-3)}
-.nav a{border-radius:3px;color:var(--side-ink)}
-.nav a:hover{background:var(--bg);color:var(--ink)}
-.nav a.on{background:var(--side-2);color:var(--side-hi);font-weight:500;box-shadow:inset 3px 0 0 var(--accent)}
-.nav a .cnt{color:#FFFFFF}
-.side-foot{color:var(--ink-3)}
-.top{background:var(--accent);border-bottom:1px solid var(--accent-2);backdrop-filter:none;color:#FFFFFF}
-.top .search input,.top .sel,.top .icon-btn{border-color:transparent;border-radius:3px;background:#FFFFFF;color:var(--ink)}
-.top .search input:focus{box-shadow:0 0 0 2px rgba(255,255,255,.55)}
-.top .ai-btn{background:#FFFFFF;border-color:#FFFFFF;border-radius:3px;color:var(--accent-2)}
-.top .ai-btn:hover{background:var(--accent-soft)}
-.top .proto{background:rgba(255,255,255,.18);color:#FFFFFF}
-.card,.paper,.modal,.pop,.drawer{border-radius:4px}
-.btn,.chip,.inp,.f input,.f select,.f textarea,.sel,.qa button,.pipe div,.linkbox,.note,.tag{border-radius:3px}
-.chip{border-radius:3px}
-.chip.on{background:var(--accent);border-color:var(--accent);color:#FFFFFF}
-.kpi .v{font-weight:500}
-.tbl th{background:var(--head);color:var(--ink-2);text-transform:none;letter-spacing:0;font-size:12px;font-weight:500;border:1px solid var(--line);border-top:0}
-.tbl td{border:1px solid var(--grid);border-top:0}
-.tbl th:first-child,.tbl td:first-child{border-left:0}
-.tbl th:last-child,.tbl td:last-child{border-right:0}
-.tbl tr.click:hover td{background-color:#EAF4EE}
-.tbl tr.tt td{background:var(--head);font-weight:500}
-.card-h{background:var(--surface);border-bottom:1px solid var(--line)}
-.ftab th{text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink-2)}
-.qa button:hover{border-color:var(--accent);background:var(--accent-soft)}
-.tabs button.on{border-bottom-color:var(--accent);color:var(--accent-2)}
-.fp,.paper{font-family:'Roboto',Arial,sans-serif}
-.fp h1.ft{font-family:'Roboto',Arial,sans-serif;font-weight:500;color:#185C37}
-.fp .rule{border-top-color:#217346}
-.fp .sec{color:#185C37}
-.fp table.ft th{background:#F3F2F1;border-color:#A19F9D}
-.fp table.ft td{border-color:#A19F9D}
-.fp table.ft tr.sh td{background:#E6F2EA}
-.msg.u{background:var(--accent)}
 .stat-cell{font-variant-numeric:tabular-nums}
+.fp,.paper{font-family:'Roboto',Arial,sans-serif}
+.fp h1.ft{font-family:'Roboto',Arial,sans-serif;font-weight:500;color:#0A4842}
+.fp .rule{border-top-color:#0F5E56}
+.fp .sec{color:#0A4842}
+.fp table.ft th{background:#F3F1EC;border-color:#A19F9D}
+.fp table.ft td{border-color:#A19F9D}
+.fp table.ft tr.sh td{background:#E3EFEC}
+.msg.u{background:var(--accent)}
 @media (max-width:760px){.tbl.cards td{border:0}}
 button.lnk{background:none;border:0;padding:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;text-align:left}button.lnk:hover{text-decoration:underline}.nw{white-space:nowrap}
 [hidden]{display:none!important}
@@ -618,6 +586,103 @@ button.lnk{background:none;border:0;padding:0;color:var(--accent);font:inherit;f
 }
 @media (max-width:760px){.tbl.cards .rn,.tbl.cards tfoot{display:none}.gt-f{flex:1 1 100%;width:auto}.side-tog{display:none}.aglg{grid-template-columns:repeat(2,minmax(0,1fr))}.tbl tbody tr:nth-child(even) td{background-color:transparent}}
 @media print{body.pgrid .side,body.pgrid .top,body.pgrid .ph,body.pgrid #view>*:not(.pg-host){display:none!important}body.pgrid .gw:not(.pg-on),body.pgrid .gt{display:none!important}body.pgrid .app{display:block}}
+
+/* ---------- DoPay soft theme (teal + yellow, rounded cards) ---------- */
+h1{font-size:24px;font-weight:600;letter-spacing:-.01em} h3{font-weight:600;font-size:15px}
+.side{background:var(--surface);border-right:0;box-shadow:1px 0 0 var(--line);padding:22px 14px}
+.brand b{color:var(--accent);font-size:20px;font-weight:700} .brand small{color:var(--ink-3)}
+.brand-logo{background:transparent;padding:0}
+.brand-stripe{display:none}
+.nav-h{color:var(--ink-3);font-size:10.5px;letter-spacing:.08em;padding:0 12px 6px}
+.nav a{padding:10px 12px;border-radius:10px;color:var(--ink-2);font-weight:500;font-size:14px;gap:12px}
+.nav a:hover{background:var(--surface-2);color:var(--ink)}
+.nav a.on{background:var(--yellow);color:var(--ink);font-weight:600;box-shadow:none}
+.nav a .cnt{background:var(--accent);color:#fff}
+.nav a.on .cnt{background:var(--ink)}
+.side-user{border:0;background:var(--surface-2);border-radius:12px}
+.side-user .av{background:var(--accent)}
+.side-tog{border-radius:8px}
+.top{background:var(--bg);border-bottom:0;backdrop-filter:none;color:var(--ink);padding:14px 28px}
+.top .search input,.top .sel,.top .icon-btn{background:var(--surface);border:1px solid var(--line);border-radius:10px;color:var(--ink)}
+.top .search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.top .ai-btn{background:var(--accent);border-color:var(--accent);color:#fff;border-radius:10px}
+.top .ai-btn:hover{background:var(--accent-2)}
+.top .proto{background:var(--yellow-soft);color:#7A5B00}
+.content{padding:8px 28px 64px}
+.card,.paper,.modal,.pop,.drawer{border-radius:14px}
+.card{border:1px solid var(--line);box-shadow:0 1px 2px rgba(29,41,39,.04)}
+.card-h{border-bottom:1px solid var(--grid);background:none}
+.btn,.inp,.f input,.f select,.f textarea,.sel,.linkbox,.note,.qa button,.pipe div{border-radius:10px}
+.btn.pri{background:var(--yellow);border-color:var(--yellow);color:var(--ink);font-weight:700}
+.btn.pri:hover{background:var(--yellow-2);border-color:var(--yellow-2)}
+.chip{border-radius:999px;background:var(--surface);border-color:var(--line)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.tag{border-radius:6px}
+.tabs button.on,.tabs a.on{border-bottom-color:var(--accent);color:var(--accent)}
+.kpi{padding:18px 20px;gap:8px}
+.kpi-stripe{display:none}
+.kpi .lbl{text-transform:none;letter-spacing:0;font-size:13px;color:var(--ink-2);font-weight:500}
+.kpi .v{font-size:28px;font-weight:600}
+.kpi.hero{background:var(--accent);border-color:var(--accent);color:#fff}
+.kpi.hero .lbl,.kpi.hero .d,.kpi.hero .v small{color:rgba(255,255,255,.82)}
+.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.kic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+.kpi.hero .kic{background:#fff;color:var(--accent)}
+.kic.y{background:var(--yellow-soft);color:#9A6B00}
+.kic.r{background:var(--bad-soft);color:var(--bad)}
+.kpi .d .up{color:var(--ok);font-weight:600} .kpi .d .dn{color:var(--bad);font-weight:600}
+.kpi.hero .d .up,.kpi.hero .d .dn{color:#fff}
+.tbl th{background:var(--head);color:var(--ink-3);font-size:12px;font-weight:500;text-transform:none;letter-spacing:0;border:0;border-bottom:1px solid var(--line)}
+.tbl td{border:0;border-bottom:1px solid var(--grid)}
+.tbl .rn{display:none}
+.tbl tbody tr:nth-child(even) td{background-color:transparent}
+.tbl tr.click:hover td{background-color:var(--surface-2)}
+.tbl tfoot td{background:var(--head);border-top:1px solid var(--line)}
+.tbl tr.tt td{background:var(--head)}
+.gt{border-bottom:0;padding:12px 16px}
+.gt-f{border-radius:10px;border-color:var(--line);background:var(--surface-2);height:34px}
+.mstrip{border-radius:14px}
+.pill{border-radius:8px;padding:3px 9px}
+.alert{padding:12px 18px}
+.alert .sv{border-radius:4px}
+.avt{width:38px;height:38px;border-radius:10px;display:inline-grid;place-items:center;font-weight:700;font-size:12.5px;flex:none;background:var(--accent);color:#fff;letter-spacing:.02em}
+.avt.y{background:var(--yellow);color:var(--ink)}
+.lc{display:flex;align-items:center;gap:12px;min-width:0}
+.lc>div{min-width:0}
+.dh{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.dh-date{font-weight:600;color:var(--ink);font-size:14px}
+.dgrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+.dmain,.dside{display:flex;flex-direction:column;gap:18px;min-width:0}
+.g-kpi3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cta{display:flex;align-items:center;justify-content:center;gap:10px;height:58px;border-radius:14px;border:0;background:var(--yellow);color:var(--ink);font-weight:700;font-size:14.5px;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;width:100%}
+.cta:hover{background:var(--yellow-2)} .cta:disabled{opacity:.5;cursor:not-allowed}
+.qa2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.qa2 button{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:13px;cursor:pointer;text-align:left;color:var(--ink)}
+.qa2 button .ic{color:var(--accent);flex:none}
+.qa2 button:hover{border-color:var(--accent);background:var(--accent-soft)}
+.qa2 button:disabled{opacity:.45;cursor:not-allowed}
+.li{display:flex;flex-direction:column;padding:4px 8px 10px}
+.li-row{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;cursor:pointer;background:none;border:0;text-align:left;width:100%;font:inherit;color:inherit}
+.li-row:hover{background:var(--surface-2)}
+.li-row .m{flex:1;min-width:0}
+.li-row .m b{display:block;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li-row .m span{font-size:12.5px;color:var(--ink-3)}
+.li-row .r{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right;flex:none}
+.li-row .r small{font-size:11.5px;color:var(--ink-3)}
+.li-row .r .amt{font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.pay-btn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:8px;border:0;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.pay-btn:hover{background:var(--yellow-2)}
+.lsearch{margin:12px 16px 4px;display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;height:36px;padding:0 10px;color:var(--ink-3)}
+.lsearch input{border:0;background:none;outline:0;font:inherit;font-size:13px;flex:1;min-width:0;color:var(--ink)}
+.rank{display:flex;align-items:center;gap:12px;padding:9px 18px;cursor:pointer}
+.rank:hover{background:var(--surface-2)}
+.rank .no{font-size:12px;color:var(--ink-3);width:18px;font-weight:600}
+.rank .m{flex:1;min-width:0} .rank .m b{display:block;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank .m span{font-size:12px;color:var(--ink-3)} .rank .m span em{font-style:normal;color:var(--accent);font-weight:600}
+.card-h .lnk,.card-h button.lnk{color:var(--accent);font-size:12.5px}
+.empty-s{padding:18px;color:var(--ink-3);font-size:13px;text-align:center}
+@media (max-width:1180px){.dgrid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){.g-kpi3{grid-template-columns:minmax(0,1fr)}.content{padding:8px 16px 64px}.top{padding:10px 16px}.dside .qa2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 
 <div class="app">
@@ -693,6 +758,7 @@ const token=s=>{let h=2166136261;for(const ch of s){h^=ch.charCodeAt(0);h=Math.i
 const uid=()=>Math.random().toString(36).slice(2,9);
 
 const I={
+arrow:'M5 12h14M13 6l6 6-6 6',
 search:'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
 print:'M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z',
 collapse:'M15 6l-6 6 6 6',
@@ -734,18 +800,18 @@ const ic=(n,s=18)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 2
 
 /* ============ state & sample data ============ */
 const S={
-  user:'U3', branch:'KLA', route:'dashboard', sel:{}, invFilter:'All', custQ:'', prodCat:'All', docTab:'repo', setTab:'org',
+  user:'U3', acct:'UG', branch:'KLA', route:'dashboard', sel:{}, invFilter:'All', custQ:'', prodCat:'All', docTab:'repo', setTab:'org',
   rep:'sales', repPeriod:'year', repCountry:'ALL', repView:'local', custTab:'timeline', stmtPeriod:'year', tpl:'T1', auditQ:'', auditUser:'ALL', expFilter:'All', aiLog:[],
   rates:{USD:1,UGX:3700,NGN:1550,XAF:600,XOF:600,KES:129}, rateDate:'2026-09-25',
-  pattern:'A4S-{CC}-{DOC}-{YYYY}-{SEQ}', seq:{},
-  org:{name:'',address:'Plot 00, Kampala Road',phone:'+256 700 000 000',email:'accounts@a4s.example',tin:'1000000000',web:'a4s.example',logo:null,
+  pattern:'DOPAY-{CC}-{DOC}-{YYYY}-{SEQ}', seq:{},
+  org:{name:'',address:'Plot 00, Kampala Road',phone:'+256 700 000 000',email:'accounts@dopay.example',tin:'1000000000',web:'dopay.example',logo:null,
        bank:'Stanbic Bank Uganda · A/C 9030 0000 00000',momo:'MTN MoMo merchant 000000',
-       terms:'Payment is due by the date shown. Please quote the invoice number with every payment. Goods remain the property of A4S until paid in full. Late payments may attract a 2% monthly charge.'},
+       terms:'Payment is due by the date shown. Please quote the invoice number with every payment. Goods remain the property of DoPay until paid in full. Late payments may attract a 2% monthly charge.'},
   countries:[
-    {code:'UG',filing:15,name:'Uganda',cur:'UGX',tax:18,taxName:'VAT',dcode:'UGD',entity:'A4S Uganda Ltd',tz:'Africa/Kampala',tzl:'EAT'},
-    {code:'NG',filing:21,name:'Nigeria',cur:'NGN',tax:7.5,taxName:'VAT',dcode:'NG',entity:'A4S Nigeria Co. Ltd',tz:'Africa/Lagos',tzl:'WAT'},
-    {code:'CM',filing:15,name:'Cameroon',cur:'XAF',tax:19.25,taxName:'TVA',dcode:'CMR',entity:'A4S Cameroon Co., Ltd.',tz:'Africa/Douala',tzl:'WAT'},
-    {code:'CI',filing:15,name:'Ivory Coast',cur:'XOF',tax:18,taxName:'TVA',dcode:'CIV',entity:'A4S Ivory Coast Co., Ltd.',tz:'Africa/Abidjan',tzl:'GMT'}],
+    {code:'UG',profile:{address:'Plot 00, Kampala Road',phone:'+256 700 000 000',email:'accounts.ug@dopay.example',tin:'1000000000',bank:'Stanbic Bank Uganda · A/C 9030 0000 00000',momo:'MTN MoMo merchant 000000'},filing:15,name:'Uganda',cur:'UGX',tax:18,taxName:'VAT',dcode:'UGD',entity:'DoPay Uganda Ltd',tz:'Africa/Kampala',tzl:'EAT'},
+    {code:'NG',profile:{address:'Plot 5, Allen Avenue, Ikeja',phone:'+234 800 000 0000',email:'accounts.ng@dopay.example',tin:'12345678-0001',bank:'GTBank · A/C 0000 0000 00',momo:''},filing:21,name:'Nigeria',cur:'NGN',tax:7.5,taxName:'VAT',dcode:'NG',entity:'DoPay Nigeria Co. Ltd',tz:'Africa/Lagos',tzl:'WAT'},
+    {code:'CM',profile:{address:'Rue Joss, Akwa',phone:'+237 600 000 000',email:'accounts.cm@dopay.example',tin:'M000000000000A',bank:'Afriland First Bank · A/C 0000 0000 000',momo:'MTN MoMo 000000'},filing:15,name:'Cameroon',cur:'XAF',tax:19.25,taxName:'TVA',dcode:'CMR',entity:'DoPay Cameroon Co., Ltd.',tz:'Africa/Douala',tzl:'WAT'},
+    {code:'CI',profile:{address:'Plateau',phone:'+225 07 00 00 00 00',email:'accounts.ci@dopay.example',tin:'CI-0000000-A',bank:'SGCI · A/C 0000 0000 000',momo:'Orange Money 000000'},filing:15,name:'Ivory Coast',cur:'XOF',tax:18,taxName:'TVA',dcode:'CIV',entity:'DoPay Ivory Coast Co., Ltd.',tz:'Africa/Abidjan',tzl:'GMT'}],
   branches:[
     {id:'KLA',bcode:'HQ',name:'Kampala',cc:'UG',office:'Head office, Kampala Road',dept:'Finance',manager:'U1',active:true},
     {id:'EBB',bcode:'EBB',name:'Entebbe',cc:'UG',office:'Airport Road office',dept:'Sales',manager:'U4',active:true},
@@ -757,25 +823,27 @@ const S={
   methods:['Cash','Bank transfer','Mobile money','Card','Online payment','Other'],
   terms:[{label:'Due on receipt',days:0},{label:'Net 15',days:15},{label:'Net 30',days:30},{label:'Net 45',days:45}],
   users:[
-    {id:'U1',name:'Grace Achieng',email:'grace.achieng@a4s.example',role:'Super Administrator',branch:'KLA',twofa:true,last:'2026-09-26 07:58',active:true},
-    {id:'U2',name:'Patrick Mugisha',email:'patrick.mugisha@a4s.example',role:'Finance Manager',branch:'KLA',twofa:true,last:'2026-09-26 08:31',active:true},
-    {id:'U3',name:'David Ssemanda',email:'david.ssemanda@a4s.example',role:'Accounting Officer',branch:'KLA',twofa:true,last:'2026-09-26 08:45',active:true},
-    {id:'U4',name:'Joseph Kizza',email:'joseph.kizza@a4s.example',role:'Accountant',branch:'EBB',twofa:false,last:'2026-09-25 17:12',active:true},
-    {id:'U5',name:'Peter Ouma',email:'peter.ouma@a4s.example',role:'Auditor',branch:'KLA',twofa:true,last:'2026-09-24 11:03',active:true},
-    {id:'U6',name:'Aminata Koné',email:'aminata.kone@a4s.example',role:'Branch Manager',branch:'ABJ',twofa:true,last:'2026-09-25 15:40',active:true},
-    {id:'U7',name:'Brian Tumusiime',email:'brian.tumusiime@a4s.example',role:'Sales/Customer Officer',branch:'KLA',twofa:false,last:'2026-09-26 08:12',active:true},
-    {id:'U8',name:'Fatuma Nalwoga',email:'fatuma.nalwoga@a4s.example',role:'Document Officer',branch:'KLA',twofa:true,last:'2026-09-23 10:20',active:true},
-    {id:'U9',name:'Chinedu Okafor',email:'chinedu.okafor@a4s.example',role:'Branch Manager',branch:'LOS',twofa:true,last:'2026-09-25 18:05',active:true},
-    {id:'U10',name:'Irene Nakimuli',email:'irene.nakimuli@a4s.example',role:'Country Manager',branch:'KLA',twofa:true,last:'2026-09-26 08:02',active:true},
-    {id:'U11',name:'Martha Nabirye',email:'martha.nabirye@a4s.example',role:'Assistant Manager',branch:'KLA',twofa:true,last:'2026-09-25 17:40',active:true},
-    {id:'U12',name:'Ngozi Eze',email:'ngozi.eze@a4s.example',role:'Accountant',branch:'LOS',twofa:true,last:'2026-09-25 16:10',active:true},
-    {id:'U13',name:'Jean-Paul Fotso',email:'jeanpaul.fotso@a4s.example',role:'Accountant',branch:'DLA',twofa:true,last:'2026-09-25 14:22',active:true},
-    {id:'U14',name:'Daniel Osei',email:'daniel.osei@a4s.example',role:'Financial Controller',branch:'KLA',twofa:true,last:'2026-09-26 07:30',active:true},
-    {id:'U15',name:'Kwame Boateng',email:'kwame.boateng@a4s.example',role:'Regional Manager',branch:'LOS',twofa:true,last:'2026-09-25 19:05',active:true},
-    {id:'U16',name:'Amara Diallo',email:'amara.diallo@a4s.example',role:'CFO',branch:'KLA',twofa:true,last:'2026-09-26 11:50',active:true},
-    {id:'U17',name:'Esi Mensah',email:'esi.mensah@a4s.example',role:'CEO',branch:'KLA',twofa:true,last:'2026-09-26 10:15',active:true},
-    {id:'U18',name:'Emmanuel Tabi',email:'emmanuel.tabi@a4s.example',role:'Country Manager',branch:'DLA',twofa:true,last:'2026-09-25 18:44',active:true}],
-  roles:['Super Administrator','CEO','CFO','Financial Controller','Regional Manager','Country Manager','Assistant Manager','Finance Manager','Accountant','Accounting Officer','Branch Manager','Sales/Customer Officer','Auditor','Document Officer'],
+    {id:'U1',name:'Grace Achieng',email:'grace.achieng@dopay.example',role:'Super Administrator',branch:'KLA',twofa:true,last:'2026-09-26 07:58',active:true},
+    {id:'U2',name:'Patrick Mugisha',email:'patrick.mugisha@dopay.example',role:'Finance Manager',branch:'KLA',twofa:true,last:'2026-09-26 08:31',active:true},
+    {id:'U3',name:'David Ssemanda',email:'david.ssemanda@dopay.example',role:'Accounting Officer',branch:'KLA',twofa:true,last:'2026-09-26 08:45',active:true},
+    {id:'U4',name:'Joseph Kizza',email:'joseph.kizza@dopay.example',role:'Accountant',branch:'EBB',twofa:false,last:'2026-09-25 17:12',active:true},
+    {id:'U5',name:'Peter Ouma',email:'peter.ouma@dopay.example',role:'Auditor',branch:'KLA',twofa:true,last:'2026-09-24 11:03',active:true},
+    {id:'U6',name:'Aminata Koné',email:'aminata.kone@dopay.example',role:'Branch Manager',branch:'ABJ',twofa:true,last:'2026-09-25 15:40',active:true},
+    {id:'U7',name:'Brian Tumusiime',email:'brian.tumusiime@dopay.example',role:'Sales/Customer Officer',branch:'KLA',twofa:false,last:'2026-09-26 08:12',active:true},
+    {id:'U8',name:'Fatuma Nalwoga',email:'fatuma.nalwoga@dopay.example',role:'Document Officer',branch:'KLA',twofa:true,last:'2026-09-23 10:20',active:true},
+    {id:'U9',name:'Chinedu Okafor',email:'chinedu.okafor@dopay.example',role:'Branch Manager',branch:'LOS',twofa:true,last:'2026-09-25 18:05',active:true},
+    {id:'U10',name:'Irene Nakimuli',email:'irene.nakimuli@dopay.example',role:'Country Manager',branch:'KLA',twofa:true,last:'2026-09-26 08:02',active:true},
+    {id:'U11',name:'Martha Nabirye',email:'martha.nabirye@dopay.example',role:'Assistant Manager',branch:'KLA',twofa:true,last:'2026-09-25 17:40',active:true},
+    {id:'U12',name:'Ngozi Eze',email:'ngozi.eze@dopay.example',role:'Accountant',branch:'LOS',twofa:true,last:'2026-09-25 16:10',active:true},
+    {id:'U13',name:'Jean-Paul Fotso',email:'jeanpaul.fotso@dopay.example',role:'Accountant',branch:'DLA',twofa:true,last:'2026-09-25 14:22',active:true},
+    {id:'U14',name:'Daniel Osei',email:'daniel.osei@dopay.example',role:'Financial Controller',branch:'KLA',twofa:true,last:'2026-09-26 07:30',active:true},
+    {id:'U15',name:'Kwame Boateng',email:'kwame.boateng@dopay.example',role:'Regional Manager',branch:'LOS',twofa:true,last:'2026-09-25 19:05',active:true},
+    {id:'U16',name:'Amara Diallo',email:'amara.diallo@dopay.example',role:'CFO',branch:'KLA',twofa:true,last:'2026-09-26 11:50',active:true},
+    {id:'U17',name:'Esi Mensah',email:'esi.mensah@dopay.example',role:'CEO',branch:'KLA',twofa:true,last:'2026-09-26 10:15',active:true},
+    {id:'U19',name:'Irene Atuhaire',email:'irene.atuhaire@dopay.example',role:'Country Administrator',branch:'KLA',twofa:true,last:'2026-09-26 08:40',active:true},
+    {id:'U20',name:'Tunde Bakare',email:'tunde.bakare@dopay.example',role:'Country Administrator',branch:'LOS',twofa:true,last:'2026-09-25 16:05',active:true},
+    {id:'U18',name:'Emmanuel Tabi',email:'emmanuel.tabi@dopay.example',role:'Country Manager',branch:'DLA',twofa:true,last:'2026-09-25 18:44',active:true}],
+  roles:['Super Administrator','Country Administrator','CEO','CFO','Financial Controller','Regional Manager','Country Manager','Assistant Manager','Finance Manager','Accountant','Accounting Officer','Branch Manager','Sales/Customer Officer','Auditor','Document Officer'],
   permList:[
     ['customers.manage','Create & edit customers'],['suppliers.manage','Add & edit suppliers'],['invoices.create','Create invoices & drafts'],['invoices.approve','Approve invoices'],
     ['payments.record','Record payments & receipts'],['payments.reverse','Refund / reverse payments'],['expenses.create','Submit expenses'],
@@ -790,9 +858,9 @@ const S={
     {id:'R3',label:'Payment overdue',rule:'3 days overdue',offset:3,on:true,tpl:'T10',ch:'Email'},
     {id:'R4',label:'Second payment reminder',rule:'7 days overdue',offset:7,on:true,tpl:'T10',ch:'WhatsApp'}],
   integrations:[
-    {id:'email',name:'Email (SMTP)',logo:'@',status:'Connected',detail:'Sending as accounts@a4s.example'},
+    {id:'email',name:'Email (SMTP)',logo:'@',status:'Connected',detail:'Sending as accounts@dopay.example'},
     {id:'wa',name:'WhatsApp Business API',logo:'WA',status:'Not connected',detail:'Until connected, WhatsApp opens a pre-filled chat on the officer’s device.'},
-    {id:'tg',name:'Telegram bot',logo:'TG',status:'Connected',detail:'@A4SBillingBot · delivers links to opted-in customers'},
+    {id:'tg',name:'Telegram bot',logo:'TG',status:'Connected',detail:'@DoPayBillingBot · delivers links to opted-in customers'},
     {id:'imo',name:'IMO',logo:'imo',status:'Limited',detail:'No public business API. Staff share the secure link from the IMO app.'},
     {id:'momo',name:'Mobile money (MTN / Airtel)',logo:'MM',status:'Planned',detail:'Phase 2: auto-match collections to invoices.'}],
   security:{twofa:true,minLen:12,timeout:30,lockout:5},
@@ -801,6 +869,7 @@ const S={
 const ALLP=S.permList.map(p=>p[0]);
 S.perms={
   'Super Administrator':[...ALLP],
+  'Country Administrator':['customers.manage','suppliers.manage','users.manage','settings.manage','documents.manage','reports.view','audit.view','expenses.approve'],
   'Finance Manager':ALLP.filter(p=>!['users.manage','settings.manage'].includes(p)),
   'Accountant':['customers.manage','invoices.create','payments.record','expenses.create','reports.view','forms.submit'],
   'Accounting Officer':['customers.manage','invoices.create','payments.record','expenses.create','reports.view','forms.submit'],
@@ -828,10 +897,20 @@ const cname=c=>c?(c.company||c.name):'—';
 const me=()=>user(S.user);
 const role=()=>me().role;
 const can=p=>(S.perms[role()]||[]).includes(p);
-const orgName=cc=>country(cc).entity||('A4S '+country(cc).name);
-const scopeCur=()=>S.branch==='ALL'?'USD':country(branch(S.branch).cc).cur;
-const inScope=r=>S.branch==='ALL'||r.branch===S.branch;
-const cv=(amt,cur)=>S.branch==='ALL'?amt/S.rates[cur]:amt;
+const orgName=cc=>country(cc).entity||('DoPay '+country(cc).name);
+const isSuper=()=>role()==='Super Administrator';
+/* Each country is its own account. Only the Super Administrator (or a user an admin has given extra accounts) can open other countries. */
+const userAccts=uid=>{const u=user(uid);if(u.role==='Super Administrator')return S.countries.map(c=>c.code);return [...new Set([branch(u.branch).cc,...(u.accts||[])])]};
+const myAccts=()=>userAccts(S.user);
+const recCC=r=>r.country||(r.branch&&r.branch!=='ALL'?branch(r.branch).cc:null);
+const homeBr=()=>S.branch!=='ALL'?S.branch:(S.acct!=='ALL'?((S.branches.find(b=>b.cc===S.acct&&b.id===me().branch)||S.branches.find(b=>b.cc===S.acct&&b.active)||{}).id||'KLA'):(me().branch||'KLA'));
+const homeCC=()=>S.acct!=='ALL'?S.acct:branch(homeBr()).cc;
+const acctRoutes=r=>true;
+const org=cc=>Object.assign({},S.org,(country(cc)||{}).profile||{});
+const acctName=cc=>cc==='ALL'?'All accounts':'DoPay '+country(cc).name;
+const scopeCur=()=>S.acct==='ALL'?'USD':country(S.acct).cur;
+const inScope=r=>{const cc=recCC(r);if(S.acct!=='ALL'&&cc&&cc!==S.acct)return false;if(S.acct==='ALL'&&cc&&!myAccts().includes(cc))return false;return S.branch==='ALL'||!r.branch||r.branch===S.branch};
+const cv=(amt,cur)=>S.acct==='ALL'?amt/S.rates[cur]:(cur===scopeCur()?amt:amt/S.rates[cur]*S.rates[scopeCur()]);
 const toUSD=(amt,cur)=>amt/(S.rates[cur]||1);
 
 function nextNo(cc,doc){const k=cc+doc;S.seq[k]=(S.seq[k]||0)+1;return S.pattern.replace('{CC}',cc).replace('{DOC}',doc).replace('{YYYY}','2026').replace('{SEQ}',String(S.seq[k]).padStart(6,'0'))}
@@ -876,22 +955,22 @@ function seedInv(no,cid,date,due,lines,status){
     link:'', sentAt:status==='Sent'?addDays(date,0):''};
   inv.link='https://pay.dopay.example/i/'+token(no);
   S.invoices.push(inv);
-  const m=no.match(/A4S-(\w\w)-INV-2026-0*(\d+)/);const k=m[1]+'INV';S.seq[k]=Math.max(S.seq[k]||0,+m[2]);
+  const m=no.match(/DOPAY-(\w\w)-INV-2026-0*(\d+)/);const k=m[1]+'INV';S.seq[k]=Math.max(S.seq[k]||0,+m[2]);
 }
-seedInv('A4S-UG-INV-2026-000218','C-UG-0001','2026-07-10','2026-08-09',[['S-SVC-002',2],['P-AGR-001',10]],'Sent');
-seedInv('A4S-UG-INV-2026-000224','C-UG-0002','2026-08-05','2026-09-04',[['S-SVC-001',4],['P-HLT-001',20]],'Sent');
-seedInv('A4S-UG-INV-2026-000226','C-UG-0002','2026-08-15','2026-09-14',[['P-HSE-002',40]],'Cancelled');
-seedInv('A4S-UG-INV-2026-000227','C-UG-0004','2026-08-20','2026-09-19',[['P-HSE-001',30],['P-HSE-002',50,5]],'Sent');
-seedInv('A4S-UG-INV-2026-000229','C-UG-0005','2026-09-01','2026-10-01',[['P-HLT-001',40],['P-HLT-002',60]],'Sent');
-seedInv('A4S-UG-INV-2026-000230','C-UG-0004','2026-09-05','2026-09-30',[['P-HSE-001',12]],'Sent');
-seedInv('A4S-UG-INV-2026-000231','C-UG-0001','2026-09-10','2026-10-10',[['S-SVC-001',1]],'Sent');
-seedInv('A4S-UG-INV-2026-000233','C-UG-0006','2026-09-18','2026-10-18',[['P-HLT-002',25]],'Pending approval');
-seedInv('A4S-UG-INV-2026-000234','C-UG-0003','2026-09-22','2026-10-22',[['P-AGR-001',40],['P-AGR-002',40]],'Approved');
-seedInv('A4S-UG-INV-2026-000235','C-UG-0007','2026-09-24','2026-10-09',[['P-HLT-001',2]],'Draft');
-seedInv('A4S-UG-INV-2026-000236','C-UG-0008','2026-09-25','2026-10-10',[['P-HLT-002',3]],'Pending approval');
-seedInv('A4S-NG-INV-2026-000041','C-NG-0001','2026-08-28','2026-09-27',[['P-HSE-001',100]],'Sent');
-seedInv('A4S-CM-INV-2026-000017','C-CM-0001','2026-07-30','2026-08-29',[['P-AGR-001',200]],'Sent');
-invBy('A4S-UG-INV-2026-000226').cancelReason='Duplicate of 000224';
+seedInv('DOPAY-UG-INV-2026-000218','C-UG-0001','2026-07-10','2026-08-09',[['S-SVC-002',2],['P-AGR-001',10]],'Sent');
+seedInv('DOPAY-UG-INV-2026-000224','C-UG-0002','2026-08-05','2026-09-04',[['S-SVC-001',4],['P-HLT-001',20]],'Sent');
+seedInv('DOPAY-UG-INV-2026-000226','C-UG-0002','2026-08-15','2026-09-14',[['P-HSE-002',40]],'Cancelled');
+seedInv('DOPAY-UG-INV-2026-000227','C-UG-0004','2026-08-20','2026-09-19',[['P-HSE-001',30],['P-HSE-002',50,5]],'Sent');
+seedInv('DOPAY-UG-INV-2026-000229','C-UG-0005','2026-09-01','2026-10-01',[['P-HLT-001',40],['P-HLT-002',60]],'Sent');
+seedInv('DOPAY-UG-INV-2026-000230','C-UG-0004','2026-09-05','2026-09-30',[['P-HSE-001',12]],'Sent');
+seedInv('DOPAY-UG-INV-2026-000231','C-UG-0001','2026-09-10','2026-10-10',[['S-SVC-001',1]],'Sent');
+seedInv('DOPAY-UG-INV-2026-000233','C-UG-0006','2026-09-18','2026-10-18',[['P-HLT-002',25]],'Pending approval');
+seedInv('DOPAY-UG-INV-2026-000234','C-UG-0003','2026-09-22','2026-10-22',[['P-AGR-001',40],['P-AGR-002',40]],'Approved');
+seedInv('DOPAY-UG-INV-2026-000235','C-UG-0007','2026-09-24','2026-10-09',[['P-HLT-001',2]],'Draft');
+seedInv('DOPAY-UG-INV-2026-000236','C-UG-0008','2026-09-25','2026-10-10',[['P-HLT-002',3]],'Pending approval');
+seedInv('DOPAY-NG-INV-2026-000041','C-NG-0001','2026-08-28','2026-09-27',[['P-HSE-001',100]],'Sent');
+seedInv('DOPAY-CM-INV-2026-000017','C-CM-0001','2026-07-30','2026-08-29',[['P-AGR-001',200]],'Sent');
+invBy('DOPAY-UG-INV-2026-000226').cancelReason='Duplicate of 000224';
 
 function calc(i){let sub=0,disc=0,tax=0;const cur=i.cur||'UGX';
   (i.items||[]).forEach(it=>{const g=(+it.qty||0)*(+it.price||0);const d=g*(+it.disc||0)/100;sub+=g;disc+=d;tax+=(g-d)*(+it.tax||0)/100});
@@ -908,13 +987,13 @@ function seedPay(cid,date,method,ref,allocs,by,status){
   if(p.status==='Completed'){al.forEach(a=>{invBy(a.inv).paid+=a.amt});S.receipts.push({no:nextNo(c.country,'RCT'),pay:p.no,date,cust:cid,status:'Issued'});}
   S.payments.push(p);return p}
 S.seq.UGPAY=140;S.seq.UGRCT=140;S.seq.NGPAY=22;S.seq.NGRCT=22;S.seq.THPAY=5;S.seq.THRCT=5;S.seq.UGEXP=57;S.seq.NGEXP=8;
-seedPay('C-UG-0001','2026-08-02','Bank transfer','STB-TRX-88231',[['A4S-UG-INV-2026-000218','full']],'U3');
-seedPay('C-UG-0002','2026-09-01','Mobile money','MTN-MP260901.1432.C77412',[['A4S-UG-INV-2026-000224',1000000]],'U3');
-seedPay('C-UG-0005','2026-09-15','Bank transfer','CEN-44820917',[['A4S-UG-INV-2026-000229',3000000]],'U4');
-seedPay('C-NG-0001','2026-09-22','Bank transfer','GTB-NIP-220926771',[['A4S-NG-INV-2026-000041',1500000]],'U9');
-seedPay('C-UG-0004','2026-09-24','Online payment','PG-CARD-DECLINED-5521',[['A4S-UG-INV-2026-000227',800000]],'U3','Failed');
-seedPay('C-UG-0001','2026-09-25','Mobile money','MTN-MP260925.0918.A55219',[['A4S-UG-INV-2026-000231',250000]],'U3');
-seedPay('C-UG-0002','2026-09-26','Cash','CASH-KLA-0926-01',[['A4S-UG-INV-2026-000224',500000]],'U3');
+seedPay('C-UG-0001','2026-08-02','Bank transfer','STB-TRX-88231',[['DOPAY-UG-INV-2026-000218','full']],'U3');
+seedPay('C-UG-0002','2026-09-01','Mobile money','MTN-MP260901.1432.C77412',[['DOPAY-UG-INV-2026-000224',1000000]],'U3');
+seedPay('C-UG-0005','2026-09-15','Bank transfer','CEN-44820917',[['DOPAY-UG-INV-2026-000229',3000000]],'U4');
+seedPay('C-NG-0001','2026-09-22','Bank transfer','GTB-NIP-220926771',[['DOPAY-NG-INV-2026-000041',1500000]],'U9');
+seedPay('C-UG-0004','2026-09-24','Online payment','PG-CARD-DECLINED-5521',[['DOPAY-UG-INV-2026-000227',800000]],'U3','Failed');
+seedPay('C-UG-0001','2026-09-25','Mobile money','MTN-MP260925.0918.A55219',[['DOPAY-UG-INV-2026-000231',250000]],'U3');
+seedPay('C-UG-0002','2026-09-26','Cash','CASH-KLA-0926-01',[['DOPAY-UG-INV-2026-000224',500000]],'U3');
 
 /* seed: suppliers, expenses */
 S.suppliers=[
@@ -939,7 +1018,7 @@ S.docs=[
  {id:'D1',name:'Distribution agreement — John Uganda Ltd.pdf',type:'PDF',link:'Customer',linkId:'C-UG-0001',cat:'Contract',tags:['2026','distribution'],owner:'U1',up:'2026-01-15',exp:'2026-10-10',ver:2,access:'Finance, Management',branch:'KLA'},
  {id:'D2',name:'ABC Ltd trading licence 2026.pdf',type:'PDF',link:'Customer',linkId:'C-UG-0002',cat:'Compliance',tags:['licence'],owner:'U8',up:'2026-02-03',exp:'2026-12-31',ver:1,access:'All finance staff',branch:'KLA'},
  {id:'D3',name:'Kampala office lease.pdf',type:'PDF',link:'Branch',linkId:'KLA',cat:'Contract',tags:['lease','premises'],owner:'U1',up:'2025-04-01',exp:'2027-03-31',ver:3,access:'Management',branch:'KLA'},
- {id:'D4',name:'rent-sept-invoice.pdf',type:'PDF',link:'Expense',linkId:'A4S-UG-EXP-2026-000058',cat:'Supporting document',tags:['rent','sept'],owner:'U3',up:'2026-09-01',exp:'',ver:1,access:'Finance',branch:'KLA'},
+ {id:'D4',name:'rent-sept-invoice.pdf',type:'PDF',link:'Expense',linkId:'DOPAY-UG-EXP-2026-000058',cat:'Supporting document',tags:['rent','sept'],owner:'U3',up:'2026-09-01',exp:'',ver:1,access:'Finance',branch:'KLA'},
  {id:'D5',name:'URA TIN certificate — Mbale Agro Supplies.pdf',type:'PDF',link:'Customer',linkId:'C-UG-0003',cat:'Compliance',tags:['tax'],owner:'U8',up:'2026-03-10',exp:'',ver:1,access:'All finance staff',branch:'KLA'},
  {id:'D6',name:'NDA registration — Herbal Immune Booster.pdf',type:'PDF',link:'Product',linkId:'P-HLT-001',cat:'Regulatory',tags:['health','registration'],owner:'U8',up:'2024-10-20',exp:'2026-10-20',ver:2,access:'Management',branch:'KLA'},
  {id:'D7',name:'Employment contract — David Ssemanda.docx',type:'DOCX',link:'Employee',linkId:'U3',cat:'HR',tags:['contract'],owner:'U1',up:'2025-06-01',exp:'2027-05-31',ver:1,access:'HR, Super Administrator',branch:'KLA'},
@@ -963,36 +1042,36 @@ const VARS=['customer_name','customer_id','customer_address','customer_phone','c
 
 /* seed: comms, audit, notifications */
 S.comms=[
- {id:uid(),at:'2026-09-25 10:42',cust:'C-UG-0001',ref:'A4S-UG-INV-2026-000231',kind:'Invoice',ch:'WhatsApp',by:'U3',status:'Delivered'},
- {id:uid(),at:'2026-09-25 11:05',cust:'C-UG-0001',ref:'A4S-UG-RCT-2026-000146',kind:'Receipt',ch:'Email',by:'U3',status:'Delivered'},
- {id:uid(),at:'2026-09-23 09:00',cust:'C-UG-0002',ref:'A4S-UG-INV-2026-000224',kind:'Payment reminder',ch:'WhatsApp',by:'SYS',status:'Delivered'},
- {id:uid(),at:'2026-09-22 09:00',cust:'C-UG-0004',ref:'A4S-UG-INV-2026-000227',kind:'Payment reminder',ch:'Email',by:'SYS',status:'Delivered'},
- {id:uid(),at:'2026-09-15 14:20',cust:'C-UG-0005',ref:'A4S-UG-RCT-2026-000143',kind:'Receipt',ch:'Email',by:'U4',status:'Delivered'},
- {id:uid(),at:'2026-09-01 16:02',cust:'C-UG-0005',ref:'A4S-UG-INV-2026-000229',kind:'Invoice',ch:'Email',by:'U3',status:'Delivered'},
- {id:uid(),at:'2026-08-28 12:40',cust:'C-NG-0001',ref:'A4S-NG-INV-2026-000041',kind:'Invoice',ch:'Telegram',by:'U9',status:'Delivered'},
- {id:uid(),at:'2026-08-05 15:10',cust:'C-UG-0002',ref:'A4S-UG-INV-2026-000224',kind:'Invoice',ch:'Email',by:'U3',status:'Delivered'}];
+ {id:uid(),at:'2026-09-25 10:42',cust:'C-UG-0001',ref:'DOPAY-UG-INV-2026-000231',kind:'Invoice',ch:'WhatsApp',by:'U3',status:'Delivered'},
+ {id:uid(),at:'2026-09-25 11:05',cust:'C-UG-0001',ref:'DOPAY-UG-RCT-2026-000146',kind:'Receipt',ch:'Email',by:'U3',status:'Delivered'},
+ {id:uid(),at:'2026-09-23 09:00',cust:'C-UG-0002',ref:'DOPAY-UG-INV-2026-000224',kind:'Payment reminder',ch:'WhatsApp',by:'SYS',status:'Delivered'},
+ {id:uid(),at:'2026-09-22 09:00',cust:'C-UG-0004',ref:'DOPAY-UG-INV-2026-000227',kind:'Payment reminder',ch:'Email',by:'SYS',status:'Delivered'},
+ {id:uid(),at:'2026-09-15 14:20',cust:'C-UG-0005',ref:'DOPAY-UG-RCT-2026-000143',kind:'Receipt',ch:'Email',by:'U4',status:'Delivered'},
+ {id:uid(),at:'2026-09-01 16:02',cust:'C-UG-0005',ref:'DOPAY-UG-INV-2026-000229',kind:'Invoice',ch:'Email',by:'U3',status:'Delivered'},
+ {id:uid(),at:'2026-08-28 12:40',cust:'C-NG-0001',ref:'DOPAY-NG-INV-2026-000041',kind:'Invoice',ch:'Telegram',by:'U9',status:'Delivered'},
+ {id:uid(),at:'2026-08-05 15:10',cust:'C-UG-0002',ref:'DOPAY-UG-INV-2026-000224',kind:'Invoice',ch:'Email',by:'U3',status:'Delivered'}];
 const DEV='102.85.14.201 · Chrome · Windows';
 S.audit=[
- {id:uid(),at:'2026-09-26 08:40',user:'U3',action:'Recorded payment',record:'A4S-UG-PAY-2026-000147',prev:'',next:'UGX 500,000 cash against A4S-UG-INV-2026-000224',ip:DEV},
- {id:uid(),at:'2026-09-25 16:05',user:'U3',action:'Submitted invoice for approval',record:'A4S-UG-INV-2026-000236',prev:'Draft',next:'Pending approval',ip:DEV},
- {id:uid(),at:'2026-09-25 10:40',user:'U3',action:'Shared invoice via WhatsApp',record:'A4S-UG-INV-2026-000231',prev:'',next:'Sent to +256 772 410 118',ip:DEV},
- {id:uid(),at:'2026-09-24 14:12',user:'U3',action:'Payment attempt failed',record:'A4S-UG-PAY-2026-000145',prev:'',next:'Card declined by gateway',ip:'Gateway webhook'},
- {id:uid(),at:'2026-09-23 12:18',user:'U2',action:'Approved invoice',record:'A4S-UG-INV-2026-000234',prev:'Pending approval',next:'Approved',ip:'102.85.14.88 · Safari · macOS'},
- {id:uid(),at:'2026-09-22 11:02',user:'U2',action:'Changed invoice total',record:'A4S-UG-INV-2026-000224',prev:'UGX 2,950,000',next:'UGX 3,186,000',ip:'102.85.14.88 · Safari · macOS'},
+ {id:uid(),at:'2026-09-26 08:40',user:'U3',action:'Recorded payment',record:'DOPAY-UG-PAY-2026-000147',prev:'',next:'UGX 500,000 cash against DOPAY-UG-INV-2026-000224',ip:DEV},
+ {id:uid(),at:'2026-09-25 16:05',user:'U3',action:'Submitted invoice for approval',record:'DOPAY-UG-INV-2026-000236',prev:'Draft',next:'Pending approval',ip:DEV},
+ {id:uid(),at:'2026-09-25 10:40',user:'U3',action:'Shared invoice via WhatsApp',record:'DOPAY-UG-INV-2026-000231',prev:'',next:'Sent to +256 772 410 118',ip:DEV},
+ {id:uid(),at:'2026-09-24 14:12',user:'U3',action:'Payment attempt failed',record:'DOPAY-UG-PAY-2026-000145',prev:'',next:'Card declined by gateway',ip:'Gateway webhook'},
+ {id:uid(),at:'2026-09-23 12:18',user:'U2',action:'Approved invoice',record:'DOPAY-UG-INV-2026-000234',prev:'Pending approval',next:'Approved',ip:'102.85.14.88 · Safari · macOS'},
+ {id:uid(),at:'2026-09-22 11:02',user:'U2',action:'Changed invoice total',record:'DOPAY-UG-INV-2026-000224',prev:'UGX 2,950,000',next:'UGX 3,186,000',ip:'102.85.14.88 · Safari · macOS'},
  {id:uid(),at:'2026-09-20 09:30',user:'U1',action:'Changed exchange rate',record:'USD → UGX',prev:'3,685',next:'3,700',ip:'102.85.14.10 · Edge · Windows'},
- {id:uid(),at:'2026-08-16 10:14',user:'U2',action:'Cancelled invoice (authorized)',record:'A4S-UG-INV-2026-000226',prev:'Sent',next:'Cancelled · reason: duplicate of 000224',ip:'102.85.14.88 · Safari · macOS'},
+ {id:uid(),at:'2026-08-16 10:14',user:'U2',action:'Cancelled invoice (authorized)',record:'DOPAY-UG-INV-2026-000226',prev:'Sent',next:'Cancelled · reason: duplicate of 000224',ip:'102.85.14.88 · Safari · macOS'},
  {id:uid(),at:'2026-08-02 15:22',user:'U1',action:'Changed supplier bank details (authorized)',record:'S-0002 Victoria Logistics',prev:'Stanbic · A/C ****111',next:'Stanbic · A/C ****222',ip:'102.85.14.10 · Edge · Windows'}];
 S.notifs=[
  {id:uid(),at:'2026-09-26 08:40',text:'Payment received: UGX 500,000 from ABC Ltd',kind:'ok',read:false,go:['payments']},
- {id:uid(),at:'2026-09-25 16:05',text:'Invoice A4S-UG-INV-2026-000236 is awaiting approval',kind:'warn',read:false,go:['invoice','A4S-UG-INV-2026-000236']},
- {id:uid(),at:'2026-09-25 09:00',text:'Invoice A4S-UG-INV-2026-000227 is overdue (Kato Household Stores)',kind:'bad',read:false,go:['invoice','A4S-UG-INV-2026-000227']},
+ {id:uid(),at:'2026-09-25 16:05',text:'Invoice DOPAY-UG-INV-2026-000236 is awaiting approval',kind:'warn',read:false,go:['invoice','DOPAY-UG-INV-2026-000236']},
+ {id:uid(),at:'2026-09-25 09:00',text:'Invoice DOPAY-UG-INV-2026-000227 is overdue (Kato Household Stores)',kind:'bad',read:false,go:['invoice','DOPAY-UG-INV-2026-000227']},
  {id:uid(),at:'2026-09-24 14:12',text:'Online payment failed: card declined for Kato Household Stores',kind:'bad',read:true,go:['payments']},
- {id:uid(),at:'2026-09-21 12:00',text:'Expense A4S-UG-EXP-2026-000061 is awaiting review',kind:'warn',read:true,go:['expenses']},
+ {id:uid(),at:'2026-09-21 12:00',text:'Expense DOPAY-UG-EXP-2026-000061 is awaiting review',kind:'warn',read:true,go:['expenses']},
  {id:uid(),at:'2026-09-20 08:00',text:'Document expiring: Distribution agreement — John Uganda Ltd (10 Oct 2026)',kind:'warn',read:true,go:['documents']},
  {id:uid(),at:'2026-09-19 10:31',text:'New customer registered: John Mukasa',kind:'info',read:true,go:['customer','C-UG-0008']}];
 
 /* ============ helpers: logging, ui ============ */
-function log(action,record,prev,next){S.audit.unshift({id:uid(),at:stamp(),user:S.user,action,record,prev:prev||'',next:next||'',ip:DEV})}
+function log(action,record,prev,next){const m=/DOPAY-([A-Z]{2})-/.exec(record||'');S.audit.unshift({id:uid(),at:stamp(),user:S.user,cc:m?m[1]:homeCC(),action,record,prev:prev||'',next:next||'',ip:DEV})}
 function notify(text,kind,go){S.notifs.unshift({id:uid(),at:stamp(),text,kind:kind||'info',read:false,go})}
 function comm(o){S.comms.unshift(Object.assign({id:uid(),at:stamp(),by:S.user,status:'Sent'},o))}
 let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,3600)}
@@ -1004,7 +1083,7 @@ function btn(l,act,o){o=o||{};const ok=!o.perm||can(o.perm);const d=Object.entri
 function tbl(cols,rows,o){o=o||{};if(!rows.length)return `<div class="empty">${o.empty||'Nothing here yet.'}</div>`;
   const tools=o.tools!==false&&rows.length>=3,rn=o.rn!==false;
   const mx=cols.map(c=>c.bar?Math.max(0,...rows.map(r=>+c.bar(r)||0)):0);
-  const bar=(c,j,r)=>{if(!c.bar||!mx[j])return '';const p=Math.max(0,Math.min(100,(+c.bar(r)||0)/mx[j]*100));if(!p)return '';const col=c.barTone&&c.barTone(r)==='bad'?'rgba(197,48,48,.15)':'rgba(33,115,70,.15)';return ` style="background-image:linear-gradient(90deg,${col} ${p.toFixed(1)}%,transparent ${p.toFixed(1)}%)"`};
+  const bar=(c,j,r)=>{if(!c.bar||!mx[j])return '';const p=Math.max(0,Math.min(100,(+c.bar(r)||0)/mx[j]*100));if(!p)return '';const col=c.barTone&&c.barTone(r)==='bad'?'rgba(197,48,48,.15)':'rgba(15,94,86,.13)';return ` style="background-image:linear-gradient(90deg,${col} ${p.toFixed(1)}%,transparent ${p.toFixed(1)}%)"`};
   return `<div class="gw" data-n="${rows.length}"${o.sum===false?' data-nosum':''}>${tools?`<div class="gt">${o.q===false?'':`<label class="gt-f">${ic('search',14)}<input type="search" data-gq placeholder="Filter these rows" aria-label="Filter these rows"></label>`}<span class="gt-n" data-gn>${rows.length} rows</span><span class="top-sp"></span><button type="button" class="btn sm ghost" data-gx="csv" title="Download the visible rows as CSV (opens in Excel)">${ic('download',14)}Export</button><button type="button" class="btn sm ghost" data-gx="print" title="Print this table">${ic('print',14)}Print</button></div>`:''}<div class="tw"><table class="tbl ${o.cards===false?'':'cards'}"><thead><tr>${rn?'<th class="rn" aria-label="Row"></th>':''}${cols.map(c=>{const so=c.h&&!c.nosort;return `<th class="${c.cls||''}${so?' so':''}" ${so?'data-gs tabindex="0" title="Sort"':''} ${c.nosum?'data-nosum':''}>${c.h}</th>`}).join('')}</tr></thead><tbody>${rows.map((r,i)=>`<tr ${o.row?o.row(r):''}>${rn?`<td class="rn">${i+1}</td>`:''}${cols.map((c,j)=>{const h=String(c.f(r));return `<td class="${c.cls||''}${h.length<=14&&!h.includes('<')?' nw':''}" data-label="${esc(c.h)}"${bar(c,j,r)}>${h}</td>`}).join('')}</tr>`).join('')}</tbody></table></div></div>`}
 /* grid behaviour: filter, sort, totals, export, print (works on any table built by tbl) */
 const cellTxt=c=>c?(c.firstChild?c.firstChild.textContent:c.textContent).trim():'';
@@ -1020,10 +1099,10 @@ function gridTotals(gw){const t=gw.querySelector('table');if(!t||!t.tHead||gw.ha
 function gridSort(th){const t=th.closest('table');const j=th.cellIndex;const dir=th.getAttribute('aria-sort')==='ascending'?-1:1;
   [...t.tHead.rows[0].cells].forEach(h=>h.removeAttribute('aria-sort'));th.setAttribute('aria-sort',dir===1?'ascending':'descending');
   const isNum=th.classList.contains('num');
-  const key=r=>{const c=r.cells[j];if(isNum){const n=parseFloat(cellTxt(c).replace(/[^\d.\-]/g,''));return isNaN(n)?-Infinity:n}const tx=c?c.textContent.trim():'';const dm=tx.match(/^\d{1,2} [A-Z][a-z]{2} \d{4}/);const d=dm?Date.parse(dm[0]):NaN;return isNaN(d)?tx.toLowerCase():d};
+  const key=r=>{const c=r.cells[j];if(isNum){const n=parseFloat(cellTxt(c).replace(/[^\d.\-]/g,''));return isNaN(n)?-Infinity:n}const tx=c?((c.querySelector('.lc>div')||c).textContent.trim()):'';const dm=tx.match(/^\d{1,2} [A-Z][a-z]{2} \d{4}/);const d=dm?Date.parse(dm[0]):NaN;return isNaN(d)?tx.toLowerCase():d};
   const tb=t.tBodies[0];[...tb.rows].sort((a,b)=>{const x=key(a),y=key(b);return (x>y?1:x<y?-1:0)*dir}).forEach((r,i)=>{tb.appendChild(r);const n=r.querySelector('td.rn');if(n)n.textContent=i+1})}
 function gridCsv(gw){const t=gw.querySelector('table');const ths=[...t.tHead.rows[0].cells];const keep=ths.map(th=>!th.classList.contains('rn')&&th.textContent.trim());
-  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';const txt=c=>[...c.childNodes].map(n=>n.textContent.trim()).filter(Boolean).join(' · ');
+  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';const txt=c=>{const b=c.querySelector('.lc>div')||c;return [...b.childNodes].map(n=>n.textContent.trim()).filter(Boolean).join(' · ')};
   const lines=[ths.filter((_,j)=>keep[j]).map(th=>q(th.textContent.trim())).join(',')];
   [...t.tBodies[0].rows].filter(r=>!r.hidden).forEach(r=>lines.push([...r.cells].filter((_,j)=>keep[j]).map(c=>q(txt(c))).join(',')));
   if(t.tFoot)lines.push([...t.tFoot.rows[0].cells].filter((_,j)=>keep[j]).map(c=>q(c.textContent.trim())).join(','));
@@ -1043,7 +1122,7 @@ document.addEventListener('click',e=>{const th=e.target.closest('th[data-gs]');i
 document.addEventListener('keydown',e=>{const th=e.target.closest&&e.target.closest('th[data-gs]');if(th&&(e.key==='Enter'||e.key===' ')){e.preventDefault();gridSort(th)}});
 new MutationObserver(()=>document.querySelectorAll('#view .gw:not([data-t])').forEach(gw=>{gw.dataset.t=1;gridTotals(gw)})).observe(document.getElementById('view')||document.body,{childList:true,subtree:true});
 const mstrip=items=>`<div class="mstrip">${items.map(([l,v,t])=>`<div class="${t||''}"><span>${l}</span><b title="${esc(String(v).replace(/<[^>]+>/g,''))}">${v}</b></div>`).join('')}</div>`;
-const scopeNote=()=>`<span class="scope">Showing ${S.branch==='ALL'?'all branches':esc(branch(S.branch).name)+' branch'} · change branch at the top</span>`;
+const scopeNote=()=>`<span class="scope">${esc(acctName(S.acct))} · ${S.branch==='ALL'?(S.acct==='ALL'?'consolidated in USD':'all branches'):esc(branch(S.branch).name)+' branch'}</span>`;
 function opt(v,l,sel){return `<option value="${esc(v)}" ${String(v)===String(sel)?'selected':''}>${esc(l)}</option>`}
 
 /* modal */
@@ -1064,7 +1143,7 @@ function requireAuth(what,cb){authCb=cb;
 function vars(inv,extra){const c=cust(inv.cust)||{};const k=calc(inv);const co=country(inv.country||'UG');const cur=inv.cur||co.cur;
   return Object.assign({customer_name:cname(c),customer_id:c.id||'',customer_address:[c.address,c.city,country(c.country||'UG').name].filter(Boolean).join(', '),customer_phone:c.phone||'',customer_email:c.email||'',customer_tin:c.tin||'',
    invoice_number:inv.no||'(assigned on save)',invoice_date:fdate(inv.date),due_date:fdate(inv.due),subtotal:fmt(k.sub,cur),discount:fmt(k.disc,cur),tax:fmt(k.tax,cur),total:fmt(k.total,cur),amount_paid:fmt(k.paid,cur),balance:fmt(k.bal,cur),currency:cur,
-   share_link:inv.link||'(secure link created on approval)',company_name:orgName(co.code),company_address:S.org.address+', '+branch(inv.branch).name,company_phone:S.org.phone,company_email:S.org.email,company_bank:S.org.bank,company_momo:S.org.momo,branch:branch(inv.branch).name,today:fdate(TODAY),tax_name:co.taxName},extra||{})}
+   share_link:inv.link||'(secure link created on approval)',company_name:orgName(co.code),company_address:org(co.code).address+', '+branch(inv.branch).name,company_phone:org(co.code).phone,company_email:org(co.code).email,company_bank:org(co.code).bank,company_momo:org(co.code).momo,branch:branch(inv.branch).name,today:fdate(TODAY),tax_name:co.taxName},extra||{})}
 const fill=(t,v)=>String(t).replace(/\{\{\s*(\w+)\s*\}\}/g,(m,k)=>v[k]!=null?v[k]:m);
 const tpl=id=>S.templates.find(t=>t.id===id);
 const logoHtml=()=>`<img class="p-logo" src="${S.org.logo||LOGO}" alt="Company logo">`;
@@ -1074,7 +1153,7 @@ function paperInvoice(inv){
   const wm=s==='Draft'?'DRAFT':s==='Pending approval'?'PENDING APPROVAL':s==='Cancelled'?'CANCELLED':s==='Paid'?'PAID':'';
   const notes=inv.notes||fill(tpl('T1').body,vars(inv));
   return `<div class="paper">${wm?`<div class="wm ${s==='Paid'?'paid':''}">${wm}</div>`:''}
-  <div class="p-head"><div class="p-brand">${logoHtml()}<div><b>${esc(orgName(co.code))}</b><br>${esc(S.org.address)}, ${esc(b.name)}, ${esc(co.name)}<br>${esc(S.org.phone)} · ${esc(S.org.email)}<br>TIN ${esc(S.org.tin)}</div></div>
+  <div class="p-head"><div class="p-brand">${logoHtml()}<div><b>${esc(orgName(co.code))}</b><br>${esc(org(co.code).address)}, ${esc(b.name)}, ${esc(co.name)}<br>${esc(org(co.code).phone)} · ${esc(org(co.code).email)}<br>TIN ${esc(org(co.code).tin)}</div></div>
    <div class="p-title"><div class="p-doc">Invoice</div><div class="mono">${esc(inv.no||previewNo(co.code,'INV'))}</div>${inv.version>1?`<div style="font-size:10.5px;color:#77867F">Revision ${inv.version}</div>`:''}</div></div>
   <div class="p-meta"><div><div class="l">Bill to</div>${c?`<b>${esc(cname(c))}</b><br>${c.company?`Attn: ${esc(c.name)}<br>`:''}${esc(c.address)}, ${esc(c.city)}, ${esc(country(c.country).name)}<br>${esc(c.phone)} · ${esc(c.email)}${c.tin?`<br>TIN ${esc(c.tin)}`:''}`:'<span style="color:#9AA8A2">Select a customer — details fill in automatically.</span>'}</div>
    <dl class="p-kv"><dt>Invoice date</dt><dd>${fdate(inv.date)}</dd><dt>Due date</dt><dd>${fdate(inv.due)}</dd><dt>Terms</dt><dd>${c?(c.terms?'Net '+c.terms:'Due on receipt'):'—'}</dd><dt>Currency</dt><dd>${cur}</dd><dt>Branch</dt><dd>${esc(b.name)}</dd></dl></div>
@@ -1090,7 +1169,7 @@ function paperReceipt(r){
   const bal=p.allocs.reduce((s,a)=>s+calc(invBy(a.inv)).bal,0);
   const v=vars(invBy(p.allocs[0].inv),{amount_received:fmt(p.amount,cur),payment_method:p.method,transaction_reference:p.ref,invoice_number:p.allocs.map(a=>a.inv).join(', '),balance:fmt(bal,cur)});
   return `<div class="paper">${r.status==='Void'?'<div class="wm">VOID</div>':''}
-  <div class="p-head"><div class="p-brand">${logoHtml()}<div><b>${esc(orgName(co.code))}</b><br>${esc(S.org.address)}, ${esc(branch(p.branch).name)}, ${esc(co.name)}<br>${esc(S.org.phone)} · ${esc(S.org.email)}</div></div>
+  <div class="p-head"><div class="p-brand">${logoHtml()}<div><b>${esc(orgName(co.code))}</b><br>${esc(org(co.code).address)}, ${esc(branch(p.branch).name)}, ${esc(co.name)}<br>${esc(org(co.code).phone)} · ${esc(org(co.code).email)}</div></div>
    <div class="p-title"><div class="p-doc">Receipt</div><div class="mono">${esc(r.no)}</div></div></div>
   <div class="p-meta"><div><div class="l">Received from</div><b>${esc(cname(c))}</b><br>${esc(c.address)}, ${esc(c.city)}<br>${esc(c.phone)}</div>
    <dl class="p-kv"><dt>Payment date</dt><dd>${fdate(p.date)}</dd><dt>Method</dt><dd>${esc(p.method)}</dd><dt>Reference</dt><dd class="mono" style="font-size:10.5px">${esc(p.ref)}</dd><dt>Branch</dt><dd>${esc(branch(p.branch).name)}</dd><dt>Received by</dt><dd>${esc(user(p.by).name)}</dd></dl></div>
@@ -1138,8 +1217,8 @@ function barChart(data,label){const W=640,H=230,pl=54,pr=10,pt=22,pb=28;const ma
     if(last||d.show)g+=`<text class="vl" x="${x+bw*.3}" y="${y-6}" text-anchor="middle">${compact(d.v)}</text>`});
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}</svg>`}
 const HIST={KLA:[5200,6100,5600,6900,7400,3000],EBB:[1200,1500,1300,1700,1600,500],LOS:[3100,2900,3400,3600,3300,1000],DLA:[900,1100,1000,1300,1200,300],ABJ:[1400,1300,1500,1600,1700,600]};
-function revenueSeries(){const months=[3,4,5,6,7,8];const brs=S.branch==='ALL'?Object.keys(HIST):[S.branch];const cur=scopeCur();
-  return months.map((m,idx)=>{let v=0;brs.forEach(b=>{const usd=(HIST[b]||[])[idx]||0;v+=S.branch==='ALL'?usd:usd*S.rates[cur]});
+function revenueSeries(){const months=[3,4,5,6,7,8];const brs=S.branch!=='ALL'?[S.branch]:Object.keys(HIST).filter(b=>S.acct==='ALL'?myAccts().includes(branch(b).cc):branch(b).cc===S.acct);const cur=scopeCur();
+  return months.map((m,idx)=>{let v=0;brs.forEach(b=>{const usd=(HIST[b]||[])[idx]||0;v+=cur==='USD'?usd:usd*S.rates[cur]});
     S.invoices.filter(i=>inScope(i)&&isLive(i)&&D(i.date).getUTCMonth()===m).forEach(i=>v+=cv(calc(i).total,i.cur));return {l:MON[m],v}})}
 
 /* ============ NAV ============ */
@@ -1155,7 +1234,9 @@ function navHtml(){const cur=PARENT[S.route]||S.route;const fmN=(S.forms||[]).fi
 
 /* ============ VIEWS ============ */
 const V={};
-function agingHtml(live,cur){const B=[['Not yet due','#217346'],['1–30 days','#E1A100'],['31–60 days','#D86B18'],['61–90 days','#C53030'],['90+ days','#7A1F1F']];const v=[0,0,0,0,0];
+const avt=(name,y)=>{const t=String(name||'?').replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/);const ini=((t[0]||'?')[0]+((t[1]||'')[0]||'')).toUpperCase();return `<span class="avt ${y?'y':''}" aria-hidden="true">${esc(ini)}</span>`};
+document.addEventListener('input',e=>{const q=e.target.closest('[data-lq]');if(!q)return;const v=q.value.trim().toLowerCase();q.closest('.card').querySelectorAll('.li-row').forEach(r=>{r.hidden=!!v&&!r.textContent.toLowerCase().includes(v)})});
+function agingHtml(live,cur){const B=[['Not yet due','#0F5E56'],['1–30 days','#E1A100'],['31–60 days','#D86B18'],['61–90 days','#C53030'],['90+ days','#7A1F1F']];const v=[0,0,0,0,0];
   live.forEach(i=>{const b=calc(i).bal;if(b<=0)return;const d=diff(i.due,TODAY);v[d<=0?0:d<=30?1:d<=60?2:d<=90?3:4]+=cv(b,i.cur)});const tot=v.reduce((a,x)=>a+x,0);
   const m=TODAY.slice(0,7),inv=live.filter(i=>i.date.slice(0,7)===m).reduce((a,i)=>a+cv(calc(i).total,i.cur),0),col=S.payments.filter(p=>inScope(p)&&p.status==='Completed'&&p.date.slice(0,7)===m).reduce((a,p)=>a+cv(p.amount,p.cur),0);const pc=inv?Math.min(100,col/inv*100):0;
   return `<div class="pad" style="border-top:1px solid var(--line)"><div class="row" style="justify-content:space-between"><h3 style="font-size:14px">Receivables aging</h3><span class="small muted">${cur} ${fmtN(rnd(tot,cur),cur)} outstanding</span></div>
@@ -1176,7 +1257,7 @@ V.dashboard=()=>{
   const expDocs=S.docs.filter(d=>d.exp&&inScope(d)&&diff(TODAY,d.exp)>=0&&diff(TODAY,d.exp)<=30);
   const failed=S.payments.filter(p=>inScope(p)&&p.status==='Failed');
   const low=S.accounts.filter(a=>inScope(a)&&a.bal<a.floor);
-  const supp=S.suppliers.filter(s=>s.outstanding>0);
+  const supp=S.suppliers.filter(s=>inScope(s)&&s.outstanding>0);
   const h=new Date().getHours();const greet=h<12?'Good morning':h<17?'Good afternoon':'Good evening';const dd=D(TODAY);
   const F=v=>fmtN(rnd(v,cur),cur);
   const attention=live.filter(i=>['Overdue'].includes(st(i))).concat(inv.filter(i=>['Pending approval','Approved','Draft'].includes(st(i)))).concat(soon.filter(i=>st(i)!=='Overdue')).slice(0,7);
@@ -1184,27 +1265,49 @@ V.dashboard=()=>{
     ...S.payments.filter(inScope).map(p=>({d:p.date+' '+p.time,t:`Payment · ${cname(cust(p.cust))}`,s:p.status,a:fmt(p.amount,p.cur),i:'cash',act:`data-act="nav" data-r="payments"`})),
     ...S.expenses.filter(inScope).map(e=>({d:e.date,t:`Expense · ${e.desc}`,s:e.status,a:fmt(e.amount,e.cur),i:'wallet',act:`data-act="nav" data-r="expenses"`}))].sort((a,b)=>b.d.localeCompare(a.d)).slice(0,6);
   const taxA=taxAlerts();const bk=S.backups[0];const fMine=S.forms.filter(awaitingMe);const advOver=S.forms.filter(f=>f.type==='K'&&f.status==='Awaiting liquidation'&&f.data.liq<TODAY&&inScope(f));
+  const first=me().name.split(' ')[0];const mth=TODAY.slice(0,7),pm=prevYM(TODAY);
+  const sm=m=>live.filter(i=>i.date.slice(0,7)===m).reduce((a,i)=>a+cv(calc(i).total,i.cur),0);const smN=sm(mth),smP=sm(pm);const gr=smP?Math.round((smN/smP-1)*100):0;
+  const dash=(g,v)=>`<span class="${v>=0?'up':'dn'}">${v>=0?'+':''}${v}%</span> ${g}`;
+  const recentInv=inv.slice().sort((a,b)=>(b.date+b.no).localeCompare(a.date+a.no)).slice(0,7);
+  const due=live.filter(i=>calc(i).bal>0).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,7);
+  const tops=Object.entries(live.reduce((m,i)=>{m[i.cust]=(m[i.cust]||0)+cv(calc(i).total,i.cur);return m},{})).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const subInv=i=>{const s2=st(i);return s2==='Overdue'?`${diff(i.due,TODAY)} days overdue`:s2==='Pending approval'?'Waiting for approval':s2==='Draft'?'Not submitted yet':s2==='Paid'?'Settled':s2==='Approved'?'Ready to send':'Due '+fdate(i.due)};
   return `
-  <div class="ph"><div><h1>${greet}, ${esc(me().name.split(' ')[0])}</h1><p class="sub">Branch: <b>${esc(branch(S.branch).name)}</b> · Today: ${DAYS[dd.getUTCDay()]}, ${dd.getUTCDate()} ${MONL[dd.getUTCMonth()]} ${dd.getUTCFullYear()} · ${esc(role())}${S.branch==='ALL'?' · consolidated in USD at today’s rates':''}</p></div></div>
-  <div class="qa" style="margin-bottom:16px">
-    <button class="primary" ${can('invoices.create')?'data-act="newInvoice"':'disabled'}>${ic('file',20)}New invoice</button>
-    <button ${can('customers.manage')?'data-act="newCustomer"':'disabled'}>${ic('users',20)}New customer</button>
-    <button ${can('payments.record')?'data-act="recordPayment"':'disabled'}>${ic('cash',20)}Record payment</button>
-    <button ${can('payments.record')?'data-act="createReceipt"':'disabled'}>${ic('receipt',20)}Create receipt</button>
-    <button ${can('expenses.create')?'data-act="newExpense"':'disabled'}>${ic('wallet',20)}New expense</button>
-    <button ${can('forms.submit')?'data-act="fNew" data-t="A"':'disabled'}>${ic('doc2',20)}Expense memo</button>
-    <button ${can('forms.submit')?'data-act="fNew" data-t="K"':'disabled'}>${ic('wallet',20)}Cash advance</button>
-    <button ${can('reports.view')?'data-act="nav" data-r="reports"':'disabled'}>${ic('chart',20)}Generate report</button>
+  <div class="dh"><div><h1>${greet}, ${esc(first)}</h1><p class="sub"><b>${esc(acctName(S.acct))}</b>${S.branch!=='ALL'?' · '+esc(branch(S.branch).name)+' branch':''} · ${esc(role())}${S.acct==='ALL'?' · consolidated in USD at today’s rates':''}</p></div><div class="dh-date">${DAYS[dd.getUTCDay()]}, ${dd.getUTCDate()} ${MONL[dd.getUTCMonth()]} ${dd.getUTCFullYear()}</div></div>
+  <div class="dgrid"><div class="dmain">
+   <div class="grid g-kpi3">
+    <div class="card kpi hero"><div class="kpi-top"><span class="lbl">Outstanding</span><span class="kic">${ic('file',18)}</span></div><div class="v"><small>${cur}</small>${F(out)}</div><span class="d">${outN} invoice${outN===1?'':'s'} with a balance · ${overN} overdue</span></div>
+    <div class="card kpi"><div class="kpi-top"><span class="lbl">Billed this month</span><span class="kic">${ic('chart',18)}</span></div><div class="v"><small>${cur}</small>${F(smN)}</div><span class="d">${smP?dash('than last month',gr):'First month of billing'}</span></div>
+    <div class="card kpi"><div class="kpi-top"><span class="lbl">Collected today</span><span class="kic y">${ic('cash',18)}</span></div><div class="v"><small>${cur}</small>${F(payTs)}</div><span class="d">${payT.length} payment${payT.length===1?'':'s'} · ${F(received)} this year</span></div>
+   </div>
+   <div class="grid g-2">
+    <section class="card"><div class="card-h"><h3>Invoice list</h3><button class="lnk" data-act="nav" data-r="invoices">View all</button></div>
+     <label class="lsearch">${ic('search',15)}<input data-lq placeholder="Search an invoice or customer" aria-label="Search invoices"></label>
+     <div class="li">${recentInv.map(i=>{const c=cust(i.cust),s2=st(i);return `<button class="li-row" data-act="openInv" data-no="${i.no}">${avt(cname(c),['Draft','Pending approval','Overdue'].includes(s2))}<div class="m"><b>${esc(cname(c))}</b><span>${i.items.length} item${i.items.length===1?'':'s'} · #${esc(i.no.slice(-6))}</span></div><div class="r">${pill(s2)}<small>${esc(subInv(i))}</small></div></button>`}).join('')||'<div class="empty-s">No invoices yet.</div>'}</div></section>
+    <section class="card"><div class="card-h"><h3>Payments due</h3><button class="lnk" data-act="invFilter" data-f="Overdue">Overdue</button></div>
+     <label class="lsearch">${ic('search',15)}<input data-lq placeholder="Search a customer" aria-label="Search payments due"></label>
+     <div class="li">${due.map(i=>{const c=cust(i.cust),od=st(i)==='Overdue';return `<div class="li-row" role="button" tabindex="0" data-act="openInv" data-no="${i.no}">${avt(cname(c),od)}<div class="m"><b>${esc(cname(c))}</b><span style="${od?'color:var(--bad)':''}">${od?'Overdue since '+fdate(i.due):'Due '+fdate(i.due)} · #${esc(i.no.slice(-6))}</span></div><div class="r"><span class="amt">${fmt(calc(i).bal,i.cur)}</span>${can('payments.record')?`<button class="pay-btn" data-act="recordPayment" data-cust="${c.id}">Record ${ic('arrow',12)}</button>`:''}</div></div>`}).join('')||'<div class="empty-s">Nothing is waiting for payment.</div>'}</div></section>
+   </div>
+   <section class="card"><div class="card-h"><div><h3>Revenue, last 6 months</h3><p class="small muted">${cur} · invoiced amounts · Apr–Aug include sample history</p></div><button class="lnk" data-act="nav" data-r="reports">Sales report</button></div><div class="pad" style="padding-top:8px">${barChart(revenueSeries(),'Revenue by month')}</div>${agingHtml(live,cur)}</section>
+   <section class="card"><div class="card-h"><h3>Financial overview</h3><span class="scope">${cur}</span></div>
+    <dl class="fo" style="margin:0">
+      <div><dt>Total invoices</dt><dd>${inv.filter(i=>i.status!=='Cancelled').length}</dd></div><div><dt>Paid</dt><dd>${paidN}</dd></div><div><dt>Partially paid</dt><dd>${partN}</dd></div><div><dt>Outstanding</dt><dd>${outN}</dd></div><div><dt>Overdue</dt><dd style="color:var(--bad)">${overN}</dd></div>
+      <div><dt>Payments received</dt><dd>${F(received)}</dd></div><div><dt>Expenses (approved)</dt><dd>${F(exps)}</dd></div><div><dt>Net income (before tax)</dt><dd>${F(sales-exps)}</dd></div><div><dt>Pending approvals</dt><dd>${pendInv.length+pendExp.length}</dd></div><div><dt>Customers · Products · Branches</dt><dd>${S.customers.filter(inScope).length} · ${S.products.length} · ${S.branches.filter(b=>b.active).length}</dd></div>
+    </dl></section>
   </div>
-  <div class="grid g-kpi" style="margin-bottom:16px">
-    <div class="card kpi acc"><div class="kpi-stripe"></div><span class="lbl">Total sales · 2026</span><div class="v"><small>${cur}</small>${F(sales)}</div><span class="d">${live.length} official invoices</span></div>
-    <div class="card kpi warn"><div class="kpi-stripe"></div><span class="lbl">Outstanding</span><div class="v"><small>${cur}</small>${F(out)}</div><span class="d">${outN} invoices with a balance</span></div>
-    <div class="card kpi bad"><div class="kpi-stripe"></div><span class="lbl">Overdue</span><div class="v"><small>${cur}</small>${F(over)}</div><span class="d">${overN} invoice${overN===1?'':'s'} past due date</span></div>
-    <div class="card kpi ok"><div class="kpi-stripe"></div><span class="lbl">Payments today</span><div class="v"><small>${cur}</small>${F(payTs)}</div><span class="d">${payT.length} payment${payT.length===1?'':'s'} received</span></div>
-  </div>
-  <div class="grid g-main" style="margin-bottom:16px">
-    <section class="card"><div class="card-h"><div><h3>Revenue, last 6 months</h3><p class="small muted">${cur} · invoiced amounts · Apr–Aug include sample history</p></div><button class="lnk" data-act="nav" data-r="reports">Sales report</button></div><div class="pad" style="padding-top:8px">${barChart(revenueSeries(),'Revenue by month')}</div>${agingHtml(live,cur)}</section>
-    <section class="card"><div class="card-h"><h3>What needs attention today</h3></div><div class="alerts">
+  <aside class="dside">
+   <button class="cta" ${can('invoices.create')?'data-act="newInvoice"':'disabled'}>${ic('plus',18)} New invoice</button>
+   <div class="qa2">
+    <button ${can('payments.record')?'data-act="recordPayment"':'disabled'}>${ic('cash',16)}Record payment</button>
+    <button ${can('customers.manage')?'data-act="newCustomer"':'disabled'}>${ic('users',16)}New customer</button>
+    <button ${can('expenses.create')?'data-act="newExpense"':'disabled'}>${ic('wallet',16)}New expense</button>
+    <button ${can('payments.record')?'data-act="createReceipt"':'disabled'}>${ic('receipt',16)}Receipt</button>
+    <button ${can('forms.submit')?'data-act="fNew" data-t="A"':'disabled'}>${ic('doc2',16)}Expense memo</button>
+    <button ${can('forms.submit')?'data-act="fNew" data-t="K"':'disabled'}>${ic('wallet',16)}Cash advance</button>
+   </div>
+   <section class="card"><div class="card-h"><h3>Top customers</h3><button class="lnk" data-act="nav" data-r="customers">View all</button></div>
+    <div style="padding:6px 0 10px">${tops.map(([id,v],k)=>{const c=cust(id);return `<div class="rank" role="button" tabindex="0" data-act="openCust" data-id="${id}"><span class="no">${String(k+1).padStart(2,'0')}</span>${avt(cname(c),k%2===1)}<div class="m"><b>${esc(cname(c))}</b><span>Billed · <em>${cur} ${F(v)}</em></span></div></div>`}).join('')||'<div class="empty-s">No billing yet.</div>'}</div></section>
+   <section class="card"><div class="card-h"><h3>Needs attention</h3></div><div class="alerts">
       ${unreadAll()?`<button class="alert" data-act="nav" data-r="communications"><span class="sv info"></span><div><b>Unread team messages</b><span>${myThreads().filter(t=>unreadIn(t)).map(t=>esc(threadName(t))).slice(0,2).join(', ')}</span></div><span class="n">${unreadAll()}</span></button>`:''}
       ${fMine.length?`<button class="alert" data-act="goForms" data-f="Awaiting my signature"><span class="sv warn"></span><div><b>Forms awaiting your signature</b><span>${fMine.slice(0,2).map(f=>esc(f.ref)).join(', ')}</span></div><span class="n">${fMine.length}</span></button>`:''}
       ${advOver.length?`<button class="alert" data-act="goForms" data-f="Approved & open"><span class="sv bad"></span><div><b>Cash advances past liquidation date</b><span>${advOver.map(f=>esc(user(f.by).name)+' · '+fmt(fTotal(f),f.cur)).join(', ')}</span></div><span class="n">${advOver.length}</span></button>`:''}
@@ -1217,21 +1320,10 @@ V.dashboard=()=>{
       ${supp.length?`<button class="alert" data-act="nav" data-r="suppliers"><span class="sv info"></span><div><b>Unpaid supplier invoices</b><span>${supp.length} suppliers with balances</span></div><span class="n">${supp.length}</span></button>`:''}
       ${expDocs.length?`<button class="alert" data-act="nav" data-r="documents"><span class="sv warn"></span><div><b>Documents expiring in 30 days</b><span>${esc(expDocs[0].name)}</span></div><span class="n">${expDocs.length}</span></button>`:''}
     </div></section>
-  </div>
-  <section class="card" style="margin-bottom:16px"><div class="card-h"><h3>Financial overview</h3><span class="scope">${cur}</span></div>
-    <dl class="fo" style="margin:0">
-      <div><dt>Total invoices</dt><dd>${inv.filter(i=>i.status!=='Cancelled').length}</dd></div><div><dt>Paid</dt><dd>${paidN}</dd></div><div><dt>Partially paid</dt><dd>${partN}</dd></div><div><dt>Outstanding</dt><dd>${outN}</dd></div><div><dt>Overdue</dt><dd style="color:var(--bad)">${overN}</dd></div>
-      <div><dt>Payments received</dt><dd>${F(received)}</dd></div><div><dt>Expenses (approved)</dt><dd>${F(exps)}</dd></div><div><dt>Net income (before tax)</dt><dd>${F(sales-exps)}</dd></div><div><dt>Pending approvals</dt><dd>${pendInv.length+pendExp.length}</dd></div><div><dt>Customers · Products · Branches</dt><dd>${S.customers.filter(inScope).length} · ${S.products.length} · ${S.branches.filter(b=>b.active).length}</dd></div>
-    </dl></section>
-  <div class="grid g-main">
-    <section class="card"><div class="card-h"><h3>Invoices requiring attention</h3><button class="lnk" data-act="nav" data-r="invoices">All invoices</button></div>
-      ${tbl([{h:'Invoice',cls:'lead',f:i=>`<span class="mono strong">${esc(i.no)}</span><span class="sub2">${esc(cname(cust(i.cust)))}</span>`},{h:'Due',f:i=>fdate(i.due)},{h:'Balance',cls:'num',f:i=>fmt(calc(i).bal,i.cur),bar:i=>isLive(i)?toUSD(calc(i).bal,i.cur):0,barTone:i=>st(i)==='Overdue'?'bad':''},{h:'Status',f:i=>pill(st(i))}],attention,{row:i=>`class="click" data-act="openInv" data-no="${i.no}"`,empty:'All clear. Nothing needs attention.'})}</section>
-    <div class="stack">
-      <section class="card"><div class="card-h"><h3>Recent transactions</h3></div><div class="feed">${recent.map(r=>`<div class="feed-i" role="button" tabindex="0" style="cursor:pointer" ${r.act}><div class="av">${ic(r.i,16)}</div><div class="t"><b>${esc(r.t)}</b><span>${fdate(r.d)} · ${esc(r.s)}</span></div><div class="a">${esc(r.a)}</div></div>`).join('')}</div></section>
-      <section class="card pad"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h3>Backup status</h3>${pill(bk.ok?'Completed':'Failed')}</div>
-        <dl class="bk"><dt>Last backup</dt><dd>Today, 02:00 AM · ${bk.ok?'Successful':'Failed'}</dd><dt>Next backup</dt><dd>Tomorrow, 02:00 AM</dd><dt>Retention</dt><dd>30 daily · 12 monthly copies</dd></dl></section>
-    </div>
-  </div>`};
+   <section class="card"><div class="card-h"><h3>Recent activity</h3></div><div class="feed">${recent.map(r=>`<div class="feed-i" role="button" tabindex="0" style="cursor:pointer" ${r.act}><div class="av">${ic(r.i,16)}</div><div class="t"><b>${esc(r.t)}</b><span>${fdate(r.d)} · ${esc(r.s)}</span></div><div class="a">${esc(r.a)}</div></div>`).join('')}</div></section>
+   <section class="card pad"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h3>Backup status</h3>${pill(bk.ok?'Completed':'Failed')}</div>
+    <dl class="bk"><dt>Last backup</dt><dd>Today, 02:00 AM · ${bk.ok?'Successful':'Failed'}</dd><dt>Next backup</dt><dd>Tomorrow, 02:00 AM</dd><dt>Retention</dt><dd>30 daily · 12 monthly copies</dd></dl></section>
+  </aside></div>`};
 
 /* ----- customers ----- */
 V.customers=()=>{const q=S.custQ.toLowerCase();const list=S.customers.filter(inScope).filter(c=>!q||[c.id,c.name,c.company,c.phone,c.email,c.tin].join(' ').toLowerCase().includes(q));
@@ -1242,7 +1334,7 @@ V.customers=()=>{const q=S.custQ.toLowerCase();const list=S.customers.filter(inS
   `<div class="row" style="margin-bottom:12px;justify-content:space-between"><input class="inp" id="custQ" data-in="custQ" style="max-width:380px" placeholder="Search name, ID, phone, email, company or TIN" value="${esc(S.custQ)}">${scopeNote()}</div>
   <section class="card" id="custTable">${custTable(list)}</section>`};
 function custTable(list){return tbl([
-  {h:'Customer',cls:'lead',f:c=>`<b>${esc(cname(c))}</b><span class="sub2">${c.company?esc(c.name)+' · ':''}<span class="mono">${c.id}</span></span>`},
+  {h:'Customer',cls:'lead',f:c=>`<div class="lc">${avt(cname(c),custFin(c).over>0)}<div><b>${esc(cname(c))}</b><span class="sub2">${c.company?esc(c.name)+' · ':''}<span class="mono">${c.id}</span></span></div></div>`},
   {h:'Phone',f:c=>esc(c.phone)},{h:'Category',f:c=>`<span class="tag">${esc(c.category)}</span>`},{h:'Branch',f:c=>esc(branch(c.branch).name)},
   {h:'Outstanding',cls:'num',f:c=>fmt(custFin(c).out,c.cur),bar:c=>toUSD(custFin(c).out,c.cur),barTone:c=>custFin(c).over?'bad':''},{h:'Overdue',cls:'num',f:c=>{const o=custFin(c).over;return o?`<span style="color:var(--bad);font-weight:600">${fmt(o,c.cur)}</span>`:'—'}}],
   list,{row:c=>`class="click" data-act="openCust" data-id="${c.id}"`,empty:'No customers match that search.',q:false})}
@@ -1296,18 +1388,18 @@ V.invoices=()=>{const all=S.invoices.filter(inScope);const f=S.invFilter;
   `<div class="row" style="margin-bottom:12px">${INV_F.map(s=>`<button class="chip ${f===s?'on':''}" data-act="invFilter" data-f="${s}">${s}<b>${cnt(s)}</b></button>`).join('')}${f==='Due soon'?`<button class="chip on" data-act="invFilter" data-f="Due soon">Due within 7 days</button>`:''}</div>
   <div style="margin-bottom:10px">${scopeNote()}</div>
   <section class="card">${tbl([
-   {h:'Invoice',cls:'lead',f:i=>`<span class="mono strong">${esc(i.no)}</span><span class="sub2">${esc(cname(cust(i.cust)))}</span>`},
+   {h:'Invoice',cls:'lead',f:i=>`<div class="lc">${avt(cname(cust(i.cust)),['Draft','Pending approval','Overdue'].includes(st(i)))}<div><span class="mono strong">${esc(i.no)}</span><span class="sub2">${esc(cname(cust(i.cust)))}</span></div></div>`},
    {h:'Date',f:i=>fdate(i.date)},{h:'Due',f:i=>fdate(i.due)},{h:'Total',cls:'num',f:i=>fmt(calc(i).total,i.cur)},{h:'Balance',cls:'num',f:i=>fmt(calc(i).bal,i.cur),bar:i=>isLive(i)?toUSD(calc(i).bal,i.cur):0,barTone:i=>st(i)==='Overdue'?'bad':''},{h:'Status',f:i=>pill(st(i))}],
    list,{row:i=>`class="click" data-act="openInv" data-no="${i.no}"`,empty:'No invoices with this status.'})}</section>`};
 
-function blankDraft(){const br=S.branch==='ALL'?'KLA':S.branch;const cc=branch(br).cc;const co=country(cc);
+function blankDraft(){const br=homeBr();const cc=branch(br).cc;const co=country(cc);
   return {no:null,cust:'',country:cc,branch:br,cur:co.cur,date:TODAY,due:addDays(TODAY,30),items:[{pid:'',desc:'',qty:1,price:0,disc:0,tax:co.tax}],notes:'',terms:'',paid:0,status:'Draft',version:1}}
 function setDraftCust(id){const d=S.draft;const c=cust(id);if(!c){d.cust='';return}const co=country(c.country);
   d.cust=id;d.country=c.country;d.branch=c.branch;d.cur=c.cur;d.due=addDays(d.date,c.terms);
   d.items.forEach(it=>{it.tax=it.pid&&!prod(it.pid).tax?0:co.tax;if(it.pid)it.price=priceIn(prod(it.pid),c.cur)})}
 
 V['invoice-new']=()=>{const d=S.draft;const c=cust(d.cust);const f=c?custFin(c):null;const co=country(d.country);
-  const custs=S.customers.filter(x=>S.branch==='ALL'||x.branch===S.branch);
+  const custs=S.customers.filter(inScope);
   const prods=S.products.filter(p=>p.status==='Active'&&p.countries.includes(d.country));
   return ph(d.no?`Edit ${esc(d.no)}`:'New invoice','You only type the transaction particulars. Customer details, currency, tax and numbering come from the system.',btn('Cancel','cancelDraft',{kind:'ghost'}))+
   `<div class="builder"><div class="stack">
@@ -1374,7 +1466,7 @@ V.payments=()=>{const list=S.payments.filter(inScope).slice().sort((a,b)=>(b.dat
   return ph('Payments','Every payment is allocated to one or more invoices and produces a receipt automatically.',btn('Record payment','recordPayment',{kind:'pri',icon:'plus',perm:'payments.record'}))+
   mstrip([['Received · all time',F(ok.reduce((a,p)=>a+cv(p.amount,p.cur),0)),'ok'],['This month',F(ok.filter(p=>p.date.slice(0,7)===TODAY.slice(0,7)).reduce((a,p)=>a+cv(p.amount,p.cur),0))],['Today',F(ok.filter(p=>p.date===TODAY).reduce((a,p)=>a+cv(p.amount,p.cur),0))],['Top method',topM?esc(topM[0]):'—'],['Failed or reversed',list.filter(p=>p.status!=='Completed').length,list.some(p=>p.status!=='Completed')?'bad':'']])+`<div style="margin-bottom:10px">${scopeNote()}</div>
   <section class="card">${tbl([
-   {h:'Payment',cls:'lead',f:p=>`<span class="mono strong">${esc(p.no)}</span><span class="sub2">${esc(cname(cust(p.cust)))}</span>`},
+   {h:'Payment',cls:'lead',f:p=>`<div class="lc">${avt(cname(cust(p.cust)),p.status!=='Completed')}<div><span class="mono strong">${esc(p.no)}</span><span class="sub2">${esc(cname(cust(p.cust)))}</span></div></div>`},
    {h:'Invoice(s)',f:p=>p.allocs.map(a=>`<span class="mono small">${esc(a.inv.slice(-6))}</span>`).join(', ')},{h:'Amount',cls:'num',f:p=>fmt(p.amount,p.cur)},{h:'Method',f:p=>esc(p.method)},
    {h:'Reference',f:p=>`<span class="mono small">${esc(p.ref)}</span>`},{h:'Date',f:p=>fdate(p.date)},{h:'Received by',f:p=>esc(user(p.by).name)},{h:'Status',f:p=>pill(p.status)},
    {h:'',f:p=>{const r=S.receipts.find(r=>r.pay===p.no);return `<div class="row" style="flex-wrap:nowrap">${r?btn('Receipt','openRct',{cls:'sm',data:{no:r.no}}):''}${p.status==='Completed'?btn('Reverse','reversePay',{cls:'sm',kind:'danger',perm:'payments.reverse',data:{no:p.no}}):''}</div>`}}],list)}</section>`};
@@ -1414,11 +1506,11 @@ V.products=()=>{const cat=S.prodCat;const list=S.products.filter(p=>cat==='All'|
    {h:'Product',cls:'lead',f:p=>`<b>${esc(p.name)}</b><span class="sub2 mono">${p.id}</span>`},{h:'Category',f:p=>`<span class="tag">${esc(p.cat)}</span>`},{h:'Unit',f:p=>esc(p.unit)},
    {h:`Price (${cur})`,cls:'num',f:p=>fmtN(priceIn(p,cur),cur)},{h:`Cost (${cur})`,cls:'num',f:p=>fmtN(rnd(p.cost/S.rates[p.cur]*S.rates[cur],cur),cur)},
    {h:'Margin',cls:'num',f:p=>Math.round((1-p.cost/p.price)*100)+'%'},{h:'Tax',f:p=>p.tax?'Standard rate':'Exempt'},{h:'Available in',f:p=>p.countries.join(' · ')},{h:'Status',f:p=>pill(p.status)}],list,{sum:false})}</section>`};
-V.suppliers=()=>{const list=S.suppliers.filter(x=>S.branch==='ALL'||x.country===branch(S.branch).cc);const ok=can('suppliers.manage');
+V.suppliers=()=>{const list=S.suppliers.filter(inScope);const ok=can('suppliers.manage');
   return ph('Suppliers','Supplier records feed expenses, expense memos and payment vouchers. Choose a supplier when you record an expense.',btn('New supplier','newSupplier',{kind:'pri',icon:'plus',perm:'suppliers.manage'}))+
   `<div style="margin-bottom:10px">${scopeNote()}${ok?'':' · <span class="small muted">Only administrators and Finance Managers can add or edit suppliers.</span>'}</div>
   <section class="card">${tbl([
-   {h:'Supplier',cls:'lead',f:s=>`<b>${esc(s.company)}</b><span class="sub2 mono">${s.id}</span>`},{h:'Contact',f:s=>`${esc(s.contact)}<span class="sub2">${esc(s.phone)}</span>`},{h:'Supplies',f:s=>esc(s.supplies)},
+   {h:'Supplier',cls:'lead',f:s=>`<div class="lc">${avt(s.company,s.outstanding>0)}<div><b>${esc(s.company)}</b><span class="sub2 mono">${s.id}</span></div></div>`},{h:'Contact',f:s=>`${esc(s.contact)}<span class="sub2">${esc(s.phone)}</span>`},{h:'Supplies',f:s=>esc(s.supplies)},
    {h:'Tax ID',f:s=>`<span class="mono small">${esc(s.tin)}</span>`},{h:'Bank',f:s=>`<span class="small">${esc(s.bank.replace(/\d(?=[\d ]{4})/g,'•'))}</span>`},{h:'Terms',f:s=>'Net '+s.terms},
    {h:'Outstanding',cls:'num',f:s=>s.outstanding?`<b>${fmt(s.outstanding,s.cur)}</b>`:'—'}],list,{row:s=>ok?`class="click" data-act="editSupplier" data-id="${s.id}" title="Edit supplier"`:'',empty:'No suppliers in this country yet.'})}</section>
    <p class="note" style="margin-top:12px">${ic('lock',13)} Bank details are masked in the list. Every change to a supplier’s bank details is written to the audit trail and the Finance Manager is notified.</p>`};
@@ -1433,7 +1525,7 @@ function docRepo(){return `<section class="card">${tbl([
   {h:'Document',cls:'lead',f:d=>`<b>${esc(d.name)}</b><span class="sub2">${d.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join(' ')}</span>`},{h:'Type',f:d=>`<span class="tag">${d.type}</span>`},{h:'Linked to',f:d=>`${esc(d.link)}<span class="sub2">${esc(linkName(d))}</span>`},
   {h:'Category',f:d=>esc(d.cat)},{h:'Owner',f:d=>esc(user(d.owner).name)},{h:'Uploaded',f:d=>fdate(d.up)},
   {h:'Expires',f:d=>{if(!d.exp)return '—';const n=diff(TODAY,d.exp);return n<=30?`<span style="color:var(--warn);font-weight:600">${fdate(d.exp)} · ${n} days</span>`:fdate(d.exp)}},{h:'Version',f:d=>'v'+d.ver},{h:'Access',f:d=>`<span class="small">${esc(d.access)}</span>`}],S.docs)}</section>`}
-function docTemplates(){const t=tpl(S.tpl);const sample=invBy('A4S-UG-INV-2026-000231');const ok=can('documents.manage');
+function docTemplates(){const t=tpl(S.tpl);const sample=invBy('DOPAY-UG-INV-2026-000231');const ok=can('documents.manage');
   return `<div class="grid" style="grid-template-columns:minmax(0,260px) minmax(0,1fr)" id="tplGrid"><section class="card tpl-list" style="align-self:start">${S.templates.map(x=>`<button class="${x.id===S.tpl?'on':''}" data-act="tplSel" data-id="${x.id}"><b>${esc(x.name)}</b><span>${esc(x.type)} · v${x.ver}</span></button>`).join('')}</section>
   <div class="stack"><section class="card pad"><div class="fg"><div class="f"><label for="tpl-name">Template name</label><input id="tpl-name" value="${esc(t.name)}" ${ok?'':'readonly'}></div><div class="f"><label>Document type</label><input readonly value="${esc(t.type)} · version ${t.ver}"></div>
    <div class="f full"><label for="tpl-body">Template text</label><textarea id="tpl-body" data-in="tplBody" style="min-height:150px;font-family:var(--f-mono);font-size:12.5px" ${ok?'':'readonly'}>${esc(t.body)}</textarea><span class="hint">Click a variable to insert it at the cursor. Staff never retype data the system already holds.</span></div></div>
@@ -1446,7 +1538,7 @@ function docTemplates(){const t=tpl(S.tpl);const sample=invBy('A4S-UG-INV-2026-0
 const REPORTS=[['Financial',[['sales','Sales report'],['invoices','Invoice report'],['payments','Payment report'],['receivables','Outstanding receivables (aging)'],['overdue','Overdue invoices'],['expenses','Expense report'],['pl','Profit / loss summary'],['cashflow','Cash flow'],['custbal','Customer balances'],['suppbal','Supplier balances']]],
  ['Operational',[['branch','Branch performance'],['country','Country performance'],['product','Product sales'],['custact','Customer activity'],['staff','Staff activity']]],
  ['Audit',[['useract','User activity'],['edited','Edited transactions'],['cancelled','Cancelled & voided'],['approved','Approved transactions']]]];
-function repCtx(){const [a,b]=periodRange(S.repPeriod);const cc=S.repCountry;const usd=cc==='ALL'||S.repView==='base';const cur=usd?'USD':country(cc).cur;
+function repCtx(){if(S.acct!=='ALL')S.repCountry=S.acct;else if(S.repCountry!=='ALL'&&!myAccts().includes(S.repCountry))S.repCountry=myAccts()[0];else if(S.repCountry==='ALL'&&myAccts().length<2)S.repCountry=myAccts()[0];const [a,b]=periodRange(S.repPeriod);const cc=S.repCountry;const usd=cc==='ALL'||S.repView==='base';const cur=usd?'USD':country(cc).cur;
   const inC=r=>cc==='ALL'||r.country===cc||(r.branch&&branch(r.branch).cc===cc);const inP=d=>d>=a&&d<=b;const m=(amt,c)=>usd?rnd(toUSD(amt,c),'USD'):amt;return {a,b,cc,cur,inC,inP,m}}
 function runReport(id){const X=repCtx();const {cur,inC,inP,m}=X;const inv=S.invoices.filter(i=>inC(i)&&inP(i.date));const live=inv.filter(isLive);const pays=S.payments.filter(p=>inC(p)&&inP(p.date));const exps=S.expenses.filter(e=>inC(e)&&inP(e.date));
   const N=v=>fmtN(v,cur);let cols=[],rows=[],chart=null,num=[];
@@ -1475,12 +1567,12 @@ V.reports=()=>{const r=runReport(S.rep);const X=r.X;const title=REPORTS.flatMap(
   return ph('Reports','Filter by period, country and currency. Consolidated views convert each transaction at its recorded rate to USD.','')+
   `<section class="card pad" style="margin-bottom:16px"><div class="row">
    <div class="f" style="min-width:150px"><label for="rp">Period</label><select id="rp" data-ch="repPeriod">${[['month','This month'],['last','Last month'],['quarter','This quarter'],['year','This year']].map(([v,l])=>opt(v,l,S.repPeriod)).join('')}</select></div>
-   <div class="f" style="min-width:170px"><label for="rc">Country</label><select id="rc" data-ch="repCountry">${opt('ALL','All countries (consolidated)',S.repCountry)}${S.countries.map(c=>opt(c.code,'A4S '+c.name,S.repCountry)).join('')}</select></div>
+   <div class="f" style="min-width:170px"><label for="rc">Country</label><select id="rc" data-ch="repCountry">${S.acct==='ALL'&&myAccts().length>1?opt('ALL','All accounts (consolidated)',S.repCountry):''}${S.countries.filter(c=>S.acct==='ALL'?myAccts().includes(c.code):c.code===S.acct).map(c=>opt(c.code,'DoPay '+c.name,S.repCountry)).join('')}</select></div>
    <div class="f" style="min-width:170px"><label for="rv">Currency</label><select id="rv" data-ch="repView" ${S.repCountry==='ALL'?'disabled':''}>${opt('local','Local currency',S.repView)}${opt('base','Base currency (USD)',S.repView)}</select></div>
    <span class="top-sp"></span><div class="row" style="align-self:flex-end">${btn('PDF','exportRep',{cls:'sm',icon:'download',data:{f:'PDF'}})}${btn('Excel','exportRep',{cls:'sm',icon:'download',data:{f:'Excel'}})}${btn('Copy CSV','copyCsv',{cls:'sm',icon:'link'})}</div></div></section>
   <div class="grid" style="grid-template-columns:minmax(0,240px) minmax(0,1fr)" id="repGrid">
    <section class="card tpl-list" style="align-self:start">${REPORTS.map(([g,items])=>`<div class="lbl" style="padding:12px 14px 6px">${g}</div>${items.map(([k,l])=>`<button class="${S.rep===k?'on':''}" data-act="repSel" data-id="${k}"><b style="font-weight:600">${l}</b></button>`).join('')}`).join('')}</section>
-   <section class="card"><div class="card-h"><div><h3>${title}</h3><p class="small muted">${fdate(X.a)} – ${fdate(X.b)} · ${X.cc==='ALL'?'All countries':'A4S '+country(X.cc).name} · ${X.cur}</p></div><span class="small muted">${r.rows.length} rows</span></div>
+   <section class="card"><div class="card-h"><div><h3>${title}</h3><p class="small muted">${fdate(X.a)} – ${fdate(X.b)} · ${X.cc==='ALL'?'All countries':'DoPay '+country(X.cc).name} · ${X.cur}</p></div><span class="small muted">${r.rows.length} rows</span></div>
     ${r.chart&&r.chart.length?`<div class="pad" style="padding-bottom:0">${barChart(r.chart,title)}</div>`:''}
     ${r.rows.length?`<div class="tw"><table class="tbl"><thead><tr>${r.cols.map((c,i)=>`<th class="${r.num.includes(i)?'num':''}">${esc(c)}</th>`).join('')}</tr></thead><tbody>${r.rows.map(row=>`<tr>${row.map((v,i)=>`<td class="${r.num.includes(i)?'num':''}">${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<div class="empty">No records in this period. Try “This year”.</div>'}
    </section></div><style>@media(max-width:900px){#repGrid{grid-template-columns:1fr!important}}</style>`};
@@ -1495,18 +1587,19 @@ function commCustomer(){const list=S.comms.filter(m=>{const c=cust(m.cust);retur
 
 /* ----- users & roles ----- */
 V.users=()=>{const ok=can('users.manage');
-  return ph('Users & roles','Roles decide what each person can see and do. Changes take effect at the next action and are logged.',btn('Invite user','newUser',{kind:'pri',icon:'plus',perm:'users.manage'}))+
+  const us=S.users.filter(u=>isSuper()?(S.acct==='ALL'||branch(u.branch).cc===S.acct):branch(u.branch).cc===homeCC()&&u.role!=='Super Administrator');
+  return ph('Users & roles',isSuper()?'You see every country account. Country Administrators manage the users of their own account only.':`Users of the ${esc(acctName(homeCC()))} account. Other countries’ users are managed by their own administrators.`,btn('Invite user','newUser',{kind:'pri',icon:'plus',perm:'users.manage'}))+
   `<section class="card" style="margin-bottom:16px">${tbl([
-   {h:'User',cls:'lead',f:u=>`<b>${esc(u.name)}</b><span class="sub2">${esc(u.email)}</span>`},{h:'Role',f:u=>esc(u.role)},{h:'Branch',f:u=>esc(branch(u.branch).name)},{h:'2FA',f:u=>u.twofa?pill('Active'):`<span class="pill p-warn">Off</span>`},{h:'Last active',f:u=>fdt(u.last)},{h:'Status',f:u=>pill(u.active?'Active':'Inactive')}],S.users)}</section>
+   {h:'User',cls:'lead',f:u=>`<b>${esc(u.name)}</b><span class="sub2">${esc(u.email)}</span>`},{h:'Role',f:u=>esc(u.role)},{h:'Account',f:u=>u.role==='Super Administrator'?'<span class="tag">All accounts</span>':esc(country(branch(u.branch).cc).name)+((u.accts||[]).length?` <span class="tag">+${u.accts.length}</span>`:'')},{h:'Branch',f:u=>esc(branch(u.branch).name)},{h:'2FA',f:u=>u.twofa?pill('Active'):`<span class="pill p-warn">Off</span>`},{h:'Last active',f:u=>fdt(u.last)},{h:'Status',f:u=>pill(u.active?'Active':'Inactive')}],us)}</section>
   <section class="card"><div class="card-h"><div><h3>Role permissions</h3><p class="small muted">${ok?'Tick to grant. Super Administrator always keeps full access.':'Read-only for your role.'}</p></div></div>
   <div class="tw"><table class="tbl perm-t"><thead><tr><th>Permission</th>${S.roles.map(r=>`<th style="white-space:normal;min-width:88px">${esc(r)}</th>`).join('')}</tr></thead><tbody>
   ${S.permList.map(([p,l])=>`<tr><td>${esc(l)}<span class="sub2 mono">${p}</span></td>${S.roles.map(r=>`<td><input type="checkbox" aria-label="${esc(r)}: ${esc(l)}" data-ch="perm" data-role="${esc(r)}" data-p="${p}" ${S.perms[r].includes(p)?'checked':''} ${ok&&r!=='Super Administrator'?'':'disabled'}></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`};
 
 /* ----- audit ----- */
 V.audit=()=>{if(!can('audit.view'))return ph('Audit trail','')+`<div class="card empty">${ic('lock',18)}<br>Your role (${esc(role())}) can't view the audit trail. Ask a Super Administrator or Auditor.</div>`;
-  const q=S.auditQ.toLowerCase();const list=S.audit.filter(a=>(S.auditUser==='ALL'||a.user===S.auditUser)&&(!q||[a.action,a.record,a.prev,a.next,user(a.user).name].join(' ').toLowerCase().includes(q)));
+  const q=S.auditQ.toLowerCase();const aCC=a=>{const m=/DOPAY-([A-Z]{2})-/.exec(a.record||'');return a.cc||(m?m[1]:branch(user(a.user).branch).cc)};const list=S.audit.filter(a=>(S.acct==='ALL'?myAccts().includes(aCC(a)):aCC(a)===S.acct)&&(S.auditUser==='ALL'||a.user===S.auditUser)&&(!q||[a.action,a.record,a.prev,a.next,user(a.user).name].join(' ').toLowerCase().includes(q)));
   return ph('Audit trail','Financial records are never deleted. Voids, cancellations and reversals are recorded here with who, when, from where and what changed.','')+
-  `<div class="row" style="margin-bottom:12px"><input class="inp" style="max-width:320px" data-in="auditQ" placeholder="Filter by record, action or value" value="${esc(S.auditQ)}" id="auditQ"><select class="sel" data-ch="auditUser" aria-label="User">${opt('ALL','All users',S.auditUser)}${S.users.map(u=>opt(u.id,u.name,S.auditUser)).join('')}</select></div>
+  `<div class="row" style="margin-bottom:12px"><input class="inp" style="max-width:320px" data-in="auditQ" placeholder="Filter by record, action or value" value="${esc(S.auditQ)}" id="auditQ"><select class="sel" data-ch="auditUser" aria-label="User">${opt('ALL','All users',S.auditUser)}${S.users.filter(u=>isSuper()||branch(u.branch).cc===homeCC()).map(u=>opt(u.id,u.name,S.auditUser)).join('')}</select></div>
   <section class="card" id="auditTable">${auditTable(list)}</section>`};
 function auditTable(list){return tbl([{h:'When',f:a=>fdt(a.at)},{h:'User',f:a=>`${esc(user(a.user).name)}<span class="sub2">${esc(user(a.user).role)}</span>`},{h:'Action',cls:'lead',f:a=>`<b>${esc(a.action)}</b><span class="sub2 mono">${esc(a.record)}</span>`},{h:'Previous value',f:a=>esc(a.prev||'—')},{h:'New value',f:a=>esc(a.next||'—')},{h:'IP / device',f:a=>`<span class="small muted">${esc(a.ip)}</span>`}],list,{empty:'No entries match.'})}
 
@@ -1517,12 +1610,15 @@ V.settings=()=>{const t=S.setTab;const ok=can('settings.manage');
   `<div class="tabs">${SET_TABS.map(([k,l])=>`<button class="${t===k?'on':''}" data-act="setTab" data-t="${k}">${l}</button>`).join('')}</div>${SET[t](ok)}`};
 const dis=ok=>ok?'':'disabled';
 const SET={
- org:ok=>`<div class="grid g-2"><section class="card pad"><h3 style="margin-bottom:12px">Company information</h3><div class="fg">
-   ${[['name','Group name'],['address','Head office address'],['phone','Phone'],['email','Accounts email'],['tin','Tax ID (TIN)'],['web','Website'],['bank','Bank details on invoices'],['momo','Mobile money details']].map(([k,l])=>`<div class="f ${k==='bank'||k==='momo'||k==='address'?'full':''}"><label for="org-${k}">${l}</label><input id="org-${k}" data-in="org" data-k="${k}" value="${esc(S.org[k])}" ${dis(ok)}></div>`).join('')}</div></section>
+ org:ok=>`<div class="grid g-2"><div class="stack" style="gap:16px">${(S.acct==='ALL'?myAccts():[S.acct]).map(cc=>{const c=country(cc);const pr=c.profile||(c.profile={});return `<section class="card pad"><div class="row" style="justify-content:space-between;margin-bottom:12px"><h3>${esc(acctName(cc))} account</h3><span class="tag">${esc(c.cur)} · ${esc(c.taxName)} ${c.tax}%</span></div><div class="fg">
+   <div class="f full"><label>Legal entity</label><input value="${esc(c.entity)}" readonly></div>
+   ${[['address','Office address'],['phone','Phone'],['email','Accounts email'],['tin','Tax ID (TIN)'],['bank','Bank details on invoices'],['momo','Mobile money details']].map(([k,l])=>`<div class="f ${k==='bank'||k==='momo'||k==='address'?'full':''}"><label for="org-${cc}-${k}">${l}</label><input id="org-${cc}-${k}" data-in="org" data-acct="${cc}" data-k="${k}" value="${esc(pr[k]||'')}" ${dis(ok)}></div>`).join('')}</div>
+   <p class="small muted" style="margin-top:10px">Shown on every invoice, receipt and statement issued by ${esc(c.name)}. Only ${esc(c.name)}’s administrators and the Super Administrator can change it.</p></section>`}).join('')}
+   ${isSuper()?`<section class="card pad"><h3 style="margin-bottom:12px">Group settings <span class="tag">Super Administrator</span></h3><div class="fg">${[['name','Group name (optional)'],['web','Website']].map(([k,l])=>`<div class="f"><label for="org-${k}">${l}</label><input id="org-${k}" data-in="org" data-k="${k}" value="${esc(S.org[k]||'')}"></div>`).join('')}</div></section>`:''}</div>
    <section class="card pad"><h3 style="margin-bottom:12px">Logo</h3><div class="row" style="gap:16px">${logoHtml()}<label class="btn ${ok?'':'disabled'}">${ic('upload',16)}<span>Upload logo</span><input type="file" accept="image/png,image/jpeg,image/svg+xml" data-ch="logo" hidden ${dis(ok)}></label></div><p class="small muted" style="margin-top:10px">Used on every invoice, receipt and statement. PNG or SVG on a transparent background works best.</p>
    <h3 style="margin:20px 0 10px">Accounts monitored for low balance</h3>${S.accounts.map(a=>`<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)"><span>${esc(a.name)}</span><span class="tab" style="font-weight:600;color:${a.bal<a.floor?'var(--bad)':'inherit'}">${fmt(a.bal,a.cur)}</span></div>`).join('')}</section></div>`,
- geo:ok=>`<section class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Countries & entities</h3><p class="small muted">Numbering pattern: <span class="mono">${esc(S.pattern)}</span></p></div>${btn('Add country','addCountry',{cls:'sm',icon:'plus',perm:'settings.manage'})}</div>
-   ${tbl([{h:'Entity',cls:'lead',f:c=>`<b>A4S ${esc(c.name)}</b><span class="sub2">${c.code}</span>`},{h:'Legal entity',f:c=>esc(c.entity||'')},{h:'Doc code',f:c=>`<span class="mono">${esc(c.dcode||c.code)}</span>`},{h:'Currency',f:c=>c.cur},{h:'Tax',f:c=>`${c.taxName} ${c.tax}%`},{h:'Time zone',f:c=>`${esc(c.tz||'UTC')} · ${esc(c.tzl||'')}`},{h:'Next invoice no.',f:c=>`<span class="mono small">${esc(previewNo(c.code,'INV'))}</span>`},{h:'Branches',f:c=>S.branches.filter(b=>b.cc===c.code).map(b=>b.name).join(', ')||'—'}],S.countries)}</section>
+ geo:ok=>`<section class="card" style="margin-bottom:16px"><div class="card-h"><div><h3>Countries & entities</h3><p class="small muted">Numbering pattern: <span class="mono">${esc(S.pattern)}</span></p></div>${isSuper()?btn('Add country account','addCountry',{cls:'sm',icon:'plus'}):'<span class="small muted">New country accounts are opened by the Super Administrator</span>'}</div>
+   ${tbl([{h:'Entity',cls:'lead',f:c=>`<b>DoPay ${esc(c.name)}</b><span class="sub2">${c.code}</span>`},{h:'Legal entity',f:c=>esc(c.entity||'')},{h:'Doc code',f:c=>`<span class="mono">${esc(c.dcode||c.code)}</span>`},{h:'Currency',f:c=>c.cur},{h:'Tax',f:c=>`${c.taxName} ${c.tax}%`},{h:'Time zone',f:c=>`${esc(c.tz||'UTC')} · ${esc(c.tzl||'')}`},{h:'Next invoice no.',f:c=>`<span class="mono small">${esc(previewNo(c.code,'INV'))}</span>`},{h:'Branches',f:c=>S.branches.filter(b=>b.cc===c.code).map(b=>b.name).join(', ')||'—'}],S.countries)}</section>
    <section class="card"><div class="card-h"><h3>Branches & offices</h3>${btn('Add branch','addBranch',{cls:'sm',icon:'plus',perm:'settings.manage'})}</div>
    ${tbl([{h:'Branch',cls:'lead',f:b=>`<b>${esc(b.name)}</b><span class="sub2">${esc(b.office)}</span>`},{h:'Code',f:b=>`<span class="mono">${esc(b.bcode||b.id)}</span>`},{h:'Country',f:b=>country(b.cc).name},{h:'Department',f:b=>esc(b.dept)},{h:'Manager',f:b=>esc(user(b.manager).name)},{h:'Users',f:b=>S.users.filter(u=>u.branch===b.id).length},{h:'Status',f:b=>pill(b.active?'Active':'Inactive')}],S.branches)}</section>`,
  fin:ok=>`<div class="grid g-2"><section class="card"><div class="card-h"><div><h3>Exchange rates</h3><p class="small muted">Units per 1 USD (base currency) · updated ${fdate(S.rateDate)}</p></div></div><div class="pad stack" style="gap:10px">
@@ -1555,16 +1651,16 @@ const SET={
 function patPrev(){return ['INV','RCT','PAY','EXP'].map(d=>`<div class="row" style="justify-content:space-between"><span class="small muted">${{INV:'Invoice',RCT:'Receipt',PAY:'Payment',EXP:'Expense'}[d]}</span><span class="mono small">${esc(previewNo('UG',d))}</span></div>`).join('')}
 
 /* ============ global search ============ */
-function searchAll(q){const toks=q.toLowerCase().split(/\s+/).filter(Boolean).map(t=>t.replace(/,/g,''));if(!toks.length)return [];
+function searchAll(q){const inA=r=>{const cc=recCC(r);return !cc||(S.acct==='ALL'?myAccts().includes(cc):cc===S.acct)};const toks=q.toLowerCase().split(/\s+/).filter(Boolean).map(t=>t.replace(/,/g,''));if(!toks.length)return [];
   const hit=h=>toks.every(t=>h.includes(t));const R=[];const push=(g,t,s,act)=>R.push({g,t,s,act});
-  S.customers.forEach(c=>{const nums=[...S.invoices.filter(i=>i.cust===c.id).map(i=>calc(i).total),...S.payments.filter(p=>p.cust===c.id).map(p=>p.amount)].join(' ');
+  S.customers.filter(inA).forEach(c=>{const nums=[...S.invoices.filter(i=>i.cust===c.id).map(i=>calc(i).total),...S.payments.filter(p=>p.cust===c.id).map(p=>p.amount)].join(' ');
     if(hit([c.id,c.name,c.company,c.phone,c.phone.replace(/\D/g,''),c.email,c.tin,nums].join(' ').toLowerCase()))push('Customers',cname(c),c.id+' · '+c.phone,`data-act="openCust" data-id="${c.id}"`)});
-  S.invoices.forEach(i=>{const c=cust(i.cust);const k=calc(i);if(hit([i.no,c.name,c.company,k.total,k.bal,st(i)].join(' ').toLowerCase()))push('Invoices',i.no,cname(c)+' · '+fmt(k.total,i.cur)+' · '+st(i),`data-act="openInv" data-no="${i.no}"`)});
-  S.payments.forEach(p=>{const c=cust(p.cust);if(hit([p.no,p.ref,c.name,c.company,p.amount,p.method].join(' ').toLowerCase()))push('Payments',p.no,cname(c)+' · '+fmt(p.amount,p.cur)+' · '+p.ref,`data-act="nav" data-r="payments"`)});
-  S.receipts.forEach(r=>{const p=payBy(r.pay);const c=cust(p.cust);if(hit([r.no,p.ref,c.name,c.company,p.amount].join(' ').toLowerCase()))push('Receipts',r.no,cname(c)+' · '+fmt(p.amount,p.cur),`data-act="openRct" data-no="${r.no}"`)});
-  S.customers.forEach(c=>{if(hit(['statement',c.name,c.company,c.id].join(' ').toLowerCase()))push('Statements','Statement · '+cname(c),c.id,`data-act="openStmt" data-id="${c.id}"`)});
-  S.docs.forEach(d=>{if(hit([d.name,d.tags.join(' '),d.cat,linkName(d)].join(' ').toLowerCase()))push('Documents',d.name,d.link+' · '+linkName(d),`data-act="nav" data-r="documents"`)});
-  (S.forms||[]).forEach(f=>{if(f.ref&&hit([f.ref,FT[f.type].name,fSubject(f),user(f.by).name,fTotal(f),country(f.country).name,...(f.lines||[]).map(l=>l.desc||l.purpose||'')].join(' ').toLowerCase()))push('Finance forms',f.ref,FT[f.type].name+' · '+fSubject(f),`data-act="openForm" data-id="${f.id}"`)});
+  S.invoices.filter(inA).forEach(i=>{const c=cust(i.cust);const k=calc(i);if(hit([i.no,c.name,c.company,k.total,k.bal,st(i)].join(' ').toLowerCase()))push('Invoices',i.no,cname(c)+' · '+fmt(k.total,i.cur)+' · '+st(i),`data-act="openInv" data-no="${i.no}"`)});
+  S.payments.filter(inA).forEach(p=>{const c=cust(p.cust);if(hit([p.no,p.ref,c.name,c.company,p.amount,p.method].join(' ').toLowerCase()))push('Payments',p.no,cname(c)+' · '+fmt(p.amount,p.cur)+' · '+p.ref,`data-act="nav" data-r="payments"`)});
+  S.receipts.filter(r=>inA(payBy(r.pay)||{})).forEach(r=>{const p=payBy(r.pay);const c=cust(p.cust);if(hit([r.no,p.ref,c.name,c.company,p.amount].join(' ').toLowerCase()))push('Receipts',r.no,cname(c)+' · '+fmt(p.amount,p.cur),`data-act="openRct" data-no="${r.no}"`)});
+  S.customers.filter(inA).forEach(c=>{if(hit(['statement',c.name,c.company,c.id].join(' ').toLowerCase()))push('Statements','Statement · '+cname(c),c.id,`data-act="openStmt" data-id="${c.id}"`)});
+  S.docs.filter(inA).forEach(d=>{if(hit([d.name,d.tags.join(' '),d.cat,linkName(d)].join(' ').toLowerCase()))push('Documents',d.name,d.link+' · '+linkName(d),`data-act="nav" data-r="documents"`)});
+  (S.forms||[]).filter(f=>inA(f)||awaitingMe(f)).forEach(f=>{if(f.ref&&hit([f.ref,FT[f.type].name,fSubject(f),user(f.by).name,fTotal(f),country(f.country).name,...(f.lines||[]).map(l=>l.desc||l.purpose||'')].join(' ').toLowerCase()))push('Finance forms',f.ref,FT[f.type].name+' · '+fSubject(f),`data-act="openForm" data-id="${f.id}"`)});
   return R}
 function renderSearch(){const q=$('#gsearch').value.trim();const box=$('#sres');if(!q){box.hidden=true;return}const R=searchAll(q);
   if(!R.length){box.innerHTML=`<div class="empty">No matches for “${esc(q)}”.</div>`;box.hidden=false;return}
@@ -1573,6 +1669,8 @@ function renderSearch(){const q=$('#gsearch').value.trim();const box=$('#sres');
 
 /* ============ ASK DOPAY: platform guide ============ */
 const KB=[
+ {id:'accounts',t:'Country accounts: who sees what',k:['account','accounts','country account','switch country','other country','all countries','see nigeria','see uganda','separate','consolidated','super admin','super administrator','country administrator','access','data separation'],
+  a:`Each country runs as its own <b>DoPay account</b> with its own customers, invoices, payments, suppliers, expenses, taxes, numbering, users and company details.<ul><li><b>Everyone else</b> works only inside their own country’s account. Their search, reports, audit trail and Ask Dopay answers never include another country.</li><li>The <b>Super Administrator</b> can open every account from the selector at the top, or choose <b>All accounts</b> for a consolidated view in USD.</li><li>A <b>Country Administrator</b> manages their own account: users, company details, suppliers and settings.</li><li>Group approvers (Financial Controller, Regional Manager, CFO, CEO) still sign forms routed to them from any country, but they can’t browse other countries’ records.</li><li>Team messages work across countries, so officers can still talk to each other.</li></ul>`,go:['settings','Open account settings']},
  {id:'supplier',t:'Adding and editing suppliers',k:['supplier','suppliers','vendor','vendors','add supplier','new supplier','edit supplier','supplier bank','payee'],
   a:`Go to <b>Spending & forms → Suppliers</b> and click <b>New supplier</b>. Enter the company, contact, country, TIN, payment terms, what they supply and bank details. Click a supplier in the list to edit it.<ul><li>Only the <b>Super Administrator</b> and <b>Finance Manager</b> can add or edit suppliers by default. An administrator can give other roles the “Add & edit suppliers” permission in Users & roles.</li><li>Dopay blocks duplicates with the same name or TIN.</li><li>Bank detail changes are written to the audit trail and the Finance Manager is notified.</li><li>New suppliers appear straight away in the Supplier list when you record an expense.</li></ul>`,go:['suppliers','Open Suppliers']},
  {id:'grid',t:'Working with tables: sort, filter, totals, export to Excel',k:['sort','filter','table','tables','export','excel','csv','download','print table','total','totals','columns','spreadsheet','collapse menu','sidebar'],
@@ -1588,7 +1686,7 @@ const KB=[
  {id:'customer',t:'Adding a customer or member',k:['add customer','new customer','add a customer','customer','customers','register customer','member','customer profile','edit customer','credit limit'],
   a:`Go to <b>Billing → Customers</b> and press <b>New customer</b> (or use the quick action on the Dashboard). Choose the branch; country, currency and tax follow from it. Once saved, the customer’s details fill every invoice, receipt and statement automatically. Changing a credit limit is logged in the audit trail.`,go:['customers','Open Customers'],act:['newCustomer','New customer','customers.manage']},
  {id:'invoice',t:'Creating an invoice',k:['create invoice','new invoice','make invoice','raise invoice','invoice builder','bill a customer','invoice'],
-  a:`<ol><li>Press <b>New invoice</b> (Dashboard or Billing → Invoices).</li><li>Pick the customer: address, tax ID, currency and terms load by themselves.</li><li>Add products or custom lines; totals, discount and VAT calculate as you type, with a live preview.</li><li>Press <b>Submit for approval</b>. Once approved, <b>Generate official PDF</b>, then send it.</li></ol>The number (e.g. A4S-UG-INV-2026-000237) follows your country’s sequence.`,act:['newInvoice','New invoice','invoices.create']},
+  a:`<ol><li>Press <b>New invoice</b> (Dashboard or Billing → Invoices).</li><li>Pick the customer: address, tax ID, currency and terms load by themselves.</li><li>Add products or custom lines; totals, discount and VAT calculate as you type, with a live preview.</li><li>Press <b>Submit for approval</b>. Once approved, <b>Generate official PDF</b>, then send it.</li></ol>The number (e.g. DOPAY-UG-INV-2026-000237) follows your country’s sequence.`,act:['newInvoice','New invoice','invoices.create']},
  {id:'approveinv',t:'Who approves invoices',k:['approve invoice','invoice approval','pending approval','approve','approval invoice','who approves','approves invoices','invoice approver','approve an invoice'],
   a:`Invoices submitted by officers wait for a <b>Finance Manager</b>, <b>Branch Manager</b>, <b>Assistant/Country Manager</b>, <b>Financial Controller</b> or <b>CFO</b>. Approvers see them under <b>Invoices → Pending approval</b> and on the Dashboard. After approval, the preparer generates the official PDF.`,go:['invoices','Open Invoices'],fil:'Pending approval'},
  {id:'sendinv',t:'Sending an invoice, receipt or statement',k:['send invoice','share','send a receipt','send a statement','send an invoice','whatsapp','email invoice','telegram','imo','copy link','share link','send receipt','send statement'],
@@ -1610,7 +1708,7 @@ const KB=[
  {id:'cert',t:'No receipt? Receipt Reimbursement Certification (Appendix C)',k:['no receipt','receipt reimbursement','certification','appendix c','lost receipt','without receipt'],
   a:`When a vendor can’t give a receipt, fill <b>Receipt Reimbursement Certification</b>: the purchaser lists the payments and certifies them, then an Accountant or Assistant Manager approves. Once approved, <b>Use in a new expense memo</b> links it as the memo’s supporting document.`,act:['fNew','New certification','forms.submit',{t:'C'}]},
  {id:'budget',t:'Budgets and budget monitoring (Appendix F)',k:['budget','budgets','annual budget','quarterly budget','monthly budget','budget monitoring','variance','actual vs budget','over budget','appendix f'],
-  a:`Prepare a <b>Monthly, Quarterly or Annual</b> budget in Finance forms → Expense Budget across the 21 A4S categories; the Financial Controller reviews it. <b>Budget monitoring</b> (card on the Finance forms page) compares the approved annual budget with actual spending by month or year to date. Actuals post automatically from paid expenses and memos; bars turn amber at 90% and red over 100%.`,go:['budget','Open budget monitoring']},
+  a:`Prepare a <b>Monthly, Quarterly or Annual</b> budget in Finance forms → Expense Budget across the 21 expense categories; the Financial Controller reviews it. <b>Budget monitoring</b> (card on the Finance forms page) compares the approved annual budget with actual spending by month or year to date. Actuals post automatically from paid expenses and memos; bars turn amber at 90% and red over 100%.`,go:['budget','Open budget monitoring']},
  {id:'branchreport',t:'Branch Financial Report (Appendix G)',k:['branch financial report','financial report','bank reconciliation','reconcile','bank statement','appendix g','monthly report','15th'],
   a:`Finance forms → Branch Financial Report. Enter the month, bank and opening balance, then <b>Import from Dopay</b> to pull that month’s payments and paid expenses. Add the closing balance from the bank statement and attach the statement. You can only submit when the difference is zero. Due to HQ by the <b>15th of the following month</b>; it’s signed by the Accountant, CM/AM, Finance Manager and Financial Controller.`,act:['fNew','New branch report','forms.submit',{t:'G'}]},
  {id:'interbranch',t:'Interbranch funding (Appendix J)',k:['interbranch','intercompany','inter-branch','another branch pays','fund transfer','appendix j'],
@@ -1626,7 +1724,7 @@ const KB=[
  {id:'expense',t:'Expenses vs expense memos',k:['expense','expenses','new expense','spend','spending','supporting document','upload receipt','difference between','expenses and expense','expense module'],
   a:`<b>Expenses</b> is the ledger of what was spent (Draft → Submitted → Reviewed → Approved → Paid). A paid <b>Expense Memorandum</b> or liquidated cash advance posts its lines here automatically. For small items you can add an expense directly with <b>New expense</b> and attach the receipt.`,go:['expenses','Open Expenses']},
  {id:'numbers',t:'Reference numbers',k:['reference number','ref no','numbering','invoice number format','sequence','ugd2026'],
-  a:`Numbers follow your templates per country: <b>UGD2026-A-017</b> (memo), <b>UGD-HQ-2026-B-004</b> (petty cash), <b>UGD-J-2026-012</b> (interbranch), <b>UGD2026-K-002</b> (cash advance), and A4S-UG-INV-2026-000237 for invoices. Change the patterns in <b>Settings → Documents</b>.`,go:['settings','Open Settings'],tab:'docs'},
+  a:`Numbers follow your templates per country: <b>UGD2026-A-017</b> (memo), <b>UGD-HQ-2026-B-004</b> (petty cash), <b>UGD-J-2026-012</b> (interbranch), <b>UGD2026-K-002</b> (cash advance), and DOPAY-UG-INV-2026-000237 for invoices. Change the patterns in <b>Settings → Documents</b>.`,go:['settings','Open Settings'],tab:'docs'},
  {id:'rates',t:'Exchange rates and currencies',k:['exchange rate','rates','currency','usd rate','convert','base currency'],
   a:`Set units per 1 USD in <b>Settings → Finance</b>. Each transaction stores the rate on its date, so past invoices never change when you update rates. Consolidated reports use USD as the base currency.`,go:['settings','Open Settings'],tab:'fin'},
  {id:'addcountry',t:'Adding a country or branch',k:['add country','new country','add branch','new branch','kenya','expand','entity','add a country','add a branch','another country','new market','open a branch'],
@@ -1704,6 +1802,7 @@ function aiPush(who,html){S.aiLog.push({who,html});renderAI()}
 function renderAI(){$('#aiLog').innerHTML=S.aiLog.map(m=>`<div class="msg ${m.who}">${m.html}</div>`).join('');$('#aiLog').scrollTop=1e6;$('#aiSug').innerHTML=aiSug().map(s=>`<button data-act="aiAsk" data-q="${esc(s)}">${esc(s)}</button>`).join('')}
 function findCust(name){const n=name.toLowerCase().replace(/\b(ltd|limited|co|company)\b\.?/g,'').replace(/[^\w\s]/g,'').trim();if(!n)return null;
   return S.customers.find(c=>cname(c).toLowerCase().replace(/[^\w\s]/g,'').includes(n))||S.customers.find(c=>c.name.toLowerCase().includes(n))||S.customers.find(c=>n.split(' ').every(w=>cname(c).toLowerCase().includes(w)))}
+const mineAcct=r=>{const cc=recCC(r);return !cc||(S.acct==='ALL'?myAccts().includes(cc):cc===S.acct)};
 function aiAnswer(q){const s=q.toLowerCase();const li=(arr,f)=>`<ul>${arr.map(f).join('')}</ul>`;
   const mk=s.match(/(?:create|make|raise|prepare|draft)\s+(?:an?\s+)?invoice\s+for\s+(.+?)(?:\s+for\s+([a-z]{3})?\s*([\d,.]+)\s*(m|million|k)?)?\s*\.?$/i);
   if(mk){if(!can('invoices.create'))return `Your role (${esc(role())}) can't create invoices, so I haven't prepared anything.`;
@@ -1720,30 +1819,32 @@ function aiAnswer(q){const s=q.toLowerCase();const li=(arr,f)=>`<ul>${arr.map(f)
     return `${L.length>1?'VAT/TVA position by country':'Tax position'}:${li(L,cc=>{const co=country(cc),r=vatPeriods(cc),o=r.filter(x=>x.status!=='Open period'&&x.bal>0),t=o.reduce((a,x)=>a+x.bal,0),op=r.find(x=>x.status==='Open period');
       return `<li><b>${esc(co.name)}</b>: ${t>0?`<b>${fmt(rnd(t,co.cur),co.cur)}</b> to remit (${o.map(x=>MON[+x.p.slice(5)-1]+' due '+fdate(x.due)).join(', ')})`:'all closed returns paid'}${op&&op.vat?` · ${fmt(op.vat,co.cur)} accruing this month`:''}</li>`})}<div class="row">${btn('Open Taxes','nav',{cls:'sm',data:{r:'taxes'}})}</div>`}
   if(HELP_RX.test(s.trim())&&!/how (much|many)/.test(s)){const [b]=kbScore(q);if(b.sc>0)return kbAnswer(b.t)}
-  const ref=s.match(/(a4s-\w\w-inv-2026-\d+|inv-?\d+|\b\d{3,6}\b)/i);
-  if(/\bfind\b|\binvoice\s+(a4s|inv|\d)/i.test(s)&&ref){const t=ref[1].replace(/^inv-?/i,'').toLowerCase();const r=S.invoices.filter(i=>i.no.toLowerCase().includes(t));if(!r.length)return `No invoice matches “${esc(ref[1])}”.`;
+  const ref=s.match(/(dopay-\w\w-inv-2026-\d+|inv-?\d+|\b\d{3,6}\b)/i);
+  if(/\bfind\b|\binvoice\s+(dopay|inv|\d)/i.test(s)&&ref){const t=ref[1].replace(/^inv-?/i,'').toLowerCase();const r=S.invoices.filter(mineAcct).filter(i=>i.no.toLowerCase().includes(t));if(!r.length)return `No invoice matches “${esc(ref[1])}”.`;
     return `Found ${r.length}:${li(r,i=>`<li><span class="mono">${esc(i.no)}</span> · ${esc(cname(cust(i.cust)))} · ${fmt(calc(i).total,i.cur)} · ${st(i)}</li>`)}<div class="row">${btn('Open','openInv',{cls:'sm',data:{no:r[0].no}})}</div>`}
   if(/(awaiting|waiting).*(sign|approv)|my signature|need.*sign/.test(s)){const r=S.forms.filter(awaitingMe);if(!r.length)return `Nothing is waiting for your signature as ${esc(role())}. Switch user to an approver (e.g. Daniel Osei, Financial Controller) to see their queue.`;
     return `${r.length} form${r.length>1?'s':''} waiting for you:${li(r,f=>`<li><span class="mono">${esc(f.ref)}</span> · ${esc(FT[f.type].name)} · ${esc(country(f.country).name)}${fTotal(f)?' · '+fmt(fTotal(f),f.cur):''}</li>`)}<div class="row">${btn('Open first','openForm',{cls:'sm',data:{id:r[0].id}})}${btn('Open queue','goForms',{cls:'sm',data:{f:'Awaiting my signature'}})}</div>`}
   const fk=[['expense memo','A'],['memorandum','A'],['petty cash','B'],['receipt reimbursement','C'],['no receipt','C'],['budget','F'],['financial report','G'],['bank reconciliation','G'],['interbranch','J'],['intercompany','J'],['cash advance','K'],['advance','K']].find(([w])=>s.includes(w));
-  if(fk&&/create|new|fill|raise|prepare|start|make|request/.test(s)){if(!can('forms.submit'))return `Your role (${esc(role())}) can't submit finance forms.`;return `I'll open a new ${esc(FT[fk[1]].name)} (${FT[fk[1]].app}) for ${esc(branch(S.branch==='ALL'?me().branch:S.branch).name)}, with the entity, currency and reference filled in. Nothing is submitted until you press Submit.<div class="row">${btn('Open the form','fNew',{cls:'sm',kind:'pri',data:{t:fk[1]}})}</div>`}
-  if(/30 days|not paid|haven.t paid|have not paid/.test(s)){const r=S.invoices.filter(i=>isLive(i)&&calc(i).bal>0&&diff(i.date,TODAY)>30);if(!r.length)return 'Every customer has paid within 30 days of invoicing.';
+  if(fk&&/create|new|fill|raise|prepare|start|make|request/.test(s)){if(!can('forms.submit'))return `Your role (${esc(role())}) can't submit finance forms.`;return `I'll open a new ${esc(FT[fk[1]].name)} (${FT[fk[1]].app}) for ${esc(branch(homeBr()).name)}, with the entity, currency and reference filled in. Nothing is submitted until you press Submit.<div class="row">${btn('Open the form','fNew',{cls:'sm',kind:'pri',data:{t:fk[1]}})}</div>`}
+  if(/30 days|not paid|haven.t paid|have not paid/.test(s)){const r=S.invoices.filter(mineAcct).filter(i=>isLive(i)&&calc(i).bal>0&&diff(i.date,TODAY)>30);if(!r.length)return 'Every customer has paid within 30 days of invoicing.';
     return `${r.length} invoice${r.length>1?'s are':' is'} unpaid more than 30 days after issue:${li(r,i=>`<li>${esc(cname(cust(i.cust)))} · <span class="mono">${i.no.slice(-6)}</span> · ${fmt(calc(i).bal,i.cur)} · ${diff(i.date,TODAY)} days</li>`)}<div class="row">${btn('Open overdue list','invFilter',{cls:'sm',data:{f:'Overdue'}})}</div>`}
-  if(/overdue/.test(s)){const r=S.invoices.filter(i=>st(i)==='Overdue');if(!r.length)return 'No invoices are overdue.';
-    return `${r.length} overdue invoice${r.length>1?'s':''} across all branches:${li(r,i=>`<li>${esc(cname(cust(i.cust)))} · <span class="mono">${i.no.slice(-6)}</span> · ${fmt(calc(i).bal,i.cur)} · due ${fdate(i.due)}</li>`)}<div class="row">${btn('Open in Invoices','invFilter',{cls:'sm',data:{f:'Overdue'}})}</div>`}
-  if(/outstanding|owe|receivable/.test(s)){const by={},bm={};S.invoices.filter(i=>isLive(i)).forEach(i=>{const b=calc(i).bal;if(b<=0)return;by[i.cur]=(by[i.cur]||0)+b;if(i.date>='2026-09-01')bm[i.cur]=(bm[i.cur]||0)+b});
+  if(/overdue/.test(s)){const r=S.invoices.filter(mineAcct).filter(i=>st(i)==='Overdue');if(!r.length)return 'No invoices are overdue.';
+    return `${r.length} overdue invoice${r.length>1?'s':''} across your accounts:${li(r,i=>`<li>${esc(cname(cust(i.cust)))} · <span class="mono">${i.no.slice(-6)}</span> · ${fmt(calc(i).bal,i.cur)} · due ${fdate(i.due)}</li>`)}<div class="row">${btn('Open in Invoices','invFilter',{cls:'sm',data:{f:'Overdue'}})}</div>`}
+  if(/outstanding|owe|receivable/.test(s)){const by={},bm={};S.invoices.filter(mineAcct).filter(i=>isLive(i)).forEach(i=>{const b=calc(i).bal;if(b<=0)return;by[i.cur]=(by[i.cur]||0)+b;if(i.date>='2026-09-01')bm[i.cur]=(bm[i.cur]||0)+b});
     const usd=Object.entries(by).reduce((a,[c,v])=>a+toUSD(v,c),0);
     return `From invoices issued this month (September): ${Object.entries(bm).map(([c,v])=>`<b>${fmt(v,c)}</b>`).join(', ')||'nothing outstanding'}.<br>Total outstanding across all dates:${li(Object.entries(by),([c,v])=>`<li>${fmt(v,c)}</li>`)}Consolidated ≈ <b>USD ${fmtN(usd,'USD')}</b> at today's rates.`}
-  if(/expense/.test(s)){const b=S.branches.find(b=>s.includes(b.name.toLowerCase()));const r=S.expenses.filter(e=>!b||e.branch===b.id);const tot={};r.forEach(e=>tot[e.cur]=(tot[e.cur]||0)+e.amount);
+  if(/expense/.test(s)){const b=S.branches.find(b=>s.includes(b.name.toLowerCase()));const r=S.expenses.filter(mineAcct).filter(e=>!b||e.branch===b.id);const tot={};r.forEach(e=>tot[e.cur]=(tot[e.cur]||0)+e.amount);
     return `${r.length} expense${r.length!==1?'s':''}${b?' for '+esc(b.name):''}, total ${Object.entries(tot).map(([c,v])=>fmt(v,c)).join(' + ')}:${li(r,e=>`<li>${esc(e.desc)} · ${fmt(e.amount,e.cur)} · ${e.status}</li>`)}<div class="row">${btn('Open Expenses','nav',{cls:'sm',data:{r:'expenses'}})}</div>`}
-  if(/report|sales/.test(s)){const sum=(a,b)=>S.invoices.filter(i=>isLive(i)&&i.date>=a&&i.date<=b).reduce((x,i)=>x+toUSD(calc(i).total,i.cur),0);const sep=sum('2026-09-01',TODAY),aug=sum('2026-08-01','2026-08-31');
+  if(/report|sales/.test(s)){const sum=(a,b)=>S.invoices.filter(mineAcct).filter(i=>isLive(i)&&i.date>=a&&i.date<=b).reduce((x,i)=>x+toUSD(calc(i).total,i.cur),0);const sep=sum('2026-09-01',TODAY),aug=sum('2026-08-01','2026-08-31');
     return `Monthly sales, consolidated in USD:<ul><li>September to date: <b>USD ${fmtN(sep,'USD')}</b></li><li>August: USD ${fmtN(aug,'USD')}</li></ul>${aug?`That's ${sep>=aug?'up':'down'} ${Math.abs(Math.round((sep-aug)/aug*100))}% on August so far.`:''}<div class="row">${btn('Open sales report','openReport',{cls:'sm',data:{id:'sales'}})}</div>`}
   {const [b]=kbScore(q);if(b.sc>0)return kbAnswer(b.t)}
   return `I can explain how to use any part of Dopay, find records and prepare drafts. Try “How do I fill an expense memo?”, “Where do I find budget monitoring?”, “How can Dopay help me?” or one of the suggestions below.`}
 
 /* ============ render ============ */
 function renderTop(){
-  $('#branchSel').innerHTML=S.branches.map(b=>opt(b.id,b.name+' · '+country(b.cc).cur,S.branch)).join('')+opt('ALL','All branches · USD',S.branch);
+  const acs=myAccts();const cur=S.branch!=='ALL'?S.branch:(S.acct==='ALL'?'ALL':'CC:'+S.acct);
+  $('#branchSel').innerHTML=(acs.length>1?opt('ALL','All accounts · USD',cur):'')+acs.map(cc=>`<optgroup label="${esc(acctName(cc))} · ${country(cc).cur}">${opt('CC:'+cc,country(cc).name+' · all branches',cur)}${S.branches.filter(b=>b.cc===cc&&b.active).map(b=>opt(b.id,country(cc).name+' · '+b.name,cur)).join('')}</optgroup>`).join('');
+  $('#branchSel').title=acs.length>1?'Switch account or branch':'Your account: '+acctName(acs[0]);
   $('#userSel').innerHTML=S.users.map(u=>opt(u.id,u.name+' — '+u.role,S.user)).join('')+'<option value="__out">Sign out</option>';
   const n=S.notifs.filter(x=>!x.read).length;const b=$('#bellCount');b.hidden=!n;b.textContent=n}
 function renderNotif(){$('#notifPop').innerHTML=`<div class="card-h" style="padding:10px 14px"><b>Notifications</b><button class="lnk btn ghost sm" data-act="readAll">Mark all read</button></div>`+S.notifs.slice(0,12).map(x=>`<button class="n ${x.read?'':'unread'}" data-act="notifGo" data-id="${x.id}"><span class="pill p-${x.kind==='ok'?'ok':x.kind==='bad'?'bad':x.kind==='warn'?'warn':'info'}" style="padding:0 6px;height:18px"></span><div><b style="font-weight:600;font-size:13px">${esc(x.text)}</b><span>${fdt(x.at)}</span></div></button>`).join('')}
@@ -1839,7 +1940,7 @@ A.imoSend=d=>{const t=$('#imo-t').value;const L=shareLinks(d.kind,d.ref);const f
   if(d.ch==='IMO'){try{navigator.clipboard.writeText(t).then(fin,()=>{$('#imo-t').select();toast('Select and copy the text manually')})}catch(e){$('#imo-t').select()}}else fin()};
 
 /* customers */
-function custForm(c){c=c||{};const co=c.country||branch(S.branch==='ALL'?'KLA':S.branch).cc;
+function custForm(c){c=c||{};const co=c.country||branch(homeBr()).cc;
   return `<div class="fg">
   <div class="f"><label for="cf-type">Type</label><select id="cf-type">${opt('Business','Business',c.type)}${opt('Member','Individual member',c.type)}</select></div>
   <div class="f"><label for="cf-cat">Category</label><select id="cf-cat">${['Distributor','Retail','Health partner','Cooperative','Member'].map(x=>opt(x,x,c.category)).join('')}</select></div>
@@ -1849,7 +1950,7 @@ function custForm(c){c=c||{};const co=c.country||branch(S.branch==='ALL'?'KLA':S
   <div class="f"><label for="cf-email">Email</label><input id="cf-email" type="email" value="${esc(c.email||'')}"></div>
   <div class="f"><label for="cf-address">Address</label><input id="cf-address" value="${esc(c.address||'')}"></div>
   <div class="f"><label for="cf-city">City</label><input id="cf-city" value="${esc(c.city||'')}"></div>
-  <div class="f"><label for="cf-branch">Branch</label><select id="cf-branch">${S.branches.map(b=>opt(b.id,b.name+' · '+country(b.cc).name,c.branch||(S.branch==='ALL'?'KLA':S.branch))).join('')}</select><span class="hint">Country, currency and tax follow the branch</span></div>
+  <div class="f"><label for="cf-branch">Branch</label><select id="cf-branch">${S.branches.map(b=>opt(b.id,b.name+' · '+country(b.cc).name,c.branch||(homeBr()))).join('')}</select><span class="hint">Country, currency and tax follow the branch</span></div>
   <div class="f"><label for="cf-tin">Tax ID (TIN)</label><input id="cf-tin" value="${esc(c.tin||'')}"></div>
   <div class="f"><label for="cf-terms">Payment terms</label><select id="cf-terms">${S.terms.map(t=>opt(t.days,t.label,c.terms??30)).join('')}</select></div>
   <div class="f"><label for="cf-credit">Credit limit</label><input id="cf-credit" type="number" min="0" value="${c.credit||0}"></div></div><p class="err" id="cf-err"></p>`}
@@ -1894,14 +1995,14 @@ A.reversePay=d=>requireAuth('Reversing a payment',a=>{const p=payBy(d.no);p.stat
   log('Reversed payment (authorized by '+user(a.by).name+')',p.no,'Completed · '+fmt(p.amount,p.cur),'Reversed · '+a.reason);notify(`Payment ${p.no} reversed`,'bad',['payments']);toast('Payment reversed; receipt voided');render(true)});
 
 /* expenses */
-A.newExpense=d=>{d=d||{};const br=d.br||(S.branch==='ALL'?'KLA':S.branch);S.expCtx={br};const cur=country(branch(br).cc).cur;
+A.newExpense=d=>{d=d||{};const br=d.br||(homeBr());S.expCtx={br};const cur=country(branch(br).cc).cur;
   openModal('New expense',`<div class="fg"><div class="f"><label for="ex-date">Date</label><input id="ex-date" type="date" value="${TODAY}"></div><div class="f"><label for="ex-cat">Category</label><select id="ex-cat">${S.expCats.map(c=>opt(c,c)).join('')}</select></div>
    <div class="f full"><label for="ex-desc">Description</label><input id="ex-desc" placeholder="What was this for?"></div>
    <div class="f"><label for="ex-amt">Amount (${cur})</label><input id="ex-amt" type="number" min="0" step="any"></div><div class="f"><label for="ex-method">Payment method</label><select id="ex-method">${S.methods.map(m=>opt(m,m)).join('')}</select></div>
    <div class="f"><label for="ex-sup">Supplier</label><select id="ex-sup"><option value="">None</option>${S.suppliers.map(s=>opt(s.id,s.company)).join('')}</select></div><div class="f"><label>Branch</label><input readonly value="${esc(branch(br).name)}"></div>${d.period?`<div class="f"><label for="ex-per">Tax period</label><input id="ex-per" type="month" value="${d.period}"><span class="hint">The month this return covers.</span></div>`:''}
    <div class="f full"><label for="ex-doc">Supporting document</label><input id="ex-doc" type="file" accept=".pdf,.jpg,.jpeg,.png,.docx,.xlsx"><span class="hint">Receipt, invoice or quote. PDF, JPG, PNG, DOCX or XLSX.</span></div></div><p class="err" id="ex-err"></p>`,
    btn('Cancel','closeModal')+btn('Save draft','saveExp',{data:{s:'Draft'}})+btn('Submit for review','saveExp',{kind:'pri',data:{s:'Submitted'}}),true)};
-A.saveExp=d=>{const br=(S.expCtx&&S.expCtx.br)||(S.branch==='ALL'?'KLA':S.branch);const cc=branch(br).cc;const desc=$('#ex-desc').value.trim();const amt=parseFloat($('#ex-amt').value)||0;
+A.saveExp=d=>{const br=(S.expCtx&&S.expCtx.br)||(homeBr());const cc=branch(br).cc;const desc=$('#ex-desc').value.trim();const amt=parseFloat($('#ex-amt').value)||0;
   if(!desc||amt<=0){$('#ex-err').textContent='Add a description and an amount.';return}const f=$('#ex-doc').files[0];
   const e={no:nextNo(cc,'EXP'),date:$('#ex-date').value||TODAY,cat:$('#ex-cat').value,desc,amount:amt,cur:country(cc).cur,sup:$('#ex-sup').value,branch:br,method:$('#ex-method').value,doc:f?f.name:'',by:S.user,approvedBy:'',status:d.s};const per=$('#ex-per');if(per&&per.value&&e.cat==='Tax')e.taxPeriod=per.value;
   S.expenses.push(e);if(f)S.docs.unshift({id:uid(),name:f.name,type:(f.name.split('.').pop()||'').toUpperCase(),link:'Expense',linkId:e.no,cat:'Supporting document',tags:[e.cat.toLowerCase()],owner:S.user,up:TODAY,exp:'',ver:1,access:'Finance',branch:br});
@@ -1931,15 +2032,16 @@ A.runReminders=()=>{let n=0;S.invoices.filter(i=>isLive(i)&&calc(i).bal>0).forEa
    if(r&&r.on){comm({cust:i.cust,ref:i.no,kind:r.label,ch:r.ch,by:'SYS',status:'Queued'});n++}});
   log('Ran payment reminders','Reminders','',n+' messages queued');toast(n+' reminders queued and logged to customer timelines');render(true)};
 A.newUser=()=>openModal('Invite user',`<div class="fg"><div class="f"><label for="nu-name">Full name</label><input id="nu-name"></div><div class="f"><label for="nu-email">Work email</label><input id="nu-email" type="email"></div>
-  <div class="f"><label for="nu-role">Role</label><select id="nu-role">${S.roles.map(r=>opt(r,r,'Accounting Officer')).join('')}</select></div><div class="f"><label for="nu-br">Branch</label><select id="nu-br">${S.branches.map(b=>opt(b.id,b.name)).join('')}</select></div></div><p class="small muted" style="margin-top:10px">They receive an email to set a password and enrol in two-factor authentication.</p><p class="err" id="nu-err"></p>`,btn('Cancel','closeModal')+btn('Send invite','saveUser',{kind:'pri'}));
+  <div class="f"><label for="nu-role">Role</label><select id="nu-role">${S.roles.filter(r=>isSuper()||r!=='Super Administrator').map(r=>opt(r,r,'Accounting Officer')).join('')}</select></div><div class="f"><label for="nu-br">Account · branch</label><select id="nu-br">${S.branches.filter(b=>b.active&&(isSuper()||b.cc===homeCC())).map(b=>opt(b.id,acctName(b.cc)+' · '+b.name,homeBr())).join('')}</select></div></div><p class="small muted" style="margin-top:10px">They receive an email to set a password and enrol in two-factor authentication.</p><p class="err" id="nu-err"></p>`,btn('Cancel','closeModal')+btn('Send invite','saveUser',{kind:'pri'}));
 A.saveUser=()=>{const n=$('#nu-name').value.trim(),e=$('#nu-email').value.trim();if(!n||!/@/.test(e)){$('#nu-err').textContent='Enter a name and a valid email.';return}
-  const id='U'+(S.users.length+1);S.users.push({id,name:n,email:e,role:$('#nu-role').value,branch:$('#nu-br').value,twofa:false,last:'',active:true});log('Invited user',n,'',$('#nu-role').value);closeModal();toast('Invitation sent to '+e);render(true)};
+  if(!isSuper()&&(branch($('#nu-br').value).cc!==homeCC()||$('#nu-role').value==='Super Administrator')){$('#nu-err').textContent='You can only add users to your own country account.';return}
+  const id='U'+(S.users.reduce((m,u)=>Math.max(m,+u.id.slice(1)),0)+1);S.users.push({id,name:n,email:e,role:$('#nu-role').value,branch:$('#nu-br').value,twofa:false,last:'',active:true});log('Invited user',n,'',$('#nu-role').value);closeModal();toast('Invitation sent to '+e);render(true)};
 A.addCountry=()=>openModal('Add country',`<div class="fg"><div class="f"><label for="nc-name">Country</label><input id="nc-name" placeholder="e.g. Kenya"></div><div class="f"><label for="nc-code">ISO code</label><input id="nc-code" maxlength="2" placeholder="KE"></div>
   <div class="f"><label for="nc-cur">Currency code</label><input id="nc-cur" maxlength="3" placeholder="KES"></div><div class="f"><label for="nc-rate">Units per 1 USD</label><input id="nc-rate" type="number" step="any" placeholder="129"></div>
   <div class="f"><label for="nc-taxn">Tax name</label><input id="nc-taxn" value="VAT"></div><div class="f"><label for="nc-tax">Tax rate %</label><input id="nc-tax" type="number" step="any" placeholder="16"></div></div><p class="small muted" style="margin-top:8px">No code changes needed: numbering, currency and tax start working as soon as you save.</p><p class="err" id="nc-err"></p>`,btn('Cancel','closeModal')+btn('Add country','saveCountry',{kind:'pri'}));
 A.saveCountry=()=>{const g=k=>$('#nc-'+k).value.trim();const code=g('code').toUpperCase(),cur=g('cur').toUpperCase();if(!g('name')||code.length!==2||cur.length!==3||!(+g('rate'))){$('#nc-err').textContent='Fill in country, 2-letter code, 3-letter currency and rate.';return}
   if(S.countries.some(c=>c.code===code)){$('#nc-err').textContent='That country already exists.';return}
-  S.countries.push({code,filing:15,name:g('name'),cur,tax:+g('tax')||0,taxName:g('taxn')||'VAT',dcode:code,entity:'A4S '+g('name')+' Co., Ltd.',tz:'UTC',tzl:'UTC'});S.rates[cur]=+g('rate');log('Added country','A4S '+g('name'),'',cur+' · '+(+g('tax')||0)+'%');closeModal();toast('A4S '+g('name')+' added. Add a branch next.');render(true)};
+  S.countries.push({code,filing:15,name:g('name'),cur,tax:+g('tax')||0,taxName:g('taxn')||'VAT',dcode:code,entity:'DoPay '+g('name')+' Co., Ltd.',tz:'UTC',tzl:'UTC'});S.rates[cur]=+g('rate');log('Added country','DoPay '+g('name'),'',cur+' · '+(+g('tax')||0)+'%');closeModal();toast('DoPay '+g('name')+' added. Add a branch next.');render(true)};
 A.addBranch=()=>openModal('Add branch',`<div class="fg"><div class="f"><label for="nb-name">Branch name</label><input id="nb-name"></div><div class="f"><label for="nb-cc">Country</label><select id="nb-cc">${S.countries.map(c=>opt(c.code,c.name)).join('')}</select></div>
   <div class="f"><label for="nb-office">Office</label><input id="nb-office"></div><div class="f"><label for="nb-mgr">Manager</label><select id="nb-mgr">${S.users.map(u=>opt(u.id,u.name)).join('')}</select></div></div><p class="err" id="nb-err"></p>`,btn('Cancel','closeModal')+btn('Add branch','saveBranch',{kind:'pri'}));
 A.saveBranch=()=>{const n=$('#nb-name').value.trim();if(!n){$('#nb-err').textContent='Enter a branch name.';return}const id=n.slice(0,3).toUpperCase()+(S.branches.length+1);
@@ -1964,9 +2066,9 @@ const IN={
  it:t=>{const it=S.draft.items[+t.dataset.i];const k=t.dataset.k;it[k]=k==='desc'?t.value:(parseFloat(t.value)||0);refreshBuilder()},
  custQ:t=>{S.custQ=t.value;const q=t.value.toLowerCase();$('#custTable').innerHTML=custTable(S.customers.filter(inScope).filter(c=>!q||[c.id,c.name,c.company,c.phone,c.email,c.tin].join(' ').toLowerCase().includes(q)))},
  auditQ:t=>{S.auditQ=t.value;const q=t.value.toLowerCase();$('#auditTable').innerHTML=auditTable(S.audit.filter(a=>(S.auditUser==='ALL'||a.user===S.auditUser)&&(!q||[a.action,a.record,a.prev,a.next,user(a.user).name].join(' ').toLowerCase().includes(q))))},
- tplBody:t=>{const s=invBy('A4S-UG-INV-2026-000231');$('#tplPrev').textContent=fill(t.value,vars(s,{amount_received:'UGX 250,000',payment_method:'Mobile money',transaction_reference:'MTN-MP260925.0918.A55219'}))},
+ tplBody:t=>{const s=invBy('DOPAY-UG-INV-2026-000231');$('#tplPrev').textContent=fill(t.value,vars(s,{amount_received:'UGX 250,000',payment_method:'Mobile money',transaction_reference:'MTN-MP260925.0918.A55219'}))},
  pmAmt:()=>updPaySum(), alloc:()=>updPaySum(),
- org:t=>{S.org[t.dataset.k]=t.value},
+ org:t=>{const a=t.dataset.acct;if(a){if(!isSuper()&&!myAccts().includes(a))return;const c=country(a);(c.profile=c.profile||{})[t.dataset.k]=t.value}else if(isSuper())S.org[t.dataset.k]=t.value},
  pattern:t=>{if(/\{SEQ\}/.test(t.value)){S.pattern=t.value;$('#patPrev').innerHTML=patPrev()}}
 };
 const CH={
@@ -1983,10 +2085,10 @@ const CH={
  sec2fa:t=>{S.security.twofa=t.checked;log((t.checked?'Enabled':'Disabled')+' mandatory 2FA','Security settings')},
  logo:t=>{const f=t.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{S.org.logo=r.result;log('Changed company logo','Organization');toast('Logo updated on all documents');render(true)};r.readAsDataURL(f)},
  upload:t=>{const f=t.files[0];if(!f)return;const ext=(f.name.split('.').pop()||'').toUpperCase();if(!['PDF','DOCX','XLSX','JPG','JPEG','PNG'].includes(ext)){toast('Use PDF, DOCX, XLSX, JPG or PNG');return}
-   S.docs.unshift({id:uid(),name:f.name,type:ext,link:'Branch',linkId:S.branch==='ALL'?'KLA':S.branch,cat:'General',tags:['new'],owner:S.user,up:TODAY,exp:'',ver:1,access:'Finance',branch:S.branch==='ALL'?'KLA':S.branch});log('Uploaded document',f.name);toast('Uploaded '+f.name);render(true)}
+   S.docs.unshift({id:uid(),name:f.name,type:ext,link:'Branch',linkId:homeBr(),cat:'General',tags:['new'],owner:S.user,up:TODAY,exp:'',ver:1,access:'Finance',branch:homeBr()});log('Uploaded document',f.name);toast('Uploaded '+f.name);render(true)}
 };
 
-/* ============ FINANCE FORMS (A4S Appendices A–K) ============ */
+/* ============ FINANCE FORMS (DoPay Appendices A–K) ============ */
 const CATS=S.expCats;
 const CAT_NOTES=['Stationery, fuel, electricity, water, internet, telephone, cleaning','Accommodation, flight tickets, overseas/domestic travel allowances','Cash advances paid to staff against future salary','Staff refreshments, uniforms, gifts, event supplies, project materials','Commission paid to bank, e-wallet, agents or sales partners','Monthly salaries, overtime, non-salary wages','Vehicle running & maintenance, local delivery, domestic waybills','Advertising, branding, promotional materials, media team','International freight, import/export shipping, clearance fees','Legal, accounting, audit, visa and other professional fees','Bank transaction fees, SMS alerts, transfer fees','Pension contributions for staff','Company income tax, WHT, VAT and other levies','Staff or asset insurance premiums','Furniture purchases and fitting costs','Rent, lease payments, property purchases','Laptops, phones, software, subscriptions, IT equipment','Printers, generators, office machinery','Vehicle purchases, major vehicle items','Software licences, trademarks, brand registrations','Anything not listed above; description required'];
 const FT={
@@ -2033,7 +2135,7 @@ const CHAIN={
  G:[{l:'Prepared by (Accountant)',who:'preparer'},{l:'Reviewed by (Country Manager or Assistant Manager)',r:['Country Manager','Assistant Manager']},{l:'Approved by (Financial Manager)',r:['Finance Manager']},{l:'Received by (Financial Controller)',r:['Financial Controller']}],
  J:[{l:'Prepared by Accountant (Requesting Branch)',who:'preparer'},{l:'Acknowledged by Accountant (Paying Branch)',r:['Accountant','Assistant Manager'],paying:true},{l:'Noted by (Financial Controller)',r:['Financial Controller']}],
  K:[{l:'1. Accountant or Assistant Manager',r:['Accountant','Assistant Manager']},{l:'2. Country Mgr (CM) or Regional Manager (RM)',r:['Country Manager','Regional Manager']},{l:'3. Financial Controller',r:['Financial Controller']},{l:'4. CFO',r:['CFO']},{l:'5. CEO',r:['CEO']}]};
-const LOCAL_ROLES=['Accountant','Assistant Manager','Country Manager','Branch Manager','Accounting Officer','Sales/Customer Officer','Document Officer'];
+const LOCAL_ROLES=['Country Administrator','Finance Manager','Auditor','Accountant','Assistant Manager','Country Manager','Branch Manager','Accounting Officer','Sales/Customer Officer','Document Officer'];
 const chainOf=f=>f.type==='A'?(f.data.route==='RM'?CHAIN.A_RM:CHAIN.A_CFO):CHAIN[f.type];
 const WHO={preparer:'Preparer',holder:'Petty cash holder',purchaser:'Purchaser'};
 function canSign(st,f,uid){const u=user(uid);if(!u.id)return false;if(st.who==='preparer')return uid===f.by;if(st.who==='holder')return uid===f.data.holder;if(st.who==='purchaser')return uid===f.data.purchaser;
@@ -2056,7 +2158,7 @@ function budgetCols(f){const d=f.data;if(d.period==='Annual')return MON.slice();
 function fSubject(f){const d=f.data;switch(f.type){case 'A':case 'K':return d.subject;case 'B':return 'Pay '+(d.payTo||'—');case 'C':return (f.lines[0]||{}).desc||'Receipts not available';case 'F':return d.period+' budget · '+(d.period==='Annual'?d.year:d.period==='Quarterly'?'Q'+d.quarter+' '+d.year:MONL[d.month-1]+' '+d.year);case 'G':return 'Bank ledger · '+(d.month?MONL[+d.month.slice(5,7)-1]+' '+d.month.slice(0,4):'');case 'J':return orgName(d.paying)+' → '+orgName(d.receiving);}return ''}
 
 /* ---------- new drafts ---------- */
-function newFormDraft(t,pre){const br=S.branch==='ALL'?(branch(me().branch).id!=='ALL'?me().branch:'KLA'):S.branch;const cc=branch(br).cc;const co=country(cc);const u=me();
+function newFormDraft(t,pre){const br=homeBr();const cc=branch(br).cc;const co=country(cc);const u=me();
   const f={id:null,type:t,ref:null,country:cc,branch:br,cur:co.cur,status:'Draft',by:S.user,created:TODAY,data:{},lines:[],sigs:[],attach:[],history:[],version:1};
   const L=o=>Object.assign({desc:'',cat:'Office Expenses',amount:0},o);
   if(t==='A'){f.data={date:TODAY,route:'CFO',subject:'',payMethod:'Bank transfer',payOther:'',fromBank:'',acctNo:'',payDate:'',bankFee:'',just:'',reqName:u.name,reqDept:'Finance',cert:''};f.lines=[L({acct:''})]}
@@ -2172,7 +2274,7 @@ function fLines(cols,o){o=o||{};const f=S.fdraft;
   <div class="row" style="margin-top:10px;justify-content:space-between"><button class="btn sm" data-act="fAddLine">${ic('plus',14)}Add line</button>${o.extra||''}<span class="small" id="f-tot">${o.noTotal?'':'Total: <b>'+fmt(fTotal(f),f.cur)+'</b>'}</span></div>`}
 const catOpts=()=>CATS;
 function memoDatalist(){return `<datalist id="dl-memos">${S.forms.filter(x=>x.type==='A'&&x.ref).map(x=>`<option value="${esc(x.ref)}">${esc(x.data.subject)} · ${fmt(fTotal(x),x.cur)}</option>`).join('')}</datalist>`}
-function entitySection(f){const brs=S.branches.filter(b=>S.branch==='ALL'||b.cc===branch(S.branch).cc||b.id===f.branch);const co=country(f.country);
+function entitySection(f){const brs=S.branches.filter(b=>(S.acct==='ALL'?myAccts().includes(b.cc):b.cc===S.acct)||b.id===f.branch);const co=country(f.country);
   const curs=[...new Set([co.cur,'USD',...Object.keys(S.rates)])];
   return `<section class="card pad"><div class="bstep"><i>${ic('home',13)}</i><h3>Entity & branch</h3></div><div class="fg">
    <div class="f"><label for="f-br">Branch</label><select id="f-br" data-ch="fbranch" ${f.ref?'disabled':''}>${brs.map(b=>opt(b.id,b.name+' · '+country(b.cc).name,f.branch)).join('')}</select>${f.ref?'<span class="hint">Locked once a reference is issued</span>':''}</div>
@@ -2184,7 +2286,7 @@ function attachSection(f){const certs=S.forms.filter(x=>x.type==='C'&&x.ref&&x.c
    <label class="btn sm" style="align-self:flex-start">${ic('upload',14)}<span>Attach files</span><input type="file" multiple hidden data-ch="fattach" accept=".pdf,.jpg,.jpeg,.png,.docx,.xlsx"></label>
    ${f.type==='A'?`<div class="f" style="max-width:420px"><label for="fd-cert">Or link a Receipt Reimbursement Certification (Appendix C)</label><select id="fd-cert" data-ch="fd" data-k="cert"><option value="">None</option>${certs.map(c=>opt(c.ref,c.ref+' · '+fmt(fTotal(c),c.cur),f.data.cert)).join('')}</select></div>`:''}</div>`)}
 const EDITORS={
- A:f=>sect(1,'Memo details',`<div class="fg">${fIn('Date','date','date')}${fIn('Approval route','route','select',{opts:[['CFO','CFO or CEO (Template 2)'],['RM','Regional Manager (Template 1)']],hint:'Sets the “To” line and the final approver'})}${fIn('Subject (one line)','subject','text',{full:true,ph:'e.g. Registration of A4S Kenya Limited'})}</div>`)+
+ A:f=>sect(1,'Memo details',`<div class="fg">${fIn('Date','date','date')}${fIn('Approval route','route','select',{opts:[['CFO','CFO or CEO (Template 2)'],['RM','Regional Manager (Template 1)']],hint:'Sets the “To” line and the final approver'})}${fIn('Subject (one line)','subject','text',{full:true,ph:'e.g. Registration of DoPay Kenya Limited'})}</div>`)+
    sect(2,'Expense lines',fLines([{k:'desc',l:'Description',wide:true},{k:'cat',l:'Category',type:'select',opts:catOpts(),w:'190px'},{k:'amount',l:'Amount',type:'number',num:true,w:'130px'},{k:'acct',l:'Acct name / number / bank',w:'170px'}]))+
    sect(3,'Payment',`<div class="fg">${fIn('Payment method','payMethod','select',{opts:['Cash','Bank transfer','Other']})}${f.data.payMethod==='Other'?fIn('Other method','payOther'):'<div></div>'}${fIn('Transfer from bank','fromBank')}${fIn('Account number','acctNo')}${fIn('Payment date','payDate','date')}${fIn('Bank fee','bankFee','text',{ph:'e.g. 4 USD'})}</div>`)+
    sect(4,'Justification & requester',`<div class="fg">${fIn('Detailed description / justification','just','textarea')}${fIn('Requester name (Head of Department)','reqName')}${fIn('Department','reqDept')}</div><p class="small muted" style="margin-top:8px">Your e-signature is added as requester when you submit.</p>`)+attachSection(f),
@@ -2273,7 +2375,7 @@ V.form=()=>{const f=fById(S.sel.form);if(!f)return V.forms();const ch=chainOf(f)
    <section class="card pad"><h3 style="margin-bottom:10px">Print & share</h3>${fSharePanel(f)}</section>
    <section class="card"><div class="card-h"><h3>History</h3></div><div class="pad" style="padding-top:6px;padding-bottom:6px"><div class="timeline">${f.history.slice().reverse().map(h=>`<div class="tl"><div class="av">${ic('clock',15)}</div><div><b>${esc(h.text)}</b><div class="small muted">${esc(user(h.uid).name)} · ${fdt(h.at)}</div></div><div></div></div>`).join('')}</div></div></section>
   </div></div>`};
-function fLink(f){return 'https://dopay.a4s.example/f/'+token(f.id+f.ref)}
+function fLink(f){return 'https://dopay.dopay.example/f/'+token(f.id+f.ref)}
 function fSharePanel(f){const msg=`${FT[f.type].name} ${f.ref} · ${orgName(f.country)}${fTotal(f)?' · '+fmt(fTotal(f),f.cur):''} · ${f.status}${f.status==='In approval'?' ('+fStepLabel(f)+')':''}. Review in Dopay: ${fLink(f)}`;const dd=`data-id="${f.id}"`;
   return `<div class="share"><button class="btn" data-act="fshare" data-ch="Print" ${dd}>${ic('printer',18)}Print</button><button class="btn" data-act="fshare" data-ch="PDF" ${dd}>${ic('download',18)}PDF</button><button class="btn" data-act="fshare" data-ch="${FT[f.type].file}" ${dd}>${ic('doc2',18)}${FT[f.type].file}</button><button class="btn" data-act="fshare" data-ch="Email" ${dd}>${ic('mail',18)}Email</button>
    <a class="btn" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener" data-act="fshare" data-ch="WhatsApp" ${dd}>${ic('chat',18)}WhatsApp</a><a class="btn" href="https://t.me/share/url?url=${encodeURIComponent(fLink(f))}&text=${encodeURIComponent(msg.replace(fLink(f),''))}" target="_blank" rel="noopener" data-act="fshare" data-ch="Telegram" ${dd}>${ic('send',18)}Telegram</a><button class="btn" data-act="fshare" data-ch="IMO" ${dd}>${ic('chat',18)}IMO</button><button class="btn" data-act="fshare" data-ch="Copy link" ${dd}>${ic('link',18)}Copy link</button></div>
@@ -2282,9 +2384,9 @@ function fSharePanel(f){const msg=`${FT[f.type].name} ${f.ref} · ${orgName(f.co
 /* ---------- budget monitoring ---------- */
 function histActual(cc,ci,mi,bud){if(mi>=8)return 0;const b=bud;if(!b)return 0;const fct=0.72+(((ci*7+mi*13)%11)/20);return Math.round(b*fct/1000)*1000}
 function liveActual(cc,ci,mi){const co=country(cc);return S.expenses.filter(e=>branch(e.branch).cc===cc&&['Approved','Paid'].includes(e.status)&&e.cat===CATS[ci]&&D(e.date).getUTCMonth()===mi&&e.date.startsWith('2026')).reduce((a,e)=>a+e.amount/S.rates[e.cur]*S.rates[co.cur],0)}
-V.budget=()=>{const cc=S.bmCountry||(S.branch==='ALL'?'UG':branch(S.branch).cc);const co=country(cc);
+V.budget=()=>{if(S.bmCountry&&!myAccts().includes(S.bmCountry))S.bmCountry='';if(S.acct!=='ALL')S.bmCountry=S.acct;const cc=S.bmCountry||homeCC();const co=country(cc);
   const bf=S.forms.find(f=>f.type==='F'&&f.country===cc&&f.data.period==='Annual'&&+f.data.year===2026&&['Approved','In approval'].includes(f.status));
-  const head=ph('Budget monitoring',`${esc(co.entity)} · 2026 · ${co.cur}. Budget from the approved Annual Budget (Appendix F); actuals post automatically from paid expenses and memos.`,`<select class="sel" data-ch="bmCountry" aria-label="Country">${S.countries.map(c=>opt(c.code,c.entity,cc)).join('')}</select>`);
+  const head=ph('Budget monitoring',`${esc(co.entity)} · 2026 · ${co.cur}. Budget from the approved Annual Budget (Appendix F); actuals post automatically from paid expenses and memos.`,`<select class="sel" data-ch="bmCountry" aria-label="Country" ${S.acct!=='ALL'?'disabled':''}>${S.countries.filter(c=>myAccts().includes(c.code)).map(c=>opt(c.code,c.entity,cc)).join('')}</select>`);
   if(!bf)return head+`<section class="card empty">No approved 2026 annual budget for ${esc(co.entity)} yet.<div class="row" style="justify-content:center;margin-top:12px">${btn('Create annual budget','fNew',{kind:'pri',perm:'forms.submit',data:{t:'F',annual:'1',cc}})}</div></section>`;
   const m=S.bmMonth,ytd=S.bmMode==='ytd';const bud=(ci,mi)=>+((bf.budget[ci]||[])[mi])||0;const act=(ci,mi)=>histActual(cc,ci,mi,bud(ci,mi))+liveActual(cc,ci,mi);
   const val=(fn,ci)=>ytd?[...Array(m+1).keys()].reduce((a,k)=>a+fn(ci,k),0):fn(ci,m);
@@ -2381,20 +2483,20 @@ function seedForm(t,br,by,fill,sigs,status,extra){const f=newFormDraft(t);f.bran
   f.history=[{at:(f.data.date||TODAY)+' 09:10',uid:by,text:'Created'},{at:(f.data.date||TODAY)+' 09:40',uid:by,text:'Submitted for approval'}];f.sigs.forEach((s,i)=>{if(s)f.history.push({at:s.date+' '+s.time,uid:s.uid,text:'Signed: '+chainOf(f)[i].l})});
   if(status==='Draft')f.history=[{at:f.created+' 09:10',uid:by,text:'Created'}];Object.assign(f,extra||{});S.forms.push(f);return f}
 S.fseq={AUGD:16,BUGDHQ:3,CUGD:2,JUGD:11,KUGD:1,ACMR:1};
-const fm1=seedForm('A','KLA','U3',f=>{Object.assign(f.data,{date:'2026-09-22',route:'CFO',subject:'Registration of A4S Kenya Limited',payMethod:'Bank transfer',fromBank:'A4S Nigeria (interbranch support)',acctNo:'',payDate:'2026-09-29',just:'Registration fees to incorporate A4S Kenya Limited as part of the East Africa expansion. Funded by A4S Nigeria under an interbranch memo.',reqName:'David Ssemanda',reqDept:'Finance'});f.cur='USD';f.lines=[{desc:'Registration of A4S Kenya Limited',cat:'Professional & Levy',amount:1350,acct:'Registrar of Companies, Nairobi'}];f.attach=['kenya-registration-fee-note.pdf']},[['U11','2026-09-22','14:10']],'In approval',{reqSig:null});
+const fm1=seedForm('A','KLA','U3',f=>{Object.assign(f.data,{date:'2026-09-22',route:'CFO',subject:'Registration of DoPay Kenya Limited',payMethod:'Bank transfer',fromBank:'DoPay Nigeria (interbranch support)',acctNo:'',payDate:'2026-09-29',just:'Registration fees to incorporate DoPay Kenya Limited as part of the East Africa expansion. Funded by DoPay Nigeria under an interbranch memo.',reqName:'David Ssemanda',reqDept:'Finance'});f.cur='USD';f.lines=[{desc:'Registration of DoPay Kenya Limited',cat:'Professional & Levy',amount:1350,acct:'Registrar of Companies, Nairobi'}];f.attach=['kenya-registration-fee-note.pdf']},[['U11','2026-09-22','14:10']],'In approval',{reqSig:null});
 fm1.reqSig=mkSig('U3','UG','2026-09-22','11:05');
 const fm2=seedForm('A','KLA','U3',f=>{Object.assign(f.data,{date:'2026-09-02',route:'RM',subject:'Replenish petty cash: toner, field banners, flash drives',payMethod:'Cash',just:'Replenishes the Kampala petty cash float used for office consumables and field branding materials.',reqName:'David Ssemanda',reqDept:'Finance',payDate:'2026-09-08'});f.lines=[{desc:'HP 106A toner cartridge',cat:'Office Expenses',amount:90000,acct:'Office cash'},{desc:'Field posters and banners, 5 pcs, 50×40',cat:'Marketing & Media',amount:100000,acct:'Office cash'},{desc:'Flash drives for management',cat:'Computers & IT',amount:105000,acct:'Office cash'}];f.attach=['toner-receipt.jpg','banners-invoice.pdf','flash-drives-receipt.jpg']},[['U4','2026-09-02','15:20'],['U10','2026-09-03','09:05'],['U14','2026-09-04','11:40'],['U15','2026-09-05','16:02']],'Paid',{approvedAt:'2026-09-05'});
 fm2.reqSig=mkSig('U3','UG','2026-09-02','10:12');fm2.lines.forEach(l=>S.expenses.push({no:nextNo('UG','EXP'),date:'2026-09-08',cat:l.cat,desc:l.desc,amount:l.amount,cur:'UGX',sup:'',branch:'KLA',method:'Cash',doc:fm2.ref,by:'U3',approvedBy:'U15',status:'Paid'}));fm2.history.push({at:'2026-09-08 10:30',uid:'U3',text:'Paid · posted to Expenses'});
 seedForm('B','KLA','U3',f=>{Object.assign(f.data,{date:'2026-09-01',payTo:'Media team — Peter Waiswa',holder:'U3',memo:fm2.ref,reimbursed:'2026-09-08'});f.lines=[{date:'2026-09-01',desc:'HP 106A toner cartridge',cat:'Office Expenses',amount:90000},{date:'2026-09-01',desc:'Field posters and banners, 5 pcs, 50×40',cat:'Marketing & Media',amount:100000},{date:'2026-09-01',desc:'Flash drives for management',cat:'Computers & IT',amount:105000}]},[['U3','2026-09-01','12:30'],['U4','2026-09-01','16:45']],'Reimbursed',{approvedAt:'2026-09-01'});
 seedForm('C','KLA','U3',f=>{Object.assign(f.data,{lang:'en',purchaser:'U3',position:'Accounting Officer',from:'2026-08-03',to:'2026-08-31'});f.lines=[{date:'2026-08-12',desc:'Interpreter for community training, Kampala',amount:150000,note:'No receipt issued'},{date:'2026-08-19',desc:'Interpreter for community training, Arua',amount:150000,note:'No receipt issued'},{date:'2026-08-28',desc:'Staff lunch after internal weekly meetings',amount:218500,note:'Street vendor'}]},[['U3','2026-09-01','10:05']],'In approval');
-seedForm('J','KLA','U3',f=>{Object.assign(f.data,{date:'2026-09-23',paying:'NG',receiving:'UG'});f.cur='USD';f.lines=[{desc:'Registration of A4S Kenya Limited',amount:1350,memo:fm1.ref},{desc:'Bank transfer fees',amount:4,memo:fm1.ref}]},[['U3','2026-09-23','10:20']],'In approval');
+seedForm('J','KLA','U3',f=>{Object.assign(f.data,{date:'2026-09-23',paying:'NG',receiving:'UG'});f.cur='USD';f.lines=[{desc:'Registration of DoPay Kenya Limited',amount:1350,memo:fm1.ref},{desc:'Bank transfer fees',amount:4,memo:fm1.ref}]},[['U3','2026-09-23','10:20']],'In approval');
 seedForm('K','KLA','U3',f=>{Object.assign(f.data,{date:'2026-09-15',dept:'Accounts',subject:'Facilitation for agent follow-up on product registration',purpose:'4',purposeOther:'Product registration follow-up at the regulator',just:'The registration agent needs transport and daily facilitation to follow up our product files at the regulator over two weeks.',use:'2026-09-18',liq:'2026-09-25',payMethod:'Mobile Money',payTo:'Registration agent · +256 772 000 270',disbursed:'2026-09-17'});f.lines=[{desc:'Agent facilitation, product registration follow-up',cat:'Professional & Levy',amount:1200000}]},[['U4','2026-09-15','11:00'],['U10','2026-09-15','15:30'],['U14','2026-09-16','09:12'],['U16','2026-09-16','13:48'],['U17','2026-09-17','10:05']],'Awaiting liquidation',{approvedAt:'2026-09-17'}).reqSig=mkSig('U3','UG','2026-09-15','09:40');
-seedForm('G','KLA','U3',f=>{Object.assign(f.data,{month:'2026-08',acctName:'A4S Uganda Ltd — operating',acctNo:'Stanbic 9030 •••• 4471',bank:'Stanbic Bank Uganda',opening:12450000,bankClosing:3795000,stmt:'stanbic-statement-aug-2026.pdf'});f.lines=[
- {date:'2026-08-02',ref:'A4S-UG-PAY-2026-000141',party:'John Uganda Ltd',purpose:'Customer payment, invoice 000218',inflow:3540000,outflow:0,cat:'Inflow',notes:''},
+seedForm('G','KLA','U3',f=>{Object.assign(f.data,{month:'2026-08',acctName:'DoPay Uganda Ltd — operating',acctNo:'Stanbic 9030 •••• 4471',bank:'Stanbic Bank Uganda',opening:12450000,bankClosing:3795000,stmt:'stanbic-statement-aug-2026.pdf'});f.lines=[
+ {date:'2026-08-02',ref:'DOPAY-UG-PAY-2026-000141',party:'John Uganda Ltd',purpose:'Customer payment, invoice 000218',inflow:3540000,outflow:0,cat:'Inflow',notes:''},
  {date:'2026-08-05',ref:'UGD2026-A-012',party:'Victoria Logistics',purpose:'Customs clearing of consignment',inflow:0,outflow:2300000,cat:'Cargo & Freight',notes:''},
  {date:'2026-08-08',ref:'UGD2026-A-013',party:'Staff',purpose:'August salary advances',inflow:0,outflow:800000,cat:'Salary Advance',notes:''},
  {date:'2026-08-15',ref:'',party:'Stanbic Bank',purpose:'Monthly account and SMS charges',inflow:0,outflow:45000,cat:'Bank Charges',notes:''},
- {date:'2026-08-20',ref:'UGD-J-2026-010',party:'A4S Nigeria Co. Ltd',purpose:'Interbranch funding received',inflow:3700000,outflow:0,cat:'Inflow',notes:'Intercompany payable'},
+ {date:'2026-08-20',ref:'UGD-J-2026-010',party:'DoPay Nigeria Co. Ltd',purpose:'Interbranch funding received',inflow:3700000,outflow:0,cat:'Inflow',notes:'Intercompany payable'},
  {date:'2026-08-28',ref:'UGD2026-A-014',party:'Staff payroll',purpose:'August salaries',inflow:0,outflow:11800000,cat:'Salary and Wages',notes:''},
  {date:'2026-08-31',ref:'UGD2026-A-015',party:'Uganda Revenue Authority',purpose:'PAYE and VAT, August',inflow:0,outflow:950000,cat:'Tax',notes:''}]},[['U3','2026-09-10','16:20'],['U10','2026-09-11','10:02'],['U2','2026-09-12','09:30']],'In approval');
 const BUD=[1500000,800000,300000,400000,200000,12000000,700000,1200000,1500000,1000000,150000,1200000,900000,250000,0,4500000,500000,0,0,0,0];
@@ -2422,7 +2524,7 @@ S.threads=[
    M('U4',UT(25,13,20),'Noted. I’ll import the September transactions on 1 October.',null,['U4','U3','U10','U11']),
    M('U11',UT(26,5,30),'@David Ssemanda ABC Ltd paid UGX 500,000 cash this morning. The receipt is already in Dopay.',null,['U11'])]},
  {id:'t-ng',type:'channel',name:'Nigeria finance',cc:'NG',members:[...usersIn('NG'),'U14','U15'],msgs:[
-   M('U9',UT(22,10,0),'Adeyemi Foods paid NGN 1,500,000 against invoice 000041. I’ll follow up the balance this week.',{k:'invoice',id:'A4S-NG-INV-2026-000041',label:'A4S-NG-INV-2026-000041'},['U9','U12','U14','U15'])]},
+   M('U9',UT(22,10,0),'Adeyemi Foods paid NGN 1,500,000 against invoice 000041. I’ll follow up the balance this week.',{k:'invoice',id:'DOPAY-NG-INV-2026-000041',label:'DOPAY-NG-INV-2026-000041'},['U9','U12','U14','U15'])]},
  {id:'t-cm',type:'channel',name:'Cameroon finance',cc:'CM',members:[...usersIn('CM'),'U14','U15'],msgs:[
    M('U18',UT(18,14,20),'Visa memo reviewed and passed to the Financial Controller.',fref('CMR2026-A-002'),['U18','U13','U14','U15'])]},
  {id:'t-ci',type:'channel',name:'Ivory Coast finance',cc:'CI',members:[...usersIn('CI'),'U14','U15'],msgs:[
@@ -2475,7 +2577,7 @@ function openOrCreate(ids,name){if(ids.length===1){let t=S.threads.find(x=>x.typ
   const t={id:'t-'+uid(),type:'group',name:name||[me(),...ids.map(user)].map(u=>u.name.split(' ')[0]).join(', '),members:[S.user,...ids],msgs:[]};S.threads.push(t);return t}
 function postMsg(t,text,ref){t.msgs.push(M(S.user,Date.now(),text,ref,[S.user]));log('Sent team message',threadName(t),'',text.slice(0,60)+(ref?' · '+ref.label:''))}
 
-function supForm(x){x=x||{};const cc=x.country||(S.branch==='ALL'?'UG':branch(S.branch).cc);
+function supForm(x){x=x||{};const cc=x.country||homeCC();
   return `<div class="fg">
   <div class="f full"><label for="sf-company">Company name</label><input id="sf-company" value="${esc(x.company||'')}" placeholder="Registered business name"></div>
   <div class="f"><label for="sf-contact">Contact person</label><input id="sf-contact" value="${esc(x.contact||'')}"></div>
@@ -2509,7 +2611,7 @@ const taxDue=(cc,p)=>nextYM(p)+'-'+String(country(cc).filing||15).padStart(2,'0'
 const taxPays=cc=>S.expenses.filter(e=>e.cat==='Tax'&&branch(e.branch).cc===cc&&e.status!=='Rejected');
 const isVatPay=e=>TAXRX.test(e.desc);
 const payPeriod=e=>e.taxPeriod||prevYM(e.date);
-const taxCCs=()=>S.branch==='ALL'?S.countries.map(c=>c.code):[branch(S.branch).cc];
+const taxCCs=()=>S.acct==='ALL'?myAccts():[S.acct];
 function vatPeriods(cc){const cur=country(cc).cur;const invs=S.invoices.filter(i=>i.country===cc&&isLive(i));const pays=taxPays(cc).filter(isVatPay);
   const set=new Set([...invs.map(i=>ym(i.date)),...pays.map(payPeriod),ym(TODAY)]);
   return [...set].sort().reverse().map(p=>{const pi=invs.filter(i=>ym(i.date)===p);let net=0,vat=0;pi.forEach(i=>{const k=calc(i);net+=k.sub-k.disc;vat+=k.tax});
@@ -2554,7 +2656,7 @@ V.taxes=()=>{const ccs=taxCCs();if(!ccs.includes(S.taxCC))S.taxCC=ccs[0];
 A.taxCC=d=>{S.taxCC=d.cc;S.taxP='';render(true)};
 A.taxSel=(d,el,e)=>{if(e&&e.target.closest('button,a,select'))return;S.taxP=d.p;render(true)};
 A.taxGo=d=>{S.taxCC=d.cc;S.taxP='';go('taxes')};
-A.taxPay=d=>{const cc=d.cc||S.taxCC||taxCCs()[0];const co=country(cc);const br=(S.branch!=='ALL'&&branch(S.branch).cc===cc)?S.branch:S.branches.find(b=>b.cc===cc&&b.active).id;const p=d.p||prevYM(TODAY);
+A.taxPay=d=>{const cc=d.cc||S.taxCC||taxCCs()[0];const co=country(cc);const br=(S.branch!=='ALL'&&branch(S.branch).cc===cc)?S.branch:(S.branches.find(b=>b.cc===cc&&b.id===me().branch)||S.branches.find(b=>b.cc===cc&&b.active)).id;const p=d.p||prevYM(TODAY);
   A.newExpense({br,period:p});$('#ex-cat').value='Tax';$('#ex-desc').value=`${co.taxName} return, ${ymLabel(p)}`;if(+d.amt>0)$('#ex-amt').value=d.amt;$('#ex-method').value='Bank transfer'};
 A.taxCsv=()=>{const cc=S.taxCC,co=country(cc);const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
   const csv=[['Country','Period',`Taxable sales (${co.cur})`,`${co.taxName} charged`,'Remitted','Balance','Due by','Status'].map(q).join(','),...vatPeriods(cc).map(r=>[co.name,ymLabel(r.p),r.net,r.vat,r.paid,r.bal,r.due,r.status].map(q).join(','))].join('\n');
@@ -2601,9 +2703,9 @@ document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.datase
 $('#gsearch').addEventListener('input',renderSearch);
 $('#gsearch').addEventListener('focus',renderSearch);
 $('#gsearch').addEventListener('keydown',e=>{if(e.key==='Enter'){const b=$('#sres button');if(b)b.click()}});
-$('#branchSel').addEventListener('change',e=>{S.branch=e.target.value;toast(S.branch==='ALL'?'Showing all branches, consolidated in USD':'Switched to '+branch(S.branch).name);if(S.route==='invoice-new'){S.draft=blankDraft()}render(true)});
+$('#branchSel').addEventListener('change',e=>{const v=e.target.value;if(v==='ALL'){S.acct='ALL';S.branch='ALL'}else if(v.startsWith('CC:')){S.acct=v.slice(3);S.branch='ALL'}else{S.branch=v;S.acct=branch(v).cc}if(S.acct!=='ALL'&&!myAccts().includes(S.acct)){S.acct=homeCC()}toast(S.acct==='ALL'?'Showing all accounts, consolidated in USD':'Switched to '+acctName(S.acct)+(S.branch!=='ALL'?' · '+branch(S.branch).name:''));if(S.route==='invoice-new'){S.draft=blankDraft()}render(true)});
 $('#userSel').addEventListener('change',e=>{const v=e.target.value;if(v==='__out'){log('Signed out','Session');const l=$('#login');l.dataset.step='1';l.dataset.user=S.user;l.hidden=false;renderLogin();renderTop();return}
-  S.user=v;const u=me();if(['Financial Controller','Regional Manager','CFO','CEO'].includes(u.role))S.branch='ALL';else if(LOCAL_ROLES.includes(u.role)&&u.branch)S.branch=u.branch;toast(`Signed in as ${u.name} (${u.role})`);render(true)});
+  S.user=v;const u=me();if(u.role==='Super Administrator'){S.acct='ALL';S.branch='ALL'}else{S.acct=branch(u.branch).cc;S.branch=['Branch Manager','Accounting Officer','Sales/Customer Officer'].includes(u.role)?u.branch:'ALL'}if(!acctRoutes(S.route))S.route='dashboard';toast(`Signed in as ${u.name} (${u.role})`);render(true)});
 $('#brandLogo').src=LOGO;
 $('#aiForm').addEventListener('submit',e=>{e.preventDefault();const q=$('#aiInput').value.trim();if(!q)return;$('#aiInput').value='';aiPush('u',esc(q));aiPush('a',aiAnswer(q))});
 window.addEventListener('hashchange',()=>{const r=location.hash.slice(1);if(V[r]&&r!==S.route)go(r)});

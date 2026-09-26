@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\BudgetMonitorController;
 use App\Http\Controllers\CustomerController;
@@ -33,6 +34,8 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('customers', CustomerController::class)->except('destroy');
         Route::resource('suppliers', SupplierController::class)->except(['show', 'destroy']);
+        Route::get('account', [AccountController::class, 'edit'])->name('account.edit');
+        Route::put('account/{country}', [AccountController::class, 'update'])->name('account.update');
 
         Route::resource('invoices', InvoiceController::class)->except('destroy');
         Route::post('invoices/{invoice}/submit', [InvoiceController::class, 'submit'])->name('invoices.submit');

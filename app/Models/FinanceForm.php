@@ -93,8 +93,10 @@ class FinanceForm extends Model
             return $q;
         }
 
-        // Local staff see their own country's forms, plus interbranch memos their country is paying for.
+        // Everyone sees their own country's forms, plus interbranch memos their country is paying for.
+        // Group approvers also see forms from other countries once those are submitted into approval (and afterwards).
         return $q->where(fn ($w) => $w->where('country_id', $user->countryId())
-            ->orWhere(fn ($j) => $j->where('type', 'J')->where('data->paying_country_id', $user->countryId())));
+            ->orWhere(fn ($j) => $j->where('type', 'J')->where('data->paying_country_id', $user->countryId()))
+            ->when($user->isGroupApprover(), fn ($g) => $g->orWhereNotIn('status', ['draft', 'returned', 'void'])));
     }
 }

@@ -55,7 +55,7 @@ class User extends Authenticatable
         return $this->getRoleNames()->first() ?? '—';
     }
 
-    /** Global roles see and sign for every country; everyone else only their own. */
+    /** Only the Super Administrator works across country accounts; everyone else sees their own country's account. */
     public function isGlobal(): bool
     {
         return $this->hasAnyRole(config('dopay.global_roles'));
@@ -64,6 +64,12 @@ class User extends Authenticatable
     public function canActForCountry(int $countryId): bool
     {
         return $this->isGlobal() || $this->countryId() === $countryId;
+    }
+
+    /** Group approvers (FC, RM, CFO, CEO) may sign forms routed to them from any country. */
+    public function isGroupApprover(): bool
+    {
+        return $this->hasAnyRole(config('dopay.group_approver_roles', []));
     }
 
     public function setSigningPin(string $pin): void

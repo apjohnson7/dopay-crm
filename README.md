@@ -1,6 +1,6 @@
 # Dopay CRM
 
-Administrative and accounting CRM for the A4S country offices in Uganda, Nigeria, Cameroon and Ivory Coast. It covers invoicing, payments and receipts, VAT/TVA tracking, the finance forms (Appendices A–K) with e-signature approval chains, budget monitoring, team messaging and an audit trail.
+Administrative and accounting CRM for the DoPay country offices in Uganda, Nigeria, Cameroon and Ivory Coast. It covers invoicing, payments and receipts, VAT/TVA tracking, the finance forms (Appendices A–K) with e-signature approval chains, budget monitoring, team messaging and an audit trail.
 
 Built with Laravel 12, MySQL 8 and plain Blade. There is no Node or asset build step, so it runs on shared hosting such as Hostinger.
 
@@ -12,7 +12,8 @@ A clickable prototype of the whole system is in `docs/prototype.html`. Open it i
 |---|---|
 | Sign-in: invite only, two-factor (TOTP), 30-minute sessions, rate limiting | Done |
 | Signing PIN for e-signatures and sensitive actions; second-person authorization | Done |
-| Roles and permissions (15 roles); country scope, where local roles only see their own country | Done |
+| Separate country accounts (see below); roles and permissions (16 roles, including Country Administrator) | Done |
+| Suppliers: add and edit (Super Administrator and Finance Manager by default) | Done |
 | Dashboard with alerts (forms to sign, approvals, overdue advances, tax returns, messages) | Done |
 | Customers, invoices (draft → approval → generate → share link → PDF) | Done |
 | Payments with allocation, automatic receipts, reversal | Done |
@@ -22,7 +23,19 @@ A clickable prototype of the whole system is in `docs/prototype.html`. Open it i
 | Team messaging across branches and countries | Done |
 | Audit trail, global search, in-app help | Done |
 | Read-only JSON API (`/api/v1`, Sanctum tokens) | Done |
-| Expenses list, suppliers, products, documents, reports, user admin and settings screens | In the prototype; to port next |
+| Expenses list, products, documents, reports, user admin and settings screens | In the prototype; to port next |
+
+### Country accounts
+
+- Each country is its own DoPay account. It has its own:
+  - customers, invoices, payments, suppliers, expenses and taxes;
+  - numbering (`DOPAY-UG-INV-2026-000001`);
+  - users;
+  - company details printed on documents (**Administration → Account**).
+- Only the **Super Administrator** can open other accounts. They choose an account, or **All accounts** in USD, from the selector at the top.
+- A **Country Administrator** manages their own account: users, company details, suppliers and settings.
+- Group approvers (Financial Controller, Regional Manager, CFO, CEO) sign finance forms routed to them from any country, but browse only their own country's records.
+- Team messages work across countries.
 
 ### How tax is connected
 

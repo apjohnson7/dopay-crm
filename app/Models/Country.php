@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Country extends Model
 {
-    protected $fillable = ['iso2', 'name', 'doc_code', 'legal_entity', 'currency_code', 'tax_name', 'tax_rate', 'vat_filing_day', 'timezone', 'timezone_label', 'is_active'];
+    protected $fillable = ['iso2', 'name', 'doc_code', 'legal_entity', 'address', 'phone', 'email', 'tax_id', 'bank_details', 'mobile_money', 'currency_code', 'tax_name', 'tax_rate', 'vat_filing_day', 'timezone', 'timezone_label', 'is_active'];
 
     protected $casts = ['tax_rate' => 'decimal:3', 'vat_filing_day' => 'integer', 'is_active' => 'boolean'];
 

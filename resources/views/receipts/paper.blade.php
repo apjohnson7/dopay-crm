@@ -2,7 +2,7 @@
 <div class="paper">
   @if($receipt->status === 'void')<div class="wm">VOID</div>@endif
   <table style="width:100%"><tr>
-    <td><table><tr><td style="width:56px"><img src="{{ isset($pdf) ? public_path('img/dopay-logo.png') : asset('img/dopay-logo.png') }}" style="width:48px" alt="Logo"></td><td><b style="font-size:13px">{{ $co->legal_entity }}</b><br>{{ $p->branch->office }}, {{ $p->branch->name }}, {{ $co->name }}</td></tr></table></td>
+    <td><table><tr><td style="width:56px"><img src="{{ isset($pdf) ? public_path('img/dopay-logo.png') : asset('img/dopay-logo.png') }}" style="width:48px" alt="Logo"></td><td><b style="font-size:13px">{{ $co->legal_entity }}</b><br>{{ $co->address ?: $p->branch->office.', '.$p->branch->name }}, {{ $co->name }}@if($co->phone || $co->email)<br>{{ collect([$co->phone, $co->email])->filter()->implode(' · ') }}@endif</td></tr></table></td>
     <td class="r"><div class="p-doc">Receipt</div><div class="mono">{{ $receipt->number }}</div></td></tr></table>
   <div class="line"></div>
   <table style="width:100%;margin-bottom:12px"><tr>
