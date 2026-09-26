@@ -35,6 +35,7 @@ class CustomerController extends Controller
         $this->ensureCountry($branch->country_id);
         $seq = $numbers->next('CUST:'.$branch->country->iso2);
         $customer = Customer::create($data + [
+            'account_manager_id' => $request->user()->id,
             'code' => sprintf('C-%s-%04d', $branch->country->iso2, $seq),
             'country_id' => $branch->country_id,
             'currency_code' => $branch->country->currency_code,
@@ -65,7 +66,10 @@ class CustomerController extends Controller
     {
         $this->authorize('customers.manage');
         $this->ensureCountry($customer->country_id);
-        $customer->update($this->validated($request));
+        $data = $this->validated($request);
+        // A customer stays in their own country account: the branch must belong to the same country.
+        abort_unless(Branch::whereKey($data['branch_id'])->value('country_id') === $customer->country_id, 422, 'Choose a branch in '.$customer->country?->name.'. Moving a customer to another country is not allowed.');
+        $customer->update($data);
 
         return redirect()->route('customers.show', $customer)->with('status', 'Customer updated.');
     }
@@ -91,7 +95,7 @@ class CustomerController extends Controller
             'date_of_birth' => 'nullable|date',
             'id_type' => 'nullable|string|max:40',
             'id_number' => 'nullable|string|max:60',
-        ]) + ['account_manager_id' => $request->user()->id];
+        ]);
     }
 
     private function branches()

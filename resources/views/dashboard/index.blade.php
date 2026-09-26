@@ -31,7 +31,7 @@
   <section class="card"><div class="card-h"><h3>Invoices requiring attention</h3><a class="lnk" href="{{ route('invoices.index', ['status' => 'Overdue']) }}">All overdue</a></div>
     <div class="tw"><table class="tbl cards"><thead><tr><th>Invoice</th><th>Due</th><th class="num">Balance</th><th>Status</th></tr></thead><tbody>
     @forelse($attention as $i)
-      <tr class="click" onclick="location='{{ route('invoices.show', $i) }}'"><td class="lead" data-label="Invoice"><span class="mono strong">{{ $i->number }}</span><span class="sub2">{{ $i->customer->displayName() }}</span></td><td data-label="Due">{{ fdate($i->due_date) }}</td><td class="num" data-label="Balance">{{ money($i->balance(), $i->currency_code) }}</td><td data-label="Status">@include('partials.pill', ['label' => $i->displayStatus()])</td></tr>
+      <tr class="click" data-href="{{ route('invoices.show', $i) }}"><td class="lead" data-label="Invoice"><span class="mono strong">{{ $i->number }}</span><span class="sub2">{{ $i->customer->displayName() }}</span></td><td data-label="Due">{{ fdate($i->due_date) }}</td><td class="num" data-label="Balance">{{ money($i->balance(), $i->currency_code) }}</td><td data-label="Status">@include('partials.pill', ['label' => $i->displayStatus()])</td></tr>
     @empty <tr><td colspan="4" class="empty">All clear. Nothing is overdue.</td></tr> @endforelse
     </tbody></table></div>
   </section>

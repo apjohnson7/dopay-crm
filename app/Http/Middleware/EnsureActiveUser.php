@@ -12,6 +12,9 @@ class EnsureActiveUser
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && ! Auth::user()->is_active) {
+            if (! $request->hasSession()) {
+                abort(403, 'This account has been deactivated.');
+            }
             Auth::guard('web')->logout();
             $request->session()->invalidate();
 

@@ -12,10 +12,13 @@ class Invoice extends Model
 {
     use Auditable;
 
-    protected $fillable = ['number', 'customer_id', 'country_id', 'branch_id', 'currency_code', 'exchange_rate', 'issue_date', 'due_date', 'status', 'subtotal', 'discount_total', 'tax_total', 'total', 'amount_paid', 'notes', 'terms', 'version', 'share_token', 'generated_at', 'sent_at', 'created_by', 'approved_by', 'approved_at', 'cancelled_reason'];
+    /** The share token opens the invoice without signing in, so it never goes into the audit trail. */
+    protected array $auditExclude = ['share_token'];
+
+    protected $fillable = ['number', 'customer_id', 'country_id', 'branch_id', 'currency_code', 'exchange_rate', 'issue_date', 'due_date', 'status', 'subtotal', 'discount_total', 'tax_total', 'total', 'amount_paid', 'notes', 'terms', 'version', 'share_token', 'generated_at', 'sent_at', 'share_refreshed_at', 'created_by', 'approved_by', 'approved_at', 'cancelled_reason'];
 
     protected $casts = [
-        'issue_date' => 'date', 'due_date' => 'date', 'generated_at' => 'datetime', 'sent_at' => 'datetime', 'approved_at' => 'datetime',
+        'issue_date' => 'date', 'due_date' => 'date', 'generated_at' => 'datetime', 'sent_at' => 'datetime', 'share_refreshed_at' => 'datetime', 'approved_at' => 'datetime',
         'subtotal' => 'decimal:2', 'discount_total' => 'decimal:2', 'tax_total' => 'decimal:2', 'total' => 'decimal:2', 'amount_paid' => 'decimal:2', 'exchange_rate' => 'decimal:6',
     ];
 

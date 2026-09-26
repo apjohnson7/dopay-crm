@@ -21,7 +21,7 @@
 
 @if($tab === 'statement')
   <section class="card"><div class="card-h"><div><h3>Statement of account</h3><p class="small muted">{{ fdate($statement['from']) }} – {{ fdate($statement['to']) }} · {{ $customer->currency_code }}</p></div>
-    <form><input type="hidden" name="tab" value="statement"><select class="sel" name="period" onchange="this.form.submit()">@foreach(['month' => 'This month', 'last' => 'Last month', 'quarter' => 'This quarter', 'year' => 'This year', 'all' => 'All time'] as $k => $l)<option value="{{ $k }}" @selected($period === $k)>{{ $l }}</option>@endforeach</select></form></div>
+    <form><input type="hidden" name="tab" value="statement"><select class="sel" name="period" data-autosubmit>@foreach(['month' => 'This month', 'last' => 'Last month', 'quarter' => 'This quarter', 'year' => 'This year', 'all' => 'All time'] as $k => $l)<option value="{{ $k }}" @selected($period === $k)>{{ $l }}</option>@endforeach</select></form></div>
   <div class="tw"><table class="tbl"><thead><tr><th>Date</th><th>Reference</th><th>Description</th><th class="num">Debit</th><th class="num">Credit</th><th class="num">Balance</th></tr></thead><tbody>
     <tr><td>{{ fdate($statement['from']) }}</td><td></td><td class="muted">Opening balance</td><td></td><td></td><td class="num strong">{{ money($statement['opening'], $customer->currency_code, false) }}</td></tr>
     @foreach($statement['rows'] as $r)<tr><td>{{ fdate($r['date']) }}</td><td class="mono">{{ $r['ref'] }}</td><td>{{ $r['desc'] }}</td><td class="num">{{ $r['debit'] ? money($r['debit'], $customer->currency_code, false) : '' }}</td><td class="num">{{ $r['credit'] ? money($r['credit'], $customer->currency_code, false) : '' }}</td><td class="num">{{ money($r['balance'], $customer->currency_code, false) }}</td></tr>@endforeach
@@ -37,7 +37,7 @@
 @else
   <div class="grid g-2">
     <section class="card"><div class="card-h"><h3>Invoices</h3></div><div class="tw"><table class="tbl cards"><tbody>
-      @forelse($customer->invoices as $i)<tr class="click" onclick="location='{{ route('invoices.show', $i) }}'"><td class="lead" data-label="Invoice"><span class="mono strong">{{ $i->number }}</span><span class="sub2">{{ fdate($i->issue_date) }}</span></td><td class="num" data-label="Total">{{ money($i->total, $i->currency_code) }}</td><td data-label="Status">@include('partials.pill', ['label' => $i->displayStatus()])</td></tr>
+      @forelse($customer->invoices as $i)<tr class="click" data-href="{{ route('invoices.show', $i) }}"><td class="lead" data-label="Invoice"><span class="mono strong">{{ $i->number }}</span><span class="sub2">{{ fdate($i->issue_date) }}</span></td><td class="num" data-label="Total">{{ money($i->total, $i->currency_code) }}</td><td data-label="Status">@include('partials.pill', ['label' => $i->displayStatus()])</td></tr>
       @empty<tr><td class="empty">No invoices yet.</td></tr>@endforelse</tbody></table></div></section>
     <section class="card"><div class="card-h"><h3>Payments & messages</h3></div><div class="pad timeline" style="padding-top:4px">
       @foreach($customer->payments as $p)<div class="tl"><div class="av">₵</div><div>Payment {{ money($p->amount, $p->currency_code) }} · {{ $p->method }}<div class="small muted">{{ fdate($p->paid_on) }} · <span class="mono">{{ $p->reference }}</span></div></div><div>@if($p->receipt)<a class="btn sm" href="{{ route('receipts.show', $p->receipt) }}">Receipt</a>@endif</div></div>@endforeach

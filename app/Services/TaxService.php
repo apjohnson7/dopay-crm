@@ -132,8 +132,9 @@ class TaxService
 
     public function markPaid(Expense $expense, User $by): void
     {
-        abort_if($expense->submitted_by === $by->id, 403, 'Another person must approve a tax payment you recorded.');
+        abort_if((int) $expense->submitted_by === (int) $by->id, 403, 'Another person must approve a tax payment you recorded.');
         abort_unless($expense->expense_category_id === self::taxCategoryId(), 422, 'Not a tax payment.');
+        abort_unless($expense->status === 'submitted', 422, 'Only submitted tax payments can be approved.');
         $before = $expense->only('status');
         $expense->update(['status' => 'paid', 'approved_by' => $by->id]);
         AuditLogger::log('Approved tax payment', $expense, $before, ['status' => 'paid'], $expense->number);

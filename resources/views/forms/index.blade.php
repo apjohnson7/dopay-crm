@@ -12,12 +12,12 @@
 </div>
 <div class="grid g-main" style="margin-top:20px">
   <section class="card"><div class="card-h"><h3>Submitted forms</h3>
-    <form class="row"><input type="hidden" name="status" value="{{ $status }}"><select class="sel" name="type" onchange="this.form.submit()"><option value="">All form types</option>@foreach(config('dopay.forms') as $k => $d)<option value="{{ $k }}" @selected($type === $k)>{{ $d['appendix'] }} · {{ $d['name'] }}</option>@endforeach</select></form></div>
+    <form class="row"><input type="hidden" name="status" value="{{ $status }}"><select class="sel" name="type" data-autosubmit><option value="">All form types</option>@foreach(config('dopay.forms') as $k => $d)<option value="{{ $k }}" @selected($type === $k)>{{ $d['appendix'] }} · {{ $d['name'] }}</option>@endforeach</select></form></div>
     <div class="row" style="padding:12px 18px 0">@foreach(['all' => 'All', 'mine' => 'Awaiting my signature', 'drafts' => 'Drafts & returned', 'in_approval' => 'In approval', 'open' => 'Approved & open', 'closed' => 'Closed'] as $k => $l)<a class="chip {{ $status === $k ? 'on' : '' }}" href="?status={{ $k }}&type={{ $type }}" style="text-decoration:none">{{ $l }}@if($k === 'mine')<b>{{ $awaiting->count() }}</b>@endif</a>@endforeach</div>
     <div class="tw"><table class="tbl cards"><thead><tr><th>Form</th><th>Entity</th><th>Prepared by</th><th class="num">Amount</th><th>Status</th></tr></thead><tbody>
     @forelse($forms as $f)
       @php $step = $approvals->currentStep($f); @endphp
-      <tr class="click" onclick="location='{{ route('forms.show', $f) }}'"><td class="lead" data-label="Form"><span class="mono strong">{{ $f->reference }}</span><span class="sub2">{{ $f->definition()['appendix'] }} · {{ $f->name() }}</span></td>
+      <tr class="click" data-href="{{ route('forms.show', $f) }}"><td class="lead" data-label="Form"><span class="mono strong">{{ $f->reference }}</span><span class="sub2">{{ $f->definition()['appendix'] }} · {{ $f->name() }}</span></td>
         <td data-label="Entity">{{ $f->country->name }}<span class="sub2">{{ $f->branch->name }}</span></td><td data-label="Prepared by">{{ $f->preparer->name }}</td>
         <td class="num" data-label="Amount">{{ (float) $f->total ? money($f->total, $f->currency_code) : '—' }}</td>
         <td data-label="Status">@include('partials.pill', ['label' => $f->statusLabel()])@if($step !== null)<span class="sub2">Step {{ $step + 1 }} of {{ count($approvals->steps($f)) }}</span>@endif</td></tr>

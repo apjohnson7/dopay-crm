@@ -32,7 +32,7 @@ class TaxController extends Controller
                 $out = fopen('php://output', 'w');
                 fputcsv($out, ['Country', 'Period', 'Taxable sales ('.$country->currency_code.')', $country->tax_name.' charged', 'Remitted', 'Balance', 'Due by', 'Status']);
                 foreach ($rows as $r) {
-                    fputcsv($out, [$country->name, $r['label'], $r['net'], $r['vat'], $r['paid'], $r['balance'], $r['due']->toDateString(), $r['status']]);
+                    fputcsv($out, array_map([self::class, 'csvSafe'], [$country->name, $r['label'], $r['net'], $r['vat'], $r['paid'], $r['balance'], $r['due']->toDateString(), $r['status']]));
                 }
                 fclose($out);
             }, 'dopay-'.strtolower($country->tax_name).'-'.$country->iso2.'-'.now()->format('Ymd').'.csv', ['Content-Type' => 'text/csv']);
@@ -47,6 +47,12 @@ class TaxController extends Controller
             'pending' => $payments->where('status', '!=', 'paid'),
             'branches' => Branch::where('country_id', $country->id)->where('is_active', true)->orderBy('name')->get(),
         ]);
+    }
+
+    /** Stop spreadsheet formula injection: text starting with = + - @ (or tab/CR) is prefixed with an apostrophe. */
+    public static function csvSafe(mixed $v): mixed
+    {
+        return is_string($v) && $v !== '' && str_contains("=+-@\t\r", $v[0]) ? "'".$v : $v;
     }
 
     public function store(Request $request, TaxService $tax)
@@ -89,6 +95,7 @@ class TaxController extends Controller
         ]);
         foreach ($data['countries'] as $id => $v) {
             $c = Country::findOrFail($id);
+            $this->ensureCountry($c->id);
             $before = $c->only('tax_rate', 'vat_filing_day');
             $c->update($v);
             if ($before != $c->only('tax_rate', 'vat_filing_day')) {

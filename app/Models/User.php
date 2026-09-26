@@ -74,7 +74,7 @@ class User extends Authenticatable
 
     public function setSigningPin(string $pin): void
     {
-        $this->forceFill(['signing_pin' => Hash::make($pin)])->save();
+        $this->forceFill(['signing_pin' => Hash::make($pin), 'pin_set_at' => now()])->save();
     }
 
     public function checkSigningPin(?string $pin): bool

@@ -30,7 +30,22 @@ class FinanceFormService
             }
             $data = [];
             foreach ($def['fields'] as $f) {
-                $data[$f['key']] = $input['data'][$f['key']] ?? null;
+                $v = $input['data'][$f['key']] ?? null;
+                // Typed fields must point at real, allowed values (people in this country, active countries, listed options, sane amounts).
+                if ($v !== null && $v !== '') {
+                    $ok = match ($f['type']) {
+                        'user' => \App\Models\User::whereKey((int) $v)->where('is_active', true)->whereHas('branch', fn ($b) => $b->where('country_id', $branch->country_id))->exists(),
+                        'country' => \App\Models\Country::whereKey((int) $v)->where('is_active', true)->exists(),
+                        'select' => array_key_exists((string) $v, $f['options'] ?? []),
+                        'money', 'number' => is_numeric($v) && ((float) $v >= 0 || in_array($f['key'], ['opening_balance', 'bank_closing'], true)),
+                        'date' => strtotime((string) $v) !== false,
+                        default => is_scalar($v) && mb_strlen((string) $v) <= 2000,
+                    };
+                    if (! $ok) {
+                        throw ValidationException::withMessages(['data.'.$f['key'] => 'Check “'.$f['label'].'”: that value isn’t allowed here.']);
+                    }
+                }
+                $data[$f['key']] = $v;
             }
             if ($type === 'K' && empty($data['liquidation_date']) && ! empty($data['use_date'])) {
                 $data['liquidation_date'] = $this->addWorkingDays($data['use_date'], $def['liquidation_working_days'])->toDateString();

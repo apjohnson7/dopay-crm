@@ -16,14 +16,14 @@ class PaymentController extends Controller
     {
         $payments = Scope::apply(Payment::query())->with('customer', 'receipt', 'allocations.invoice', 'receiver')->latest('paid_on')->latest('id')->paginate(30);
 
-        return view('payments.index', ['payments' => $payments, 'authorizers' => SecondApproval::candidates(auth()->user())]);
+        return view('payments.index', ['payments' => $payments, 'authorizers' => SecondApproval::candidates(auth()->user(), auth()->user()->isGlobal() ? \App\Support\Scope::countryId() : auth()->user()->countryId(), 'payments.reverse')]);
     }
 
     public function create(Request $request)
     {
         $this->authorize('payments.record');
         $customers = Scope::apply(Customer::query())->orderBy('company')->orderBy('name')->get()->filter(fn ($c) => auth()->user()->canActForCountry($c->country_id));
-        $customer = $request->query('customer') ? Customer::find($request->query('customer')) : null;
+        $customer = $request->query('customer') ? $customers->firstWhere('id', (int) $request->query('customer')) : null;
         $open = $customer ? Invoice::where('customer_id', $customer->id)->whereIn('status', ['approved', 'sent'])->orderBy('due_date')->get()->filter(fn ($i) => $i->balance() > 0) : collect();
 
         return view('payments.create', ['customers' => $customers, 'customer' => $customer, 'open' => $open, 'preselect' => $request->query('invoice')]);
@@ -52,7 +52,7 @@ class PaymentController extends Controller
     {
         $this->authorize('payments.reverse');
         $this->ensureCountry($payment->country_id);
-        SecondApproval::verify($request, 'Reverse payment '.$payment->number);
+        SecondApproval::verify($request, 'Reverse payment '.$payment->number, $payment->country_id, 'payments.reverse');
         $service->reverse($payment, $request->user(), $request->input('reason'));
 
         return back()->with('status', 'Payment reversed and receipt voided.');

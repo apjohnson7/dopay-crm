@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureActiveUser;
 use App\Http\Middleware\EnsureTwoFactorEnabled;
+use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetBranchScope;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,12 +19,17 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             EnsureActiveUser::class,
             SetBranchScope::class,
+            SecurityHeaders::class,
         ]);
+        $middleware->api(append: [SecurityHeaders::class]);
         $middleware->alias([
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             '2fa' => EnsureTwoFactorEnabled::class,
+            'active' => EnsureActiveUser::class,
+            'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
+            'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
         ]);
         $middleware->redirectGuestsTo('/login');
         $middleware->redirectUsersTo('/dashboard');

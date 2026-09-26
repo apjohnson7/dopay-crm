@@ -70,7 +70,8 @@ php artisan serve
 
 - **With demo data:** keep `DOPAY_DEMO_PASSWORD` in `.env`. The seeder then creates 18 demo users, customers, products, invoices, payments, tax payments and messages.
   - Sign in as `david.ssemanda@dopay.example` (Accounting Officer) or `patrick.mugisha@dopay.example` (Finance Manager), using that password.
-  - Every demo user's signing PIN is `2468`.
+  - Every demo user's signing PIN is `258147`.
+  - For a local demo over plain `http://`, also set `APP_ENV=local` and `SESSION_SECURE_COOKIE=false`.
 - **Clean install:** leave `DOPAY_DEMO_PASSWORD` empty, then run `php artisan dopay:admin you@company.com "Your Name"`. This creates the first Super Administrator.
 
 With `DOPAY_REQUIRE_2FA=true`, each user sets up an authenticator app and a signing PIN under **Security** before they can use the system.
@@ -104,6 +105,10 @@ With `DOPAY_REQUIRE_2FA=true`, each user sets up an authenticator app and a sign
    ```
    It sends payment reminders at 06:00 and processes the queue.
 7. Enable SSL (free Let's Encrypt in hPanel).
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for the review, what was fixed and the go-live checklist.
 
 ## Tests
 

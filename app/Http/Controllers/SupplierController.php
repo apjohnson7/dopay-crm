@@ -68,7 +68,8 @@ class SupplierController extends Controller
         if ($bankChanged) {
             // The details themselves stay out of the log; only the fact of the change and who made it.
             AuditLogger::log('Changed supplier bank details', $supplier, null, null, $supplier->code);
-            $managers = User::role(['Finance Manager', 'Super Administrator'])->where('is_active', true)->where('id', '!=', $request->user()->id)->get();
+            $managers = User::role(['Finance Manager', 'Super Administrator'])->where('is_active', true)->where('id', '!=', $request->user()->id)->get()
+                ->filter(fn (User $u) => $u->canActForCountry($supplier->country_id));
             Notification::send($managers, new SupplierBankChanged($supplier, $request->user()));
         }
 
@@ -83,13 +84,13 @@ class SupplierController extends Controller
     private function validated(Request $request, ?Supplier $supplier = null): array
     {
         return $request->validate([
-            'company' => ['required', 'string', 'max:190', Rule::unique('suppliers', 'company')->ignore($supplier?->id)->whereNull('deleted_at')],
+            'company' => ['required', 'string', 'max:190', Rule::unique('suppliers', 'company')->ignore($supplier?->id)->where('country_id', (int) $request->input('country_id'))->whereNull('deleted_at')],
             'contact_person' => ['nullable', 'string', 'max:190'],
             'phone' => ['nullable', 'required_without:email', 'string', 'max:40'],
             'email' => ['nullable', 'required_without:phone', 'email', 'max:190'],
             'address' => ['nullable', 'string', 'max:190'],
             'country_id' => ['required', 'exists:countries,id'],
-            'tax_id' => ['nullable', 'string', 'max:40', Rule::unique('suppliers', 'tax_id')->ignore($supplier?->id)->whereNull('deleted_at')],
+            'tax_id' => ['nullable', 'string', 'max:40', Rule::unique('suppliers', 'tax_id')->ignore($supplier?->id)->where('country_id', (int) $request->input('country_id'))->whereNull('deleted_at')],
             'payment_terms_days' => ['required', 'integer', 'min:0', 'max:180'],
             'supplies' => ['nullable', 'string', 'max:190'],
             'bank_details' => ['nullable', 'string', 'max:500'],

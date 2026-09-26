@@ -2,7 +2,7 @@
 @section('title', 'Budget monitoring')
 @section('content')
 <div class="ph"><div><h1>Budget monitoring</h1><p class="sub">{{ $country->legal_entity }} · {{ $year }} · {{ $country->currency_code }}. Budget from the approved Annual Budget (Appendix F); actuals post automatically from paid expenses and memos.</p></div>
-  @if($countries->count() > 1)<form><select class="sel" name="country" onchange="this.form.submit()">@foreach($countries as $c)<option value="{{ $c->id }}" @selected($c->id === $country->id)>{{ $c->legal_entity }}</option>@endforeach</select></form>@endif</div>
+  @if($countries->count() > 1)<form><select class="sel" name="country" data-autosubmit>@foreach($countries as $c)<option value="{{ $c->id }}" @selected($c->id === $country->id)>{{ $c->legal_entity }}</option>@endforeach</select></form>@endif</div>
 <div class="row" style="margin-bottom:12px">@foreach(range(1, 12) as $m)<a class="chip {{ !$ytd && $month === $m ? 'on' : '' }}" style="text-decoration:none" href="?country={{ $country->id }}&month={{ $m }}">{{ date('M', mktime(0, 0, 0, $m, 1)) }}</a>@endforeach
   <a class="chip {{ $ytd ? 'on' : '' }}" style="text-decoration:none" href="?country={{ $country->id }}&month={{ $month }}&mode=ytd">Year to date</a></div>
 @if(!$report)

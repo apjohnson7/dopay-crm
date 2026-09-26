@@ -161,7 +161,7 @@
   function csv(gw) {
     const t = gw.querySelector('table'), ths = [...t.tHead.rows[0].cells];
     const keep = ths.map(th => !th.classList.contains('rn') && th.textContent.trim());
-    const q = v => '"' + String(v).replace(/"/g, '""') + '"';
+    const q = v => { v = String(v); if (/^[=+\-@\t\r]/.test(v) && !/^-?[\d,.]+$/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
     const txt = c => [...c.childNodes].map(n => n.textContent.trim()).filter(Boolean).join(' · ');
     const lines = [ths.filter((_, j) => keep[j]).map(th => q(th.textContent.trim())).join(',')];
     [...t.tBodies[0].rows].filter(r => !r.hidden).forEach(r => lines.push([...r.cells].filter((_, j) => keep[j]).map(c => q(txt(c))).join(',')));
@@ -207,4 +207,15 @@
     const x = e.target.closest('[data-gx]'); if (x) { const gw = x.closest('.gw'); x.dataset.gx === 'csv' ? csv(gw) : print(gw); }
   });
   document.addEventListener('keydown', e => { const th = e.target.closest && e.target.closest('th[data-gs]'); if (th && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); sort(th); } });
+})();
+
+/* Behaviour that used to be inline (kept out of the HTML so the Content Security Policy can forbid inline scripts). */
+(function () {
+  document.addEventListener('change', e => { const s = e.target.closest('[data-autosubmit]'); if (s && s.form) s.form.submit(); });
+  document.addEventListener('click', e => {
+    const f = e.target.closest('[data-fill]');
+    if (f) { try { const m = JSON.parse(f.dataset.fill); Object.keys(m).forEach(id => { const el = document.getElementById(id); if (el) el.value = m[id]; }); } catch (_) {} }
+    const r = e.target.closest('tr[data-href]');
+    if (r && !e.target.closest('a,button,input,select,label,form')) { const u = r.dataset.href; try { const t = new URL(u, location.origin); if (t.origin === location.origin) location.href = t.href; } catch (_) {} }
+  });
 })();

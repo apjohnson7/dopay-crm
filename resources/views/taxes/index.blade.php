@@ -39,7 +39,7 @@
     <td class="num strong" data-label="Balance" @if($r['status'] === 'Overdue') style="color:var(--bad)" @endif>{{ money($r['balance'], $cur, false) }}</td>
     <td data-label="Due by">{{ fdate($r['due']) }}</td>
     <td data-label="Status">@include('partials.pill', ['label' => $r['status']])</td>
-    <td>@if($r['balance'] > 0 && $r['status'] !== 'Open period')@can('expenses.create')<button class="btn sm" data-open-modal="taxPay" data-period="{{ $r['period'] }}" data-amount="{{ $r['balance'] }}" data-label="{{ $r['label'] }}">Record payment</button>@endcan @endif</td>
+    <td>@if($r['balance'] > 0 && $r['status'] !== 'Open period')@can('expenses.create')<button class="btn sm" data-open-modal="taxPay" data-fill="{{ json_encode(['tp-period' => $r['period'], 'tp-amt' => $r['balance'], 'tp-desc' => $tn.' return, '.$r['label']]) }}">Record payment</button>@endcan @endif</td>
   </tr>
 @endforeach
 </tbody></table></div></section>
@@ -95,13 +95,6 @@
     <div class="f"><label for="tp-br">Branch</label><select id="tp-br" name="branch_id">@foreach($branches as $b)<option value="{{ $b->id }}" @selected($b->id === auth()->user()->branch_id)>{{ $b->name }}</option>@endforeach</select></div>
   </div></div>
   <div class="modal-f"><button class="btn" data-close-modal>Cancel</button><button class="btn pri">Record payment</button></div></form></dialog>
-<script>
-document.addEventListener('click', e => {
-  const b = e.target.closest('[data-open-modal="taxPay"][data-period]'); if (!b) return;
-  document.getElementById('tp-period').value = b.dataset.period;
-  document.getElementById('tp-amt').value = b.dataset.amount;
-  document.getElementById('tp-desc').value = @json($tn) + ' return, ' + b.dataset.label;
-});
-</script>
+
 @endcan
 @endsection

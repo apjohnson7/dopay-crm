@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ReferenceSeeder::class);
 
-        if (env('DOPAY_DEMO_PASSWORD')) {
+        if (env('DOPAY_DEMO_PASSWORD') && app()->environment('production')) {
+            $this->command?->error('Demo data is never created in production. Set APP_ENV=local for a demo install.');
+        } elseif (env('DOPAY_DEMO_PASSWORD')) {
             $this->call(DemoSeeder::class);
         } else {
             $this->command?->info('DOPAY_DEMO_PASSWORD is empty, so demo users and records were skipped. Create the first administrator with: php artisan dopay:admin');

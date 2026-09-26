@@ -94,9 +94,10 @@ class FinanceForm extends Model
         }
 
         // Everyone sees their own country's forms, plus interbranch memos their country is paying for.
-        // Group approvers also see forms from other countries once those are submitted into approval (and afterwards).
+        // Group approvers also see other countries' forms they have signed; a form waiting for their signature
+        // is opened through FinanceFormController::authorizeView.
         return $q->where(fn ($w) => $w->where('country_id', $user->countryId())
             ->orWhere(fn ($j) => $j->where('type', 'J')->where('data->paying_country_id', $user->countryId()))
-            ->when($user->isGroupApprover(), fn ($g) => $g->orWhereNotIn('status', ['draft', 'returned', 'void'])));
+            ->when($user->isGroupApprover(), fn ($g) => $g->orWhereHas('signatures', fn ($s) => $s->where('user_id', $user->id))));
     }
 }

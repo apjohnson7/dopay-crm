@@ -33,9 +33,9 @@ Artisan::command('dopay:reminders', function () {
 Artisan::command('dopay:admin {email} {name}', function (string $email, string $name) {
     $branch = Branch::orderBy('id')->first();
     $password = $this->secret('Password (min 12 characters)');
-    $pin = $this->secret('Signing PIN (4 to 6 digits)');
-    if (strlen((string) $password) < 12 || ! preg_match('/^\d{4,6}$/', (string) $pin)) {
-        $this->error('Password must be at least 12 characters and the PIN 4 to 6 digits.');
+    $pin = $this->secret('Signing PIN (6 digits)');
+    if (strlen((string) $password) < 12 || ! preg_match('/^\d{6}$/', (string) $pin)) {
+        $this->error('Password must be at least 12 characters and the PIN 6 digits.');
 
         return 1;
     }

@@ -46,7 +46,8 @@ class DashboardController extends Controller
             'pendingInvoices' => $user->can('invoices.approve') ? Scope::apply(Invoice::query())->where('status', 'pending_approval')->with('customer')->get() : collect(),
             'advancesOverdue' => Scope::apply(FinanceForm::query())->where('type', 'K')->where('status', 'awaiting_liquidation')->get()
                 ->filter(fn ($f) => $f->datum('liquidation_date') < today()->toDateString()),
-            'expiringDocs' => Document::whereBetween('expires_on', [today(), today()->addDays(30)])->count(),
+            'expiringDocs' => Document::whereBetween('expires_on', [today(), today()->addDays(30)])
+                ->when($countryId, fn ($q) => $q->whereHas('uploader.branch', fn ($b) => $b->where('country_id', $countryId)))->count(),
             'unread' => $messaging->unreadCount($user),
             'attention' => $overdue->sortBy('due_date')->take(6)->load('customer'),
             'recentPayments' => Scope::apply(Payment::query())->with('customer')->latest('paid_on')->limit(6)->get(),

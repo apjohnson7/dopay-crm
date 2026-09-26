@@ -24,7 +24,7 @@
     <p class="small">You enter this PIN to sign finance forms and to authorize another person’s sensitive action. Keep it private.</p>
     <form method="post" action="{{ route('profile.pin') }}" class="fg">@csrf
       <div class="f full"><label for="current_password">Current password</label><input id="current_password" name="current_password" type="password" required></div>
-      <div class="f"><label for="pin">New PIN (4–6 digits)</label><input id="pin" name="pin" type="password" inputmode="numeric" required></div>
+      <div class="f"><label for="pin">New PIN (6 digits)</label><input id="pin" name="pin" type="password" inputmode="numeric" required></div>
       <div class="f"><label for="pin_confirmation">Repeat PIN</label><input id="pin_confirmation" name="pin_confirmation" type="password" inputmode="numeric" required></div>
       <div class="full"><button class="btn pri">{{ $user->signing_pin ? 'Change PIN' : 'Save PIN' }}</button></div>
     </form>

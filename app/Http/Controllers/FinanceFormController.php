@@ -78,14 +78,14 @@ class FinanceFormController extends Controller
             'canSign' => $step !== null && $this->approvals->canSign($request->user(), $form, $step),
             'waitingFor' => $step !== null ? $this->approvals->eligibleSigners($form, $step) : collect(),
             'ledger' => $form->type === 'G' ? $this->forms->ledger($form) : null,
-            'authorizers' => SecondApproval::candidates($request->user()),
+            'authorizers' => SecondApproval::candidates($request->user(), $form->country_id),
             'categories' => ExpenseCategory::orderBy('position')->get(),
         ]);
     }
 
     public function edit(FinanceForm $form)
     {
-        $this->authorizeView($form);
+        $this->authorizeEdit($form);
         abort_unless(in_array($form->status, ['draft', 'returned'], true), 403, 'Only drafts and returned forms can be edited.');
 
         return view('forms.edit', $this->editorData($form->load('lines', 'budgetLines', 'documents')));
@@ -93,7 +93,7 @@ class FinanceFormController extends Controller
 
     public function update(FinanceForm $form, Request $request)
     {
-        $this->authorizeView($form);
+        $this->authorizeEdit($form);
         $this->forms->save($form->type, $this->input($request), $request->user(), $form);
         $this->storeUploads($request, $form);
 
@@ -102,7 +102,7 @@ class FinanceFormController extends Controller
 
     public function submit(FinanceForm $form, Request $request)
     {
-        $this->authorizeView($form);
+        $this->authorizeEdit($form);
         $this->forms->validateForSubmit($form);
         $this->approvals->submit($form, $request->user());
 
@@ -126,8 +126,9 @@ class FinanceFormController extends Controller
 
     public function revise(FinanceForm $form, Request $request)
     {
-        $this->authorizeView($form);
-        SecondApproval::verify($request, 'Revise '.$form->reference);
+        $this->authorizeEdit($form, allowSigned: true);
+        abort_unless(in_array($form->status, ['in_approval', 'approved'], true), 403, 'Only forms in approval or approved (not yet paid) can be revised. Paid, disbursed or closed forms need a reversal.');
+        SecondApproval::verify($request, 'Revise '.$form->reference, $form->country_id);
         $form->update(['status' => 'draft', 'version' => $form->version + 1, 'approved_at' => null]);
 
         return redirect()->route('forms.edit', $form)->with('status', 'Authorized. Saving and submitting restarts the approval chain.');
@@ -135,9 +136,9 @@ class FinanceFormController extends Controller
 
     public function void(FinanceForm $form, Request $request)
     {
-        $this->authorizeView($form);
+        $this->authorizeEdit($form, allowSigned: true);
         abort_unless(in_array($form->status, ['draft', 'returned', 'in_approval'], true), 403);
-        SecondApproval::verify($request, 'Void '.$form->reference);
+        SecondApproval::verify($request, 'Void '.$form->reference, $form->country_id);
         $form->update(['status' => 'void']);
 
         return back()->with('status', 'Form voided. It stays in the records.');
@@ -147,7 +148,12 @@ class FinanceFormController extends Controller
     {
         $this->authorizeView($form);
         $user = $request->user();
-        if ($action !== 'liquidate') {
+        // Money actions happen in the country that pays: the form's own country, or the paying country of an interbranch memo.
+        $payingCountry = $form->type === 'J' ? (int) $form->datum('paying_country_id', $form->country_id) : $form->country_id;
+        abort_unless($user->canActForCountry($payingCountry), 403, 'Only the paying country can record this.');
+        if ($action === 'liquidate') {
+            abort_unless(in_array($user->id, [(int) $form->prepared_by, (int) $form->datum('holder_id')], true) || $user->can('payments.record'), 403, 'Only the person who received the advance, or finance, can liquidate it.');
+        } else {
             $this->authorize('payments.record');
         }
         match ($action) {
@@ -173,7 +179,8 @@ class FinanceFormController extends Controller
 
     private function liquidate(FinanceForm $form, Request $request): void
     {
-        $data = $request->validate(['spent' => 'required|numeric|min:0', 'receipts' => 'required|array|min:1', 'receipts.*' => 'file|max:10240|mimes:pdf,jpg,jpeg,png,xlsx']);
+        abort_unless($form->type === 'K' && $form->status === 'awaiting_liquidation', 422, 'Only disbursed cash advances can be liquidated.');
+        $data = $request->validate(['spent' => 'required|numeric|min:0|max:'.(float) $form->total, 'receipts' => 'required|array|min:1|max:20', 'receipts.*' => 'file|max:10240|mimes:pdf,jpg,jpeg,png,xlsx']);
         foreach ($request->file('receipts') as $file) {
             $this->storeDocument($form, $file, 'Liquidation receipt');
         }
@@ -195,9 +202,23 @@ class FinanceFormController extends Controller
             'branch_id' => 'required|exists:branches,id',
             'currency_code' => 'nullable|exists:currencies,code',
             'data' => 'array',
-            'lines' => 'array',
+            'lines' => 'array|max:200',
+            'lines.*.amount' => 'nullable|numeric|min:0|max:999999999999',
+            'lines.*.inflow' => 'nullable|numeric|min:0|max:999999999999',
+            'lines.*.outflow' => 'nullable|numeric|min:0|max:999999999999',
+            'lines.*.category' => ['nullable', function ($attr, $v, $fail) { if ($v !== 'inflow' && ! \App\Models\ExpenseCategory::whereKey((int) $v)->exists()) { $fail('Choose a category from the list.'); } }],
+            'lines.*.date' => 'nullable|date',
+            'lines.*.description' => 'nullable|string|max:500',
+            'lines.*.account_details' => 'nullable|string|max:250',
+            'lines.*.memo_ref' => 'nullable|string|max:60',
+            'lines.*.party' => 'nullable|string|max:190',
+            'lines.*.notes' => 'nullable|string|max:250',
+            'lines.*.purpose' => 'nullable|string|max:500',
             'budget' => 'array',
+            'budget.*' => 'array',
+            'budget.*.*' => 'nullable|numeric|min:0|max:999999999999',
             'budget_notes' => 'array',
+            'budget_notes.*' => 'nullable|string|max:250',
             'attachments.*' => 'file|max:10240|mimes:pdf,jpg,jpeg,png,docx,xlsx',
         ]);
     }
@@ -216,9 +237,24 @@ class FinanceFormController extends Controller
             'category' => $category, 'documentable_type' => $form->getMorphClass(), 'documentable_id' => $form->id, 'uploaded_by' => auth()->id()]);
     }
 
+    /** Drafts are changed by their preparer (or a forms administrator) in the form's own country. */
+    private function authorizeEdit(FinanceForm $form, bool $allowSigned = false): void
+    {
+        $this->authorizeView($form);
+        $user = auth()->user();
+        abort_unless($user->canActForCountry($form->country_id), 403, 'This form belongs to another country.');
+        abort_unless($user->id === (int) $form->prepared_by || $user->can('forms.admin'), 403, 'Only the preparer or a forms administrator can change this form.');
+        if (! $allowSigned) {
+            abort_unless(in_array($form->status, ['draft', 'returned'], true), 403, 'Signed forms can only be changed through an authorized revision.');
+        }
+    }
+
     private function authorizeView(FinanceForm $form): void
     {
-        abort_unless(FinanceForm::visibleTo(auth()->user())->whereKey($form->id)->exists(), 403, 'This form belongs to another country.');
+        $user = auth()->user();
+        $step = $this->approvals->currentStep($form);
+        $awaitingMe = $step !== null && $this->approvals->canSign($user, $form, $step);
+        abort_unless($awaitingMe || FinanceForm::visibleTo($user)->whereKey($form->id)->exists(), 403, 'This form belongs to another country.');
     }
 
     private function editorData(FinanceForm $form): array

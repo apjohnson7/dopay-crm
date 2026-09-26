@@ -1120,7 +1120,7 @@ function gridSort(th){const t=th.closest('table');const j=th.cellIndex;const dir
   const key=r=>{const c=r.cells[j];if(isNum){const n=parseFloat(cellTxt(c).replace(/[^\d.\-]/g,''));return isNaN(n)?-Infinity:n}const tx=c?((c.querySelector('.lc>div')||c).textContent.trim()):'';const dm=tx.match(/^\d{1,2} [A-Z][a-z]{2} \d{4}/);const d=dm?Date.parse(dm[0]):NaN;return isNaN(d)?tx.toLowerCase():d};
   const tb=t.tBodies[0];[...tb.rows].sort((a,b)=>{const x=key(a),y=key(b);return (x>y?1:x<y?-1:0)*dir}).forEach((r,i)=>{tb.appendChild(r);const n=r.querySelector('td.rn');if(n)n.textContent=i+1})}
 function gridCsv(gw){const t=gw.querySelector('table');const ths=[...t.tHead.rows[0].cells];const keep=ths.map(th=>!th.classList.contains('rn')&&th.textContent.trim());
-  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';const txt=c=>{const b=c.querySelector('.lc>div')||c;return [...b.childNodes].map(n=>n.textContent.trim()).filter(Boolean).join(' · ')};
+  const q=v=>{v=String(v);if(/^[=+\-@\t\r]/.test(v)&&!/^-?[\d,.]+$/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};const txt=c=>{const b=c.querySelector('.lc>div')||c;return [...b.childNodes].map(n=>n.textContent.trim()).filter(Boolean).join(' · ')};
   const lines=[ths.filter((_,j)=>keep[j]).map(th=>q(th.textContent.trim())).join(',')];
   [...t.tBodies[0].rows].filter(r=>!r.hidden).forEach(r=>lines.push([...r.cells].filter((_,j)=>keep[j]).map(c=>q(txt(c))).join(',')));
   if(t.tFoot)lines.push([...t.tFoot.rows[0].cells].filter((_,j)=>keep[j]).map(c=>q(c.textContent.trim())).join(','));

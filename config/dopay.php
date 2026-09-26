@@ -16,8 +16,8 @@ return [
     'document_pattern' => env('DOPAY_DOCUMENT_PATTERN', 'DOPAY-{CC}-{DOC}-{YYYY}-{SEQ}'),
 
     'require_two_factor' => (bool) env('DOPAY_REQUIRE_2FA', true),
-    'share_link_days' => 14,
-    'signing_pin_digits' => [4, 6],
+    'share_link_days' => 30, // a shared invoice link works for 30 days after it was last sent
+    'signing_pin_digits' => [6, 6],
 
     'payment_methods' => ['Cash', 'Bank transfer', 'Mobile money', 'Card', 'Online payment', 'Other'],
 

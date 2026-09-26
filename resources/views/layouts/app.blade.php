@@ -17,7 +17,7 @@
     'Overview' => [['dashboard', 'Dashboard', 'dashboard', null]],
     'Billing' => array_values(array_filter([['customers.index', 'Customers', 'customers*', null], ['invoices.index', 'Invoices', 'invoices*', null], ['payments.index', 'Payments', 'payments*|receipts*', null], $u->can('reports.view') ? ['taxes.index', 'Taxes', 'taxes*', null] : null])),
     'Spending & forms' => [['forms.index', 'Finance forms', 'forms*|budget*', $navFormsAwaiting ?? 0], ['suppliers.index', 'Suppliers', 'suppliers*', null]],
-    'Records' => [['messages.index', 'Team messages', 'messages*', $navUnreadMessages ?? 0], ['help', 'Help & guide', 'help', null]],
+    'Records' => array_values(array_filter([$u->can('messages.use') ? ['messages.index', 'Team messages', 'messages*', $navUnreadMessages ?? 0] : null, ['help', 'Help & guide', 'help', null]])),
     'Administration' => array_values(array_filter([['account.edit', 'Account', 'account*', null], $u->can('audit.view') ? ['audit.index', 'Audit trail', 'audit*', null] : null, ['profile.security', 'Security', 'profile*', null]])),
   ];
 @endphp
@@ -46,7 +46,7 @@
       </form>
       @if($scopeCountries->count() > 1)
         <form method="post" action="{{ route('scope') }}" style="margin-left:auto">@csrf
-          <select class="sel" name="country_id" onchange="this.form.submit()" aria-label="Account">
+          <select class="sel" name="country_id" data-autosubmit aria-label="Account">
             <option value="">All accounts · {{ config('dopay.base_currency') }}</option>
             @foreach($scopeCountries as $c)<option value="{{ $c->id }}" @selected($scopeCountryId === $c->id)>DoPay {{ $c->name }} · {{ $c->currency_code }}</option>@endforeach
           </select>

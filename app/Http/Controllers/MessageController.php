@@ -16,6 +16,7 @@ class MessageController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('messages.use');
         $user = $request->user();
         $conversations = $user->conversations()->with('users.branch.country', 'messages')->orderByDesc('last_message_at')->get();
         $current = $request->query('c') ? $conversations->firstWhere('id', (int) $request->query('c')) : null;
@@ -38,9 +39,10 @@ class MessageController extends Controller
     /** Start a conversation with one person (direct) or several (group), with a first message. */
     public function store(Request $request)
     {
+        $this->authorize('messages.use');
         $data = $request->validate([
             'user_ids' => 'required|array|min:1',
-            'user_ids.*' => 'exists:users,id',
+            'user_ids.*' => 'integer|exists:users,id,is_active,1',
             'name' => 'nullable|string|max:80',
             'body' => 'required|string|max:5000',
             'attach' => 'nullable|string',
@@ -60,6 +62,7 @@ class MessageController extends Controller
 
     public function send(Conversation $conversation, Request $request)
     {
+        $this->authorize('messages.use');
         $data = $request->validate(['body' => 'required_without:attach|nullable|string|max:5000', 'attach' => 'nullable|string']);
         $this->messaging->send($conversation, $request->user(), $data['body'] ?? 'Please see this record.', $this->attachable($data['attach'] ?? null));
 

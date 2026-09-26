@@ -19,11 +19,11 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * Sample people and records matching the prototype, for training and demos.
- * Every demo user signs in with DOPAY_DEMO_PASSWORD and signs documents with PIN 2468.
+ * Every demo user signs in with DOPAY_DEMO_PASSWORD and signs documents with PIN 258147.
  */
 class DemoSeeder extends Seeder
 {
-    public const PIN = '2468';
+    public const PIN = '258147';
 
     public function run(): void
     {

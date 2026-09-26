@@ -29,6 +29,12 @@ class ApprovalService
         return $def['steps'];
     }
 
+    /** Indexes of steps signed by a named person (preparer / holder / purchaser) rather than an approver role. */
+    private function whoSteps(FinanceForm $form): array
+    {
+        return array_keys(array_filter($this->steps($form), fn ($s) => isset($s['who'])));
+    }
+
     /** Index of the next step to sign, or null when the chain is complete / not running. */
     public function currentStep(FinanceForm $form): ?int
     {
@@ -59,6 +65,17 @@ class ApprovalService
             };
         }
         if (! $user->hasAnyRole($step['roles'])) {
+            return false;
+        }
+        // Separation of duties: the preparer, holder or purchaser never approves their own form,
+        // and one person signs at most one approval step per version.
+        if (in_array($user->id, array_filter([(int) $form->prepared_by, (int) $form->datum('holder_id'), (int) $form->datum('purchaser_id')]), true)) {
+            return false;
+        }
+        $sigs = $form->relationLoaded('signatures') ? $form->signatures : $form->signatures()->get();
+        $who = $this->whoSteps($form);
+        if ($sigs->contains(fn ($s) => (int) $s->version === (int) $form->version && (int) $s->step_index >= 0 && (int) $s->step_index !== $stepIndex
+            && ! in_array((int) $s->step_index, $who, true) && (int) $s->user_id === (int) $user->id)) {
             return false;
         }
         $countryId = ! empty($step['paying']) ? (int) $form->datum('paying_country_id') : $form->country_id;
@@ -108,9 +125,7 @@ class ApprovalService
 
     public function sign(FinanceForm $form, User $user, string $pin, ?string $comment = null): void
     {
-        if (! $user->checkSigningPin($pin)) {
-            throw ValidationException::withMessages(['pin' => 'That PIN is not correct.']);
-        }
+        \App\Support\SecondApproval::checkPin($user, $pin, $user, $form->reference);
         $i = $this->currentStep($form);
         if ($i === null || ! $this->canSign($user, $form, $i)) {
             abort(403, 'This step is not yours to sign.');

@@ -48,7 +48,7 @@ class InvoiceController extends Controller
         $this->ensureCountry($invoice->country_id);
         $invoice->load('customer', 'items', 'allocations.payment.receipt', 'country', 'branch', 'creator', 'approver');
 
-        return view('invoices.show', ['invoice' => $invoice, 'authorizers' => SecondApproval::candidates(auth()->user())]);
+        return view('invoices.show', ['invoice' => $invoice, 'authorizers' => SecondApproval::candidates(auth()->user(), $invoice->country_id)]);
     }
 
     public function edit(Invoice $invoice)
@@ -56,6 +56,7 @@ class InvoiceController extends Controller
         $this->authorize('invoices.create');
         $this->ensureCountry($invoice->country_id);
         abort_unless($invoice->status === 'draft', 403, 'Only drafts can be edited.');
+        abort_unless((int) $invoice->created_by === (int) auth()->id(), 403, 'Only the preparer can edit this draft.');
 
         return view('invoices.form', $this->formData($invoice->load('items')));
     }
@@ -64,6 +65,8 @@ class InvoiceController extends Controller
     {
         $this->authorize('invoices.create');
         $this->ensureCountry($invoice->country_id);
+        abort_unless($invoice->status === 'draft', 403, 'Only drafts can be edited. Ask the approver to return the invoice first.');
+        abort_unless((int) $invoice->created_by === (int) $request->user()->id, 403, 'Only the preparer can edit this draft. Approvers return it with comments instead.');
         $this->service->saveDraft($this->validated($request), $request->user(), $invoice);
         if ($request->boolean('submit')) {
             $this->service->submit($invoice->refresh());
@@ -75,6 +78,7 @@ class InvoiceController extends Controller
     public function submit(Invoice $invoice)
     {
         $this->authorize('invoices.create');
+        $this->ensureCountry($invoice->country_id);
         $this->service->submit($invoice);
 
         return back()->with('status', 'Submitted for approval.');
@@ -82,6 +86,9 @@ class InvoiceController extends Controller
 
     public function approve(Invoice $invoice, Request $request)
     {
+        $this->authorize('invoices.approve');
+        $this->ensureCountry($invoice->country_id);
+        abort_if((int) $invoice->created_by === (int) $request->user()->id && ! $request->user()->hasRole('Super Administrator'), 403, 'Someone other than the preparer must approve this invoice.');
         $this->service->approve($invoice, $request->user());
 
         return back()->with('status', 'Approved. Generate the official PDF next.');
@@ -90,6 +97,7 @@ class InvoiceController extends Controller
     public function returnToDraft(Invoice $invoice, Request $request)
     {
         $this->authorize('invoices.approve');
+        $this->ensureCountry($invoice->country_id);
         $this->service->returnToDraft($invoice, $request->validate(['comment' => 'required|string|min:4'])['comment']);
 
         return back()->with('status', 'Returned to the preparer.');
@@ -98,6 +106,7 @@ class InvoiceController extends Controller
     public function generate(Invoice $invoice)
     {
         $this->authorize('invoices.create');
+        $this->ensureCountry($invoice->country_id);
         $this->service->generate($invoice);
 
         return back()->with('status', 'Official invoice generated. Choose how to send it.');
@@ -106,12 +115,14 @@ class InvoiceController extends Controller
     /** Logs a share (WhatsApp / Telegram / email / link) to the customer's timeline and marks the invoice sent. */
     public function share(Invoice $invoice, Request $request)
     {
+        $this->authorize('invoices.create');
         $this->ensureCountry($invoice->country_id);
         abort_unless($invoice->generated_at, 422, 'Generate the official invoice first.');
         $channel = $request->validate(['channel' => 'required|in:WhatsApp,Email,Telegram,IMO,SMS,Link'])['channel'];
         Communication::create(['customer_id' => $invoice->customer_id, 'channel' => $channel, 'kind' => 'Invoice', 'reference' => $invoice->number,
             'recipient' => $channel === 'Email' ? $invoice->customer->email : $invoice->customer->phone, 'status' => 'sent', 'sent_by' => $request->user()->id, 'sent_at' => now()]);
         $this->service->markSent($invoice);
+        $invoice->forceFill(['share_refreshed_at' => now()])->save(); // each send restarts the link's 30 days
 
         return $request->expectsJson() ? response()->json(['ok' => true]) : back()->with('status', "Logged: sent via {$channel}.");
     }
@@ -119,7 +130,8 @@ class InvoiceController extends Controller
     public function cancel(Invoice $invoice, Request $request)
     {
         $this->authorize('invoices.create');
-        SecondApproval::verify($request, 'Cancel invoice '.$invoice->number);
+        $this->ensureCountry($invoice->country_id);
+        SecondApproval::verify($request, 'Cancel invoice '.$invoice->number, $invoice->country_id);
         $this->service->cancel($invoice, $request->input('reason'));
 
         return back()->with('status', 'Invoice cancelled. It stays in the records for the audit trail.');

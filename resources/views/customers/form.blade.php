@@ -21,6 +21,6 @@
   <div class="f"><label for="id_type">ID type (members)</label><input id="id_type" name="id_type" value="{{ old('id_type', $customer->id_type) }}" placeholder="National ID, passport…"></div>
   <div class="f"><label for="id_number">ID number</label><input id="id_number" name="id_number" value="{{ old('id_number', $customer->id_number) }}"><span class="hint">Stored encrypted</span></div>
 </div>
-<div class="row" style="margin-top:16px"><button class="btn pri">Save customer</button><a class="btn ghost" href="{{ url()->previous() }}">Cancel</a></div>
+<div class="row" style="margin-top:16px"><button class="btn pri">Save customer</button><a class="btn ghost" href="{{ route('customers.index') }}">Cancel</a></div>
 </form>
 @endsection

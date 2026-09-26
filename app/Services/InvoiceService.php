@@ -33,7 +33,7 @@ class InvoiceService
                 'status' => 'draft',
                 'created_by' => $user->id,
             ]);
-            if (! in_array($invoice->status, ['draft', 'pending_approval'], true) && $invoice->exists) {
+            if ($invoice->exists && $invoice->status !== 'draft') {
                 throw ValidationException::withMessages(['status' => 'Approved invoices can only be changed through an authorized revision.']);
             }
             $invoice->fill([
@@ -126,7 +126,7 @@ class InvoiceService
         if ((float) $invoice->amount_paid > 0) {
             throw ValidationException::withMessages(['status' => 'Reverse the payments on this invoice before cancelling it.']);
         }
-        $invoice->update(['status' => 'cancelled', 'cancelled_reason' => $reason]);
+        $invoice->update(['status' => 'cancelled', 'cancelled_reason' => $reason, 'share_token' => null]); // the customer link stops working immediately
     }
 
     private function expect(Invoice $invoice, string $status): void

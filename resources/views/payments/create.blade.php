@@ -3,7 +3,7 @@
 @section('content')
 <div class="ph"><div><h1>Record payment</h1><p class="sub">Allocate the money to invoices. A receipt is issued as soon as you save.</p></div></div>
 <form method="get" class="card pad" style="margin-bottom:16px"><div class="f"><label for="customer">Customer</label>
-  <select id="customer" name="customer" onchange="this.form.submit()"><option value="">Choose a customer…</option>@foreach($customers as $c)<option value="{{ $c->id }}" @selected($customer?->id === $c->id)>{{ $c->displayName() }} · {{ $c->code }}</option>@endforeach</select></div></form>
+  <select id="customer" name="customer" data-autosubmit><option value="">Choose a customer…</option>@foreach($customers as $c)<option value="{{ $c->id }}" @selected($customer?->id === $c->id)>{{ $c->displayName() }} · {{ $c->code }}</option>@endforeach</select></div></form>
 @if($customer)
 <form method="post" action="{{ route('payments.store') }}" class="card pad">@csrf<input type="hidden" name="customer_id" value="{{ $customer->id }}">
   <div class="fg">
