@@ -617,6 +617,13 @@ h1{font-size:24px;font-weight:600;letter-spacing:-.01em} h3{font-weight:600;font
 .top .ai-btn{background:var(--accent);border-color:var(--accent);color:#fff;border-radius:10px}
 .top .ai-btn:hover{background:var(--accent-2)}
 .top .proto{background:var(--yellow-soft);color:#7A5B00}
+/* header never wraps its buttons: things shrink or drop their label instead */
+.top .ai-btn,.top .icon-btn,.top .proto,.top .menu-btn{flex:none;white-space:nowrap}
+.top .ai-btn span{white-space:nowrap}
+.top .sel{min-width:0;flex:0 1 auto;max-width:240px;text-overflow:ellipsis}
+.top .search{flex:1 1 220px}
+@media (max-width:1320px){.top .proto{display:none}.top .sel{max-width:190px}}
+@media (max-width:1180px){.top .ai-btn span{display:none}.top .ai-btn{padding:0 10px}.top .sel{max-width:160px}}
 .content{padding:8px 28px 64px}
 .card,.paper,.modal,.pop,.drawer{border-radius:14px}
 .card{border:1px solid var(--line);box-shadow:0 1px 2px rgba(29,41,39,.04)}
