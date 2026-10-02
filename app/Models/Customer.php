@@ -12,13 +12,29 @@ class Customer extends Model
 {
     use Auditable, SoftDeletes;
 
-    protected $fillable = ['code', 'type', 'name', 'company', 'gender', 'date_of_birth', 'phone', 'email', 'address', 'city', 'country_id', 'branch_id', 'id_type', 'id_number', 'registration_no', 'tax_id', 'industry', 'account_manager_id', 'category', 'credit_limit', 'payment_terms_days', 'currency_code'];
+    protected $fillable = ['code', 'type', 'name', 'company', 'gender', 'date_of_birth', 'phone', 'email', 'address', 'city', 'country_id', 'branch_id', 'id_type', 'id_number', 'registration_no', 'tax_id', 'industry', 'account_manager_id', 'category', 'credit_limit', 'payment_terms_days', 'currency_code', 'language', 'portal_invited_at', 'portal_last_login_at'];
 
-    protected $casts = ['date_of_birth' => 'date', 'credit_limit' => 'decimal:2', 'id_number' => 'encrypted'];
+    protected $casts = ['portal_invited_at' => 'datetime', 'portal_last_login_at' => 'datetime', 'date_of_birth' => 'date', 'credit_limit' => 'decimal:2', 'id_number' => 'encrypted'];
 
     public function displayName(): string
     {
         return $this->company ?: $this->name;
+    }
+
+    /** Language for this customer's documents and portal: their own setting, else their country's default. */
+    public function documentLanguage(): string
+    {
+        return $this->language ?: ($this->country?->default_language ?: 'en');
+    }
+
+    public function quotes(): HasMany
+    {
+        return $this->hasMany(Quote::class);
+    }
+
+    public function creditNotes(): HasMany
+    {
+        return $this->hasMany(CreditNote::class);
     }
 
     public function country(): BelongsTo

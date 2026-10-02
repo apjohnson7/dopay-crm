@@ -20,7 +20,10 @@ return Application::configure(basePath: dirname(__DIR__))
             EnsureActiveUser::class,
             SetBranchScope::class,
             SecurityHeaders::class,
+            \App\Http\Middleware\SetLocale::class,
         ]);
+        // Payment providers and messaging providers post notifications here; each one is verified by its signature instead.
+        $middleware->validateCsrfTokens(except: ['webhooks/*']);
         $middleware->api(append: [SecurityHeaders::class]);
         $middleware->alias([
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,

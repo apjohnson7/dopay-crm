@@ -51,7 +51,7 @@ class CustomerController extends Controller
         [$from, $to] = $this->period($request->query('period', 'year'));
 
         return view('customers.show', ['customer' => $customer, 'fin' => $customer->financials(), 'tab' => $request->query('tab', 'timeline'),
-            'statement' => $this->statement($customer, $from, $to), 'period' => $request->query('period', 'year')]);
+            'statement' => app(\App\Services\StatementService::class)->build($customer, $from, $to), 'period' => $request->query('period', 'year')]);
     }
 
     public function edit(Customer $customer)
@@ -113,26 +113,5 @@ class CustomerController extends Controller
             'all' => [now()->subYears(20), now()],
             default => [now()->startOfYear(), now()],
         };
-    }
-
-    private function statement(Customer $customer, $from, $to): array
-    {
-        $tx = collect();
-        foreach ($customer->invoices->whereIn('status', ['approved', 'sent']) as $i) {
-            $tx->push(['date' => $i->issue_date, 'ref' => $i->number, 'desc' => 'Invoice', 'debit' => (float) $i->total, 'credit' => 0]);
-        }
-        foreach ($customer->payments->where('status', 'completed') as $p) {
-            $tx->push(['date' => $p->paid_on, 'ref' => $p->number, 'desc' => 'Payment · '.$p->method, 'debit' => 0, 'credit' => (float) $p->amount]);
-        }
-        $tx = $tx->sortBy('date')->values();
-        $opening = $tx->filter(fn ($t) => $t['date']->lt($from))->sum(fn ($t) => $t['debit'] - $t['credit']);
-        $bal = $opening;
-        $rows = $tx->filter(fn ($t) => $t['date']->betweenIncluded($from, $to))->map(function ($t) use (&$bal) {
-            $bal += $t['debit'] - $t['credit'];
-
-            return $t + ['balance' => $bal];
-        })->values();
-
-        return ['from' => $from, 'to' => $to, 'opening' => $opening, 'rows' => $rows, 'closing' => $bal];
     }
 }

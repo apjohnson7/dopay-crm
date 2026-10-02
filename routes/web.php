@@ -23,6 +23,11 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/dashboard');
 Route::get('/s/i/{token}', [SharedDocumentController::class, 'invoice'])->name('shared.invoice')->middleware('throttle:30,1');
 
+// Customer-facing pages and provider notifications (phase 2)
+require __DIR__.'/portal.php';
+require __DIR__.'/public-payments.php';
+require __DIR__.'/public-messaging.php';
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile/security', [ProfileController::class, 'security'])->name('profile.security');
     Route::post('/profile/pin', [ProfileController::class, 'pin'])->name('profile.pin');
@@ -92,6 +97,18 @@ Route::middleware('auth')->group(function () {
         Route::post('messages/{conversation}', [MessageController::class, 'send'])->name('messages.send');
 
         Route::get('audit', AuditLogController::class)->name('audit.index');
+        Route::post('locale', function (\Illuminate\Http\Request $request) {
+            $locale = $request->validate(['locale' => 'required|in:en,fr'])['locale'];
+            $request->user()->forceFill(['locale' => $locale])->save();
+
+            return back();
+        })->name('locale');
+
+        // Phase 2: getting paid and compliance
+        require __DIR__.'/sales.php';
+        require __DIR__.'/payments.php';
+        require __DIR__.'/einvoicing.php';
+        require __DIR__.'/messaging.php';
 
         Route::post('notifications/read', function () {
             auth()->user()->unreadNotifications->markAsRead();

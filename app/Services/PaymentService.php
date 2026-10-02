@@ -69,6 +69,43 @@ class PaymentService
         });
     }
 
+    /**
+     * A payment confirmed by an online provider: recorded against one invoice with no staff member, the provider's fee kept
+     * so it posts to bank charges, and the receipt issued. Idempotent on the provider reference: a repeated
+     * notification returns the payment already recorded instead of recording it twice.
+     */
+    public function recordOnline(Invoice $invoice, float $amount, string $method, string $reference, \App\Models\PaymentGateway $gateway, float $fee = 0.0): Payment
+    {
+        return DB::transaction(function () use ($invoice, $amount, $method, $reference, $gateway, $fee) {
+            $existing = Payment::where('payment_gateway_id', $gateway->id)->where('reference', $reference)->where('status', 'completed')->first();
+            if ($existing) {
+                return $existing->load('receipt', 'allocations.invoice');
+            }
+            $invoice = Invoice::with('customer.country')->lockForUpdate()->findOrFail($invoice->id);
+            $amount = round($amount, 2);
+            if (! $invoice->isOfficial() || $amount <= 0 || $amount > $invoice->balance() + 0.004) {
+                throw ValidationException::withMessages(['amount' => "{$invoice->number} can't take ".money($amount, $invoice->currency_code).' (balance '.money($invoice->balance(), $invoice->currency_code).').']);
+            }
+            $customer = $invoice->customer;
+            $today = now($customer->country->timezone)->toDateString();
+            $payment = Payment::create([
+                'number' => $this->numbers->document($customer->country, 'PAY'),
+                'customer_id' => $customer->id, 'country_id' => $invoice->country_id, 'branch_id' => $invoice->branch_id,
+                'currency_code' => $invoice->currency_code, 'exchange_rate' => $this->rates->rate($invoice->currency_code, $today),
+                'amount' => $amount, 'method' => $method, 'reference' => $reference, 'paid_on' => $today, 'status' => 'completed',
+                'payment_gateway_id' => $gateway->id, 'fee' => round($fee, 2), 'received_by' => null,
+            ]);
+            $payment->allocations()->create(['invoice_id' => $invoice->id, 'amount' => $amount]);
+            $invoice->increment('amount_paid', $amount);
+            if ($invoice->status === 'approved' && $invoice->generated_at) {
+                $invoice->update(['status' => 'sent', 'sent_at' => $invoice->sent_at ?? now()]);
+            }
+            $payment->receipt()->create(['number' => $this->numbers->document($customer->country, 'RCT'), 'issued_on' => $today, 'status' => 'issued']);
+
+            return $payment->load('receipt', 'allocations.invoice');
+        });
+    }
+
     /** Reversal needs a second person's authorization (checked by the controller). */
     public function reverse(Payment $payment, User $by, string $reason): void
     {
