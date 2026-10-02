@@ -4,7 +4,7 @@
 <div class="paper">
   @if($wm)<div class="wm {{ $s === 'Paid' ? 'paid' : '' }}">{{ $wm }}</div>@endif
   <table class="p-head" style="width:100%"><tr>
-    <td><table><tr><td style="width:56px;vertical-align:top"><img src="{{ isset($pdf) ? public_path('img/dopay-logo.png') : asset('img/dopay-logo.png') }}" style="width:48px" alt="Logo"></td>
+    <td><table><tr><td style="vertical-align:top;padding-right:10px">@include('partials.doc-logos')</td>
       <td><b style="font-size:13px">{{ $co->legal_entity }}</b><br>{{ $co->address ?: $invoice->branch->office.', '.$invoice->branch->name }}, {{ $co->name }}@if($co->phone || $co->email)<br>{{ collect([$co->phone, $co->email])->filter()->implode(' · ') }}@endif @if($co->tax_id)<br>TIN {{ $co->tax_id }}@endif</td></tr></table></td>
     <td class="r"><div class="p-doc">Invoice</div><div class="mono">{{ $invoice->number }}</div>@if($invoice->version > 1)<div class="muted">Revision {{ $invoice->version }}</div>@endif</td>
   </tr></table>
